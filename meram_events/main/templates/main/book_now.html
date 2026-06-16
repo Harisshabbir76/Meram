@@ -1,0 +1,219 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Book Now - Meram Events{% endblock %}
+{% block extra_head %}
+<style>
+.booking-section { padding:100px 80px; background:var(--cream); display:grid; grid-template-columns:1fr 1.6fr; gap:80px; align-items:start; }
+.booking-info-title { font-family:var(--font-display); font-size:clamp(26px,3.5vw,46px); font-weight:400; font-style:italic; line-height:1.2; margin-bottom:20px; }
+.booking-info-body { font-size:13px; color:var(--text-mid); line-height:2; margin-bottom:30px; }
+.booking-step { display:flex; gap:20px; align-items:flex-start; margin-bottom:24px; }
+.booking-step-num { width:36px; height:36px; border:1px solid rgba(0,0,0,0.15); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:18px; flex-shrink:0; color:var(--text-mid); }
+.booking-step-text { font-size:12px; color:var(--text-mid); line-height:1.7; }
+.booking-step-text strong { display:block; color:var(--text-dark); margin-bottom:3px; font-size:13px; }
+.booking-form-wrap { background:var(--white); padding:50px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.form-section-title { font-family:var(--font-body); font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--text-light); margin:24px 0 18px; padding-bottom:10px; border-bottom:1px solid rgba(0,0,0,0.07); }
+@media(max-width:900px){.booking-section{grid-template-columns:1fr;padding:60px 24px;gap:40px;}.booking-form-wrap{padding:30px 20px;}.form-row{grid-template-columns:1fr;}}
+</style>
+{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="page-header-bg" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80');"></div>
+    <div class="page-header-content">
+
+        <h1 class="page-header-title"
+            data-en="Book Now"
+            data-ar="احجز الآن">
+            Book Now
+        </h1>
+
+        <p class="page-header-subtitle"
+           data-en="Begin Your Journey"
+           data-ar="ابدأ رحلتك">
+            Begin Your Journey
+        </p>
+
+    </div>
+</div>
+
+
+<section class="booking-section">
+
+    <div class="reveal">
+
+        <span class="section-eyebrow"
+              data-en="Start Planning"
+              data-ar="ابدأ التخطيط">
+            Start Planning
+        </span>
+
+        <h2 class="booking-info-title"
+            data-en="Let's Create<br>Something<br>Extraordinary"
+            data-ar="لنصنع شيئًا<br>استثنائيًا<br>معًا">
+            Let's Create<br>Something<br>Extraordinary
+        </h2>
+
+        <p class="booking-info-body"
+           data-en="Fill out the form and one of our event specialists will contact you within 24 hours to discuss your vision."
+           data-ar="املأ النموذج وسيتواصل معك أحد خبراء الفعاليات خلال 24 ساعة لمناقشة رؤيتك.">
+            Fill out the form and one of our event specialists will contact you within 24 hours to discuss your vision.
+        </p>
+
+        <div class="booking-step">
+            <div class="booking-step-num">1</div>
+            <div class="booking-step-text"
+                 data-en="<strong>Submit Your Request</strong>Tell us about your event vision and requirements."
+                 data-ar="<strong>إرسال طلبك</strong>أخبرنا عن رؤيتك ومتطلبات فعاليتك.">
+                <strong>Submit Your Request</strong>
+                Tell us about your event vision and requirements.
+            </div>
+        </div>
+
+        <div class="booking-step">
+            <div class="booking-step-num">2</div>
+            <div class="booking-step-text"
+                 data-en="<strong>Initial Consultation</strong>We'll schedule a meeting to discuss your vision in detail."
+                 data-ar="<strong>الاستشارة الأولية</strong>سنحدد اجتماعًا لمناقشة رؤيتك بالتفصيل.">
+                <strong>Initial Consultation</strong>
+                We'll schedule a meeting to discuss your vision in detail.
+            </div>
+        </div>
+
+        <div class="booking-step">
+            <div class="booking-step-num">3</div>
+            <div class="booking-step-text"
+                 data-en="<strong>Custom Proposal</strong>Receive a tailored proposal crafted specifically for your event."
+                 data-ar="<strong>عرض مخصص</strong>ستحصل على عرض مصمم خصيصًا لفعاليتك.">
+                <strong>Custom Proposal</strong>
+                Receive a tailored proposal crafted specifically for your event.
+            </div>
+        </div>
+
+        <div class="booking-step">
+            <div class="booking-step-num">4</div>
+            <div class="booking-step-text"
+                 data-en="<strong>Begin Planning</strong>Once approved, we begin crafting your perfect event."
+                 data-ar="<strong>بدء التخطيط</strong>بعد الموافقة نبدأ في تنفيذ فعاليتك المثالية.">
+                <strong>Begin Planning</strong>
+                Once approved, we begin crafting your perfect event.
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="booking-form-wrap reveal">
+
+        <h3 data-en="Request a Booking"
+            data-ar="طلب حجز">
+            Request a Booking
+        </h3>
+
+        <p data-en="All fields marked * are required"
+           data-ar="جميع الحقول التي تحمل * مطلوبة">
+            All fields marked * are required
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-section-title"
+                 data-en="Personal Information"
+                 data-ar="المعلومات الشخصية">
+                Personal Information
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" data-en="Full Name *" data-ar="الاسم الكامل *">Full Name *</label>
+                    {{ form.full_name }}
+                </div>
+                <div class="form-group">
+                    <label class="form-label" data-en="Email Address *" data-ar="البريد الإلكتروني *">Email Address *</label>
+                    {{ form.email }}
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+                <label class="form-label" data-en="Phone Number *" data-ar="رقم الهاتف *">Phone Number *</label>
+                {{ form.phone }}
+            </div>
+
+
+            <div class="form-section-title"
+                 data-en="Event Details"
+                 data-ar="تفاصيل الحدث">
+                Event Details
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label class="form-label" data-en="Event Type *" data-ar="نوع الحدث *">Event Type *</label>
+                    {{ form.event_type }}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" data-en="Event Date *" data-ar="تاريخ الحدث *">Event Date *</label>
+                    {{ form.event_date }}
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label class="form-label" data-en="Start Time *" data-ar="وقت البداية *">Start Time *</label>
+                    {{ form.start_time }}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" data-en="End Time *" data-ar="وقت النهاية *">End Time *</label>
+                    {{ form.end_time }}
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label class="form-label" data-en="Estimated Guest Count" data-ar="عدد الضيوف المتوقع">Estimated Guest Count</label>
+                    {{ form.guest_count }}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" data-en="Approximate Budget" data-ar="الميزانية التقريبية">Approximate Budget</label>
+                    {{ form.budget }}
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+                <label class="form-label" data-en="Preferred Venue" data-ar="المكان المفضل">Preferred Venue</label>
+                {{ form.venue }}
+            </div>
+
+
+            <div class="form-group">
+                <label class="form-label" data-en="Tell Us About Your Dream Event"
+                       data-ar="أخبرنا عن حلمك للحدث">
+                    Tell Us About Your Dream Event
+                </label>
+                {{ form.details }}
+            </div>
+
+
+            <button type="submit" class="btn-primary"
+                    data-en="Submit Booking Request"
+                    data-ar="إرسال طلب الحجز">
+                Submit Booking Request
+            </button>
+
+        </form>
+    </div>
+
+</section>
+{% endblock %}

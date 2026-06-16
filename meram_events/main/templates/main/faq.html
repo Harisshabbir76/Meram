@@ -1,0 +1,648 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}FAQ — Meram Events{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* ===== FAQ PAGE ===== */
+
+    /* Hero: Dark brown bg with centered ornate card */
+    .faq-hero {
+        height: 460px;
+        position: relative;
+        background: linear-gradient(rgba(49, 31, 19, .35), rgba(49, 31, 19, .35)),
+        url("{% static 'main/images/banner1.jpg' %}");
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* Ornate label/badge card in center */
+    .faq-badge {
+        position: absolute;
+        left: 50%;
+        bottom: -240px;
+        transform: translateX(-50%);
+        width: 360px;
+        z-index: 10;
+    }
+
+    .faq-badge img {
+        width: 100%;
+        display: block;
+    }
+
+    .faq-badge-content {
+        position: absolute;
+        inset: 0;
+        padding: 90px 45px;
+
+        display: flex;
+        /* ✅ required */
+        flex-direction: column;
+        /* optional but usually needed */
+        justify-content: center;
+        /* vertical centering */
+        align-items: center;
+        /* horizontal centering */
+
+        text-align: center;
+    }
+
+    .faq-badge-eyebrow {
+        display: block;
+        margin-bottom: 7px;
+        font-family: 'Hanken Grotesk', sans-serif;
+        font-size: 5px;
+        line-height: 20px;
+        font-weight: 300;
+
+        letter-spacing: 0.9px;
+        text-transform: uppercase;
+
+        color: #000;
+    }
+
+    .faq-badge-title {
+        font-family: "FreightDisp Pro", serif;
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.1;
+        letter-spacing: -0.76px;
+        text-transform: uppercase;
+        color: #000;
+
+        margin-bottom: 18px;
+    }
+
+    .faq-badge-body {
+        font-family: "Hanken Grotesk", sans-serif;
+        font-size: 10px;
+        line-height: 1.7;
+        letter-spacing: 0.4px;
+        color: #000;
+        max-width: 210px;
+        margin: 0 auto;
+        text-transform: none;
+    }
+
+    /* =========================
+   FAQ SECTION
+========================= */
+
+    .faq-list-section {
+        background: #311F13;
+        padding: 220px 0 160px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .faq-inner {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    .faq-main-title {
+        text-align: center;
+        font-family: var(--font-display);
+        font-size: 56px;
+        line-height: 1.1;
+        font-weight: 300;
+        text-transform: uppercase;
+        color: #F4F1EA;
+        margin-bottom: 70px;
+    }
+
+    .faq-item {
+        border-bottom: 1px solid rgba(255, 255, 255, .18);
+    }
+
+    .faq-question-btn {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 18px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .faq-q-text {
+        font-family: "Hanken Grotesk", sans-serif;
+        font-size: 15px;
+        line-height: 20px;
+        font-weight: 300;
+        letter-spacing: 0.9px;
+        text-transform: uppercase;
+        color: #FFFFFF;
+    }
+
+    .faq-q-icon {
+        color: #F4F1EA;
+    }
+
+    .faq-answer {
+        display: none;
+        padding: 0 80px 20px 0;
+    }
+
+    .faq-item.open .faq-answer {
+        display: block;
+    }
+
+    .faq-answer p {
+        font-family: "Hanken Grotesk", sans-serif;
+        font-size: 15px;
+        line-height: 20px;
+        font-weight: 300;
+        letter-spacing: 0.9px;
+        text-transform: uppercase;
+        color: #FFFFFF;
+    }
+
+    /* =========================
+   CTA SECTION
+========================= */
+
+    .faq-cta-section {
+        background: #E6DBC9;
+        padding: 0 20px;
+        position: relative;
+    }
+
+    /* Half dark / half cream overlap */
+
+    .faq-cta-card {
+        width: 100%;
+        max-width: 700px;
+        background: #F4F1EA;
+
+        margin: 0 auto;
+
+        position: relative;
+        top: -95px;
+        /* overlap amount */
+
+        padding: 55px 80px 60px;
+
+        text-align: center;
+
+        box-sizing: border-box;
+        z-index: 1;
+
+    }
+
+    .faq-cta-clip {
+        position: absolute;
+        top: -18px;
+        left: 28px;
+    }
+
+    .faq-cta-title {
+        font-family: var(--font-display);
+        font-size: 47px;
+        line-height: 1;
+        font-weight: 300;
+        color: #311F13;
+        text-transform: uppercase;
+        margin-bottom: 22px;
+    }
+
+    .faq-cta-body {
+        font-size: 12px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+
+    .faq-cta-desc {
+        max-width: 480px;
+        margin: 0 auto 30px;
+        font-size: 12px;
+        line-height: 18px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .faq-cta-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 130px;
+        height: 30px;
+
+        border: 1px solid #311F13;
+
+        text-decoration: none;
+
+        font-size: 10px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+
+        color: #311F13;
+    }
+
+    .faq-cta-btn:hover {
+        background: #311F13;
+        color: #fff;
+        border-color: #311F13;
+    }
+
+    .contact-clip {
+        position: absolute;
+        top: -59px;
+        left: -81px;
+        transform: rotate(35deg);
+        z-index: 5;
+    }
+
+    .contact-clip img {
+        width: 200px;
+        height: 200px;
+        display: block;
+    }
+
+    /* =========================
+   MOBILE
+========================= */
+    @media (max-width: 1024px) {
+
+        /* HERO BADGE POSITION */
+        .faq-badge {
+            width: 300px;
+            bottom: -200px;
+        }
+
+        .faq-badge-content {
+            padding: 70px 30px;
+        }
+
+        .faq-badge-title {
+            font-size: 20px;
+        }
+
+        .faq-badge-body {
+            max-width: 260px;
+            font-size: 11px;
+        }
+    }
+
+    @media(max-width:768px) {
+
+        .faq-list-section {
+            padding: 120px 0 180px;
+        }
+
+        .faq-main-title {
+            margin-bottom: 45px;
+        }
+
+        .faq-q-text {
+            font-size: 7px;
+            line-height: 18px;
+        }
+
+        .faq-answer {
+            padding: 0 0 22px;
+        }
+
+        .faq-cta-section {
+            margin-top: -90px;
+            padding: 80px 20px 10px;
+        }
+
+
+        .faq-cta-clip {
+            left: 30px;
+        }
+
+        .faq-cta-body,
+        .faq-cta-desc {
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        /* HERO HEIGHT */
+        .faq-hero {
+            height: 205px;
+        }
+
+        /* BADGE CENTER SCALE */
+        .faq-badge {
+            width: 260px;
+            bottom: -170px;
+        }
+
+        .faq-badge-content {
+            padding: 55px 20px;
+        }
+
+        .faq-badge-eyebrow {
+            font-size: 3px;
+            letter-spacing: 0.6px;
+            margin-bottom: 0;
+        }
+
+        .faq-badge-title {
+            font-size: 16px;
+            line-height: 1.2;
+            margin-bottom: 5px;
+
+        }
+
+        .faq-badge-body {
+            font-size: 10px;
+            max-width: 220px;
+            line-height: 1.5;
+        }
+
+        /* FAQ SECTION */
+        .faq-list-section {
+            padding: 140px 20px 140px;
+        }
+
+        .faq-main-title {
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+
+        /* CTA */
+        .faq-cta-card {
+            padding: 40px 22px;
+            top: -70px;
+        }
+
+        .faq-cta-title {
+            font-size: 28px;
+        }
+
+        .faq-cta-desc {
+            font-size: 11px;
+            line-height: 16px;
+        }
+
+    }
+
+    @media (max-width: 480px) {
+
+        .faq-badge {
+            width: 220px;
+            bottom: -150px;
+        }
+
+        .faq-badge-title {
+            font-size: 8px;
+        }
+
+        .faq-badge-body {
+            font-size: 4px;
+            max-width: 80px;
+        }
+
+        .faq-main-title {
+            font-size: 26px;
+        }
+
+        .faq-cta-title {
+            font-size: 24px;
+        }
+    }
+
+    @media(max-width:960px) {
+
+        .faq-list-section,
+        .faq-cta-section {
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        .faq-hero {
+            padding: 140px 24px 60px;
+        }
+
+        .faq-badge {
+            padding: 34px 28px;
+        }
+
+        .faq-cta-card {
+            padding: 50px 28px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- ===== HERO WITH ORNATE BADGE ===== -->
+<section class="faq-hero">
+    <div class="faq-badge">
+        <img src="{% static 'main/images/section1.png' %}" alt="Frame">
+
+        <div class="faq-badge-content">
+            <span class="faq-badge-eyebrow" data-en="EVERYTHING YOU NEED TO KNOW" data-ar="كل ما تحتاج إلى معرفته">
+                EVERYTHING YOU NEED TO KNOW
+            </span>
+
+            <h1 class="faq-badge-title" data-en="BEFORE WE BEGIN SOMETHING UNFORGETTABLE."
+                data-ar="قبل أن نبدأ شيئًا لا يُنسى.">
+                BEFORE WE BEGIN<br>
+                SOMETHING<br>
+                UNFORGETTABLE.
+            </h1>
+
+            <p class="faq-badge-body"
+                data-en="Planning a celebration of this scale comes with questions — and it should. We’ve curated the most important details below to guide you through what it’s like to work with Meram Events, what to expect, and how we ensure every experience feels seamless, personal, and beautifully executed."
+                data-ar="إن التخطيط لاحتفال بهذا الحجم يثير الكثير من التساؤلات، وهذا أمر طبيعي. لقد جمعنا أهم التفاصيل أدناه لمساعدتك على فهم تجربة العمل مع ميرام إيفنتس، وما يمكنك توقعه، وكيف نضمن أن تكون كل تجربة سلسة وشخصية ومنفذة بأعلى درجات الإتقان.">
+                Planning a celebration of this scale comes with questions — and it should. We’ve curated the most
+                important details below to guide you through what it’s like to work with Meram Events, what to expect,
+                and how we ensure every experience feels seamless, personal, and beautifully executed.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ LIST SECTION -->
+<section class="faq-list-section">
+    <div class="faq-inner">
+
+        <h2 class="faq-main-title" data-en="Frequently Asked Questions" data-ar="الأسئلة الشائعة">
+            Frequently Asked Questions
+        </h2>
+
+        {% if general or wedding or corporate or booking %}
+
+        {% for item in general %}
+        <div class="faq-item">
+            <button class="faq-question-btn" onclick="toggleFaq(this)">
+                <span class="faq-q-text" data-en="{{ item.question }}" data-ar="{{ item.question_ar }}">
+                    {{ item.question }}
+                </span>
+                <span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-answer">
+    <p data-en="{{ item.answer }}"
+       data-ar="{{ item.answer_ar }}">
+        {{ item.answer }}
+    </p>
+</div>
+        </div>
+        {% endfor %}
+
+        {% for item in wedding %}
+        <div class="faq-item">
+            <button class="faq-question-btn" onclick="toggleFaq(this)">
+                <span class="faq-q-text" data-en="{{ item.question }}" data-ar="{{ item.question_ar }}">
+                    {{ item.question }}
+                </span>
+                <span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-answer">
+    <p data-en="{{ item.answer }}"
+       data-ar="{{ item.answer_ar }}">
+        {{ item.answer }}
+    </p>
+</div>
+        </div>
+        {% endfor %}
+
+        {% for item in corporate %}
+        <div class="faq-item">
+            <button class="faq-question-btn" onclick="toggleFaq(this)">
+                <span class="faq-q-text" data-en="{{ item.question }}" data-ar="{{ item.question_ar }}">
+                    {{ item.question }}
+                </span>
+                <span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-answer">
+    <p data-en="{{ item.answer }}"
+       data-ar="{{ item.answer_ar }}">
+        {{ item.answer }}
+    </p>
+</div>
+        </div>
+        {% endfor %}
+
+        {% for item in booking %}
+        <div class="faq-item">
+            <button class="faq-question-btn" onclick="toggleFaq(this)">
+                <span class="faq-q-text" data-en="{{ item.question }}" data-ar="{{ item.question_ar }}">
+                    {{ item.question }}
+                </span>
+                <span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-answer">
+    <p data-en="{{ item.answer }}"
+       data-ar="{{ item.answer_ar }}">
+        {{ item.answer }}
+    </p>
+</div>
+        </div>
+        {% endfor %}
+
+        {% else %}
+
+        <div class="faq-item">
+            <button class="faq-question-btn" onclick="toggleFaq(this)">
+                <span class="faq-q-text">When should we start planning our event?</span>
+                <span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                <p>
+                    For weddings and large-scale events, we recommend starting the planning process
+                    9–12 months in advance to ensure the best availability of venues and suppliers.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item open">
+            <button class="faq-question-btn" onclick="toggleFaq(this)">
+                <span class="faq-q-text">Do you only specialise in weddings?</span>
+                <span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                <p>
+                    Weddings are at the heart of what we do, but our expertise extends to
+                    engagements and private celebrations as well.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question-btn" onclick="toggleFaq(this)">
+                <span class="faq-q-text">Do you offer full-service planning?</span>
+                <span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                <p>
+                    Yes. We offer comprehensive end-to-end planning, from concept development
+                    and vendor sourcing to on-the-day coordination.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question-btn" onclick="toggleFaq(this)">
+                <span class="faq-q-text">Can you work with our preferred venue or suppliers?</span>
+                <span class="faq-q-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                <p>
+                    Absolutely. We're happy to collaborate with your chosen venue or existing suppliers.
+                </p>
+            </div>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+<!-- CTA SECTION -->
+<section class="faq-cta-section">
+
+
+    <div class="faq-cta-card reveal">
+
+        <!-- Paper Clip -->
+        <div class="faq-cta-clip">
+            <div class="contact-clip">
+                <img src="{% static 'main/images/pin.png' %}" alt="Paper Clip">
+            </div>
+        </div>
+
+        <!-- <h2 class="faq-cta-title">Still Have Questions?</h2> -->
+        <h2 class="faq-cta-title" data-en="Still Have Questions?" data-ar="هل لا تزال لديك أسئلة؟">
+            Still Have Questions?
+        </h2>
+        <p class="faq-cta-body" data-en="We'd Love To Hear From You." data-ar="يسعدنا أن نسمع منك.">
+            We'd Love To Hear From You.
+        </p>
+
+        <p class="faq-cta-desc"
+            data-en="Let's begin with a conversation — and take the first step toward creating something truly unforgettable."
+            data-ar="لنبدأ بمحادثة بسيطة، ولنخطُ معًا الخطوة الأولى نحو ابتكار تجربة لا تُنسى حقًا.">
+            Let's begin with a conversation — and take the first step toward creating something truly unforgettable.
+        </p>
+
+        <a href="{% url 'contact' %}" class="faq-cta-btn" data-en="Contact Us Now" data-ar="تواصل معنا الآن">
+            Contact Us Now
+        </a>
+
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function toggleFaq(btn) {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+    }
+</script>
+{% endblock %}

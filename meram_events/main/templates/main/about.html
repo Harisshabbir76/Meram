@@ -1,0 +1,1647 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}About Us — Meram Events{% endblock %}
+
+{% block extra_head %}
+<style>
+
+.about-section{
+    
+    position:relative;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.about-hero{
+    text-align: center;
+    padding: 220px 20px 320px;
+    background: #F4F1EA;
+}
+
+.about-eyebrow{
+    display:block;
+    margin-bottom:38px;
+
+    font-family:'Hanken Grotesk', sans-serif;
+    font-size:15px;
+    font-weight:300;
+    letter-spacing:0.9px;
+    text-transform:uppercase;
+    color:#000;
+}
+
+.about-hero-title{
+    font-family:'FreightDisp Pro', serif;
+    font-size:clamp(42px,5vw,76px);
+    line-height:0.95;
+    font-weight:300;
+    letter-spacing:-0.95px;
+    text-transform:uppercase;
+    color:#311F13;
+
+    max-width:1100px;
+    margin:0 auto 42px;
+}
+
+.about-hero-script{
+    font-family:'Pinyon Script', cursive;
+    font-size:clamp(24px,3vw,32px);
+    line-height:40px;
+    color:#311F13;
+}
+
+
+/* =========================
+   OVERLAP IMAGE
+========================= */
+
+.about-cinematic{
+        position: relative;
+    width: 100%;
+    max-width: 1340px;
+    height: 574px;
+    margin: -180px auto 0;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.about-cinematic img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+
+    filter:brightness(0.45);
+}
+
+.about-cinematic::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.18);
+}
+
+.about-cinematic-text{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+    z-index:3;
+
+    padding:0 40px;
+}
+
+.about-cinematic-text p{
+    max-width:750px;
+
+    font-family:'Hanken Grotesk', sans-serif;
+    font-size:15px;
+    line-height:20px;
+    font-weight:300;
+
+    letter-spacing:0.9px;
+    text-transform:uppercase;
+
+    color:#fff;
+}
+
+
+/* Section 3: Two images left + text right */
+.about-thoughtful{
+        background: #fff;
+    display: grid;
+    grid-template-columns: 513px 1fr;
+    gap: 80px;
+    /* align-items: center; */
+    padding: 43px 122px;
+    overflow: hidden;
+}
+
+
+/* =========================
+   IMAGES LAYOUT
+========================= */
+
+.about-two-imgs{
+    position:relative;
+    /* width:700px; */
+    height:430px;
+}
+
+
+/* IMAGE 1 */
+.about-two-imgs img:nth-child(1){
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:216px;
+    height:225px;
+
+    object-fit:cover;
+    z-index:0;
+}
+
+
+/* IMAGE 2 (MAIN BIG IMAGE) */
+.about-two-imgs img:nth-child(2){
+    position: absolute;
+    bottom: 70px;
+    left: 90px;
+    width: 389px;
+    height: 284px;
+    object-fit: cover;
+    z-index: 1;
+}
+
+
+
+
+/* IMAGE 3 */
+.about-two-imgs img:nth-child(3){
+    position: absolute;
+    top: 5px;
+    left: 330px;
+    width: 184px;
+    height: 214px;
+    object-fit: cover;
+    z-index: 2;
+}
+.about-white-box{
+    position: absolute;
+    top: 0;
+    left: 319px;
+    width: 191px;
+    height: 229px;
+    background: #fff;
+    z-index: 1;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.about-thoughtful-content{
+    max-width:760px;
+}
+
+.about-block-title{
+    font-family:'FreightDisp Pro', serif;
+    font-size:clamp(32px,3vw,48px);
+    line-height:1.02;
+    font-weight:300;
+
+    letter-spacing:-0.58px;
+    text-transform:uppercase;
+
+    color:#311F13;
+
+    margin-bottom:42px;
+}
+
+.about-body{
+    font-family:'Hanken Grotesk', sans-serif;
+
+    font-size:15px;
+    line-height:20px;
+    font-weight:300;
+
+    letter-spacing:0.9px;
+    text-transform:uppercase;
+
+    color:#000;
+
+    margin-bottom:20px;
+
+    max-width:760px;
+}
+
+.about-quote{
+    margin-top:50px;
+
+    font-family:'Pinyon Script', cursive;
+    font-size:28px;
+    line-height:35px;
+
+    color:#311F13;
+}
+
+/* Section 4: Philosophy — cream bg, centered, image top */
+/* =========================================================
+   MAIN SECTION
+========================================================= */
+
+.about-philosophy{
+    position:relative;
+    background-color: #FAF9F5;
+}
+
+
+/* =========================================================
+   TOP BEIGE AREA
+========================================================= */
+
+.about-philosophy-top{
+    width:100%;
+    height:500px;
+
+    background:#E6DBC9;
+}
+
+
+
+/* =========================================================
+   WHITE CARD
+========================================================= */
+
+.philosophy-inner{
+    position:relative;
+
+    width:90%;
+    max-width:1560px;
+
+    margin: -331px auto 0;
+
+    background:#F8F5F0;
+
+    padding:
+        100px
+        40px
+        90px;
+
+    text-align:center;
+
+    z-index:2;
+}
+
+
+
+/* =========================================================
+   FLOATING IMAGE
+========================================================= */
+
+.about-philosophy-img-wrap{
+    position:absolute;
+
+    top:-115px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    z-index:5;
+
+    width:100%;
+    display:flex;
+    justify-content:center;
+}
+
+
+/* RESPONSIVE IMAGE */
+.about-philosophy-img{
+    width:100%;
+    max-width:370px;
+
+    aspect-ratio:370/236;
+
+    height:auto;
+
+    object-fit:cover;
+
+    box-shadow:0 10px 30px rgba(0,0,0,0.15);
+}
+
+
+/* TEXT OVER IMAGE */
+.about-philosophy-label{
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    font-family:'Pinyon Script', cursive;
+    font-size:clamp(18px,2vw,29px);
+    line-height:1.2;
+
+    color:#311F13;
+
+    z-index:6;
+}
+
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.philosophy-title{
+    font-family:'FreightDisp Pro', serif;
+
+    font-size:clamp(30px,4vw,48px);
+    line-height:1.02;
+    font-weight:300;
+
+    letter-spacing:-0.58px;
+    text-transform:uppercase;
+
+    color:#311F13;
+
+    margin: 42px;
+}
+
+
+
+/* =========================================================
+   TEXT
+========================================================= */
+
+.philosophy-sub,
+.philosophy-list,
+.philosophy-footer{
+    font-family:'Hanken Grotesk', sans-serif;
+
+    font-size:15px;
+    line-height:20px;
+    font-weight:300;
+
+    letter-spacing:0.9px;
+    text-transform:uppercase;
+
+    color:#000;
+}
+
+.philosophy-sub{
+    margin-bottom:22px;
+}
+
+.philosophy-list{
+    list-style:none;
+
+    margin:28px 0;
+    padding:0;
+}
+
+.philosophy-list li::before{
+    content:'• ';
+}
+
+.philosophy-footer{
+    margin-top:34px;
+}
+
+/* Section 5: Trusted Venues — white bg */
+/* =========================================================
+   VENUES SECTION
+========================================================= */
+
+.about-venues{
+    background: #FAF9F5;
+
+    text-align:center;
+
+    padding:
+        clamp(80px,8vw,140px)
+        clamp(20px,7vw,120px);
+}
+
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.venues-eyebrow{
+    display:block;
+
+    margin-bottom:24px;
+
+    font-family:'Hanken Grotesk', sans-serif;
+
+    font-size:15px;
+    line-height:20px;
+    font-weight:300;
+
+    letter-spacing:0.9px;
+    text-transform:uppercase;
+
+    color:#000;
+}
+
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.venues-title{
+    max-width:1172px;
+
+    margin:
+        0 auto
+        32px;
+
+    font-family:'FreightDisp Pro', serif;
+
+    font-size:clamp(28px,4vw,48px);
+    line-height:1.02;
+    font-weight:300;
+
+    letter-spacing:-0.58px;
+    text-transform:uppercase;
+
+    color:#311F13;
+}
+
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+.venues-body{
+    max-width:1149px;
+
+    margin:
+        0 auto
+        70px;
+
+    font-family:'Hanken Grotesk', sans-serif;
+
+    font-size:clamp(12px,1vw,15px);
+    line-height:20px;
+    font-weight:300;
+
+    letter-spacing:0.9px;
+    text-transform:uppercase;
+
+    color:#000;
+}
+
+
+
+/* =========================================================
+   LOGOS ROW
+========================================================= */
+
+.venues-logos{
+    width:100%;
+    max-width:1498px;
+
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:60px;
+}
+
+
+
+/* =========================================================
+   SINGLE LOGO
+========================================================= */
+
+.venue-logo-item{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.venue-logo-item img{
+    width: auto;
+    max-width: 120px;
+    max-height: 60px;
+
+    object-fit:contain;
+
+    opacity:0.9;
+
+    transition:0.3s ease;
+}
+
+.venue-logo-item img:hover{
+    opacity:1;
+    transform:scale(1.03);
+}
+ 
+
+/* =========================================================
+   TRUST SECTION
+========================================================= */
+
+.about-trust{
+    width:100%;
+    max-width:1520px;
+
+    margin:auto;
+
+    background:#F4F1EA;
+
+    text-align:center;
+
+    padding:
+        clamp(60px,7vw,90px)
+        clamp(20px,7vw,120px);
+
+    overflow:hidden;
+}
+
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.trust-eyebrow{
+    display:block;
+
+    margin-bottom:26px;
+
+    font-family:'Hanken Grotesk', sans-serif;
+
+    font-size:15px;
+    line-height:20px;
+    font-weight:300;
+
+    letter-spacing:0.9px;
+    text-transform:uppercase;
+
+    color:#000;
+}
+
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.trust-title{
+    width:100%;
+    max-width:1172px;
+
+    margin:
+        0 auto
+        28px;
+
+    font-family:'FreightDisp Pro', serif;
+
+    font-size:clamp(28px,4vw,48px);
+    line-height:1.02;
+    font-weight:300;
+
+    letter-spacing:-0.58px;
+    text-transform:uppercase;
+
+    color:#311F13;
+}
+
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+.trust-body{
+    width:100%;
+    max-width:1149px;
+
+    margin:auto;
+
+    font-family:'Hanken Grotesk', sans-serif;
+
+    font-size:clamp(12px,1vw,15px);
+    line-height:20px;
+    font-weight:300;
+
+    letter-spacing:0.9px;
+    text-transform:uppercase;
+
+    color:#000;
+}
+
+/* Section 7: More Than Planning — image left, text right */
+/* =========================================================
+   MORE SECTION
+========================================================= */
+
+.about-more{
+    background:#fff;
+
+    display:grid;
+    grid-template-columns:
+        minmax(320px,667px)
+        1fr;
+
+    align-items:center;
+
+    gap:clamp(40px,6vw,90px);
+
+    padding:
+        clamp(80px,8vw,140px)
+        clamp(20px,7vw,120px);
+
+    overflow:hidden;
+}
+
+
+
+/* =========================================================
+   LEFT IMAGE
+========================================================= */
+
+.about-more img{
+    width:100%;
+
+    max-width:667px;
+
+    aspect-ratio:667/630;
+
+    height:auto;
+
+    object-fit:cover;
+
+    display:block;
+}
+
+
+
+
+/* =========================================================
+   RIGHT CONTENT
+========================================================= */
+
+.about-more-content{
+    width:100%;
+    max-width:700px;
+}
+
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.more-eyebrow{
+    display:block;
+
+    margin-bottom:22px;
+
+    font-family:'Hanken Grotesk', sans-serif;
+
+    font-size:15px;
+    line-height:20px;
+    font-weight:300;
+
+    letter-spacing:0.9px;
+    text-transform:uppercase;
+
+    color:#000;
+}
+
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.more-title{
+    width:100%;
+    max-width:610px;
+
+    margin-bottom:36px;
+
+    font-family:'FreightDisp Pro', serif;
+
+    font-size:clamp(30px,4vw,48px);
+    line-height:1.02;
+    font-weight:300;
+
+    letter-spacing:-0.58px;
+    text-transform:uppercase;
+
+    color:#311F13;
+}
+
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+.more-body{
+    font-family:'Hanken Grotesk', sans-serif;
+
+    font-size:clamp(12px,1vw,15px);
+    line-height:20px;
+    font-weight:300;
+
+    letter-spacing:0.9px;
+    text-transform:uppercase;
+
+    color:#000;
+
+    margin-bottom:20px;
+
+    max-width:615px;
+}
+
+
+
+/* =========================================================
+   LIST
+========================================================= */
+
+.more-list{
+    list-style:none;
+
+    margin:26px 0 30px;
+    padding:0;
+
+    max-width:615px;
+}
+
+.more-list li{
+    position:relative;
+
+    padding-left:18px;
+    margin-bottom:12px;
+
+    font-family:'Hanken Grotesk', sans-serif;
+
+    font-size:clamp(12px,1vw,15px);
+    line-height:20px;
+    font-weight:300;
+
+    letter-spacing:0.9px;
+    text-transform:uppercase;
+
+    color:#000;
+}
+
+.more-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 15px;
+    font-weight: 900;
+    color: #000;
+}
+
+
+
+/* =========================================================
+   QUOTE
+========================================================= */
+
+.more-quote{
+    margin-top:36px;
+
+    font-family:'Pinyon Script', cursive;
+
+    font-size:clamp(22px,2.5vw,28px);
+    line-height:35px;
+
+    color:#311F13;
+}
+
+
+/* Section 8: 4-image horizontal strip */
+.about-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr);     
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.about-strip img {
+    width: 100%; height: 220px; object-fit: cover;
+    display: block; transition: transform 0.5s;
+}
+.about-strip img:hover { transform: scale(1.03); }
+
+/* Section 9: Dark CTA block */
+.about-cta {
+    position: relative;
+    width: 100%;
+    min-height: 767px;
+    background: #311F13;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Background texture */
+.about-cta::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(rgba(49,31,19,.72),
+        rgba(49,31,19,.72)),
+        url("{% static 'main/images/f2.jpg' %}");
+
+    background-size: cover;
+    opacity: .95;
+}
+
+/* Center content */
+.about-cta-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    max-width: 900px;
+}
+
+.cta-script {
+    font-family: "Pinyon Script", cursive;
+    font-size: 46px;
+    line-height: 58px;
+    color: #fff;
+    margin-bottom: 25px;
+}
+
+.cta-title {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 48px;
+    font-weight: 300;
+    line-height: 49px;
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: -.58px;
+    margin-bottom: 35px;
+}
+
+.cta-body {
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,.75);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+}
+
+/* Button */
+.btn-outline-light {
+    width: 219px;
+    height: 34px;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid #fff;
+    color: #fff;
+    text-decoration: none;
+
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Left image */
+.left-image {
+    position: absolute;
+    left: 100px;
+    top: 75px;
+    z-index: 2;
+}
+
+.left-image img {
+    width: 239px;
+    height: 310px;
+    object-fit: cover;
+}
+
+/* Right image */
+.right-image {
+    position: absolute;
+    right: 120px;
+    bottom: 55px;
+    z-index: 2;
+}
+
+.right-image img {
+    width: 369px;
+    height: 249px;
+    object-fit: cover;
+}
+
+/* Watermark */
+.cta-watermark {
+    position: absolute;
+    left: 60px;
+    bottom: 60px;
+
+    font-family: "Pinyon Script", cursive;
+    font-size: 32px;
+    line-height: 50px;
+
+    color: rgba(250,249,245,.9);
+
+    transform: rotate(-14deg);
+    z-index: 2;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width:1400px){
+
+    .about-thoughtful{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+
+@media (max-width:1100px){
+
+    .about-thoughtful{
+        grid-template-columns:1fr;
+
+        gap:70px;
+
+        padding:110px 40px;
+    }
+
+    .about-thoughtful-content{
+        margin:auto;
+        text-align:left;
+    }
+
+    .about-two-imgs{
+        max-width:620px;
+        display: none;
+    }
+        .about-more{
+        grid-template-columns:1fr;
+
+        gap:60px;
+
+        padding:
+            100px
+            40px;
+    }
+
+    .about-more img{
+        margin:auto;
+    }
+
+    .about-more-content{
+        margin:auto;
+    }
+}
+
+@media (max-width:480px){
+
+    .about-two-imgs{
+        aspect-ratio:1/0.9;
+    }
+
+    .about-block-title{
+        line-height:1.08;
+    }
+
+    .about-body{
+        font-size:11px;
+    }
+
+    .about-quote{
+        font-size:20px;
+    }
+        .venues-logos{
+        gap:22px;
+    }
+
+    .venue-logo-item img{
+        max-width:75px;
+        max-height:40px;
+    }
+        .about-philosophy-img{
+        max-width:150px;
+    }
+
+    .about-philosophy-label{
+        font-size:16px;
+    }
+        .philosophy-inner{padding:40px 24px;}
+
+    .philosophy-sub,
+    .philosophy-list,
+    .philosophy-footer{
+        font-size:11px;
+        line-height:18px;
+    }
+        .trust-title br{
+        display:none;
+    }
+
+    .trust-body{
+        font-size:11px;
+    }
+        .more-title br{
+        display:none;
+    }
+
+    .more-body,
+    .more-list li{
+        font-size:11px;
+    }
+
+    .more-quote{
+        font-size:20px;
+    }
+}
+
+@media (max-width:768px){
+
+    .about-hero{
+        padding:140px 20px 220px;
+    }
+
+    .about-cinematic{
+        width:92%;
+        height:420px;
+
+        margin-top:-120px;
+    }
+
+    .about-cinematic-text p{
+        font-size:11px;
+        line-height:18px;
+    }
+        .about-philosophy-top{
+        height:220px;
+    }
+
+    .philosophy-inner{
+        width:92%;
+
+        margin-top:-110px;
+
+        padding:
+            100px
+            20px
+            60px;
+    }
+
+        .about-philosophy-img-wrap{
+        top:-35px;
+    }
+
+    .about-philosophy-img{
+        max-width:180px;
+    }
+        .about-venues{
+        padding:80px 20px;
+    }
+
+    .venues-body{
+        margin-bottom:50px;
+
+        line-height:18px;
+        letter-spacing:0.5px;
+    }
+
+    .venues-logos{
+        gap:28px;
+    }
+
+    .venue-logo-item img{
+        max-width:90px;
+        max-height:45px;
+    }
+        .about-trust{
+        width:92%;
+
+        padding:
+            60px
+            20px;
+    }
+
+    .trust-title{
+        line-height:1.08;
+    }
+
+    .trust-body{
+        line-height:18px;
+        letter-spacing:0.5px;
+    }
+        .about-more{
+        padding:
+            80px
+            20px;
+
+        gap:45px;
+    }
+
+    .more-title{
+        line-height:1.08;
+        margin-bottom:28px;
+    }
+
+    .more-body,
+    .more-list li{
+        line-height:18px;
+        letter-spacing:0.5px;
+    }
+
+    .more-list{
+        margin:20px 0 24px;
+    }
+
+    .more-quote{
+        line-height:1.3;
+    }
+    
+    .about-cta::before {
+    background-position: center;
+}
+    .about-cta {
+        min-height: auto;
+        padding: 80px 20px 60px;
+    }
+
+    .about-cta-content {
+        max-width: 100%;
+        padding: 0 10px;
+                margin-bottom: 25px;
+
+    }
+
+    .cta-script {
+        font-size: 28px;
+        line-height: 1.2;
+        margin-bottom: 15px;
+    }
+
+    .cta-title {
+        font-size: 20px !important;
+        line-height: 1.3;
+        letter-spacing: 0;
+        margin-bottom: 20px;
+    }
+
+    .cta-body {
+        font-size: 12px;
+        line-height: 1.8;
+        padding: 0 10px;
+    }
+
+    /* Images ko side se hatao */
+    .left-image,
+    .right-image {
+        display: none;
+    }
+
+    .cta-watermark {
+        display: none;
+    }
+
+    .btn-outline-light {
+        width: 220px;
+        height: 44px;
+        font-size: 11px;
+    }
+}
+
+
+@media (max-width:1200px){
+
+    /* .about-hero{
+        padding:180px 30px 90px;
+    } */
+
+    .about-cinematic{
+        width: 78%;
+        height: 469px;
+    }
+    .about-thoughtful{
+        grid-template-columns:1fr;
+        gap:70px;
+
+        padding:120px 40px;
+    }
+
+    .about-two-imgs{
+        margin:auto;
+    }
+
+    .about-thoughtful-content{
+        margin:auto;
+    }
+}
+
+@media (max-width:1024px){
+
+    .about-philosophy{
+        padding: 25px 0 0;
+    }
+
+    .philosophy-inner{
+        padding:
+            110px
+            30px
+            70px;
+    }
+}
+@media(max-width:992px){
+
+    .venues-logos{
+        gap:40px;
+    }
+
+    .venue-logo-item img{
+        max-width: 55px;
+        max-height: 37px;
+    }
+        .about-trust{
+        padding:
+            70px
+            40px;
+    }
+    .about-cta {
+        min-height: auto;
+        padding: 80px 30px;
+    }
+
+    .left-image {
+        left: 20px !important;
+        top: 30px !important;
+    }
+
+    .right-image {
+        right: 20px !important;
+        bottom: 30px !important;
+    }
+
+    .left-image img {
+        width: 180px;
+    }
+
+    .right-image img {
+        width: 250px;
+    }
+
+    .cta-title {
+        font-size: 38px;
+    }
+}
+
+
+@media(max-width:960px){
+    /* .about-hero,.about-philosophy,.about-trust{padding:60px 24px;} */
+    .about-thoughtful,.about-venues,.about-more,.about-cta{padding:60px 40px 0;grid-template-columns:1fr;}
+    .about-cinematic-text{padding:30px 24px;}
+    .about-strip{grid-template-columns:repeat(2,1fr); gap: 0;}
+    .about-cta{grid-template-columns:1fr;}
+    .about-cta-rose{display:none;}
+    /* .venues-logos{justify-content:flex-start;} */
+    .venue-item{padding:18px 20px;}
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="about-section">
+
+    <!-- HERO CONTENT -->
+    <div class="about-hero">
+
+
+        <span class="about-eyebrow"
+              data-en="ABOUT US"
+              data-ar="من نحن">
+            ABOUT US
+        </span>
+
+<h1 class="about-hero-title"
+    data-en="WE DON’T JUST PLAN EVENTS. WE CREATE EXPERIENCES THAT STAY WITH YOU."
+    data-ar="نحن لا نقوم فقط بتخطيط الفعاليات. نحن نصنع تجارب تبقى معك.">
+</h1>
+
+        <p class="about-hero-script"
+           data-en="At Meram Events, every celebration begins with a story — yours."
+           data-ar="في ميرام إيفنتس، كل احتفال يبدأ بقصة — قصتك أنت.">
+            At Meram Events, every celebration begins with a story — yours.
+        </p>
+
+    </div>
+
+
+    <!-- OVERLAP CINEMATIC -->
+    <div class="about-cinematic">
+
+        <img src="{% static 'main/images/Banner.jpg' %}"
+             alt="Scenic landscape">
+
+    <div class="about-cinematic-text">
+        <p
+        data-en="WE ARE A LUXURY EVENT PLANNING AND DESIGN HOUSE SPECIALISING IN WEDDINGS, ENGAGEMENTS, AND PRIVATE CELEBRATIONS ACROSS THE UAE. OUR APPROACH IS TO CREATE BEAUTIFULLY CHOREOGRAPHED, DEEPLY PERSONAL, AND UNFORGETTABLE EXPERIENCES THAT FEEL SEAMLESS, PERSONAL, AND UNFORGETTABLE. BUT HOW WE MAKE YOU FEEL THROUGHOUT THE JOURNEY."
+        data-ar="نحن شركة فاخرة لتخطيط وتصميم الفعاليات متخصصة في حفلات الزفاف والخطوبة والاحتفالات الخاصة في جميع أنحاء الإمارات. نهجنا هو إنشاء تجارب مصممة بشكل جميل، وشخصية بعمق، ولا تُنسى، تبدو سلسة وخاصة ولا تُنسى. لكن الأهم هو كيف نجعلك تشعر طوال الرحلة.">
+</p>
+    </div>
+    </div>
+
+</section>
+
+<!-- ===== SECTION 3: THOUGHTFUL APPROACH ===== -->
+<section class="about-thoughtful reveal">
+
+    <div class="about-two-imgs">
+        <img src="{% static 'main/images/1.jpg' %}" alt="Floral table">
+        <img src="{% static 'main/images/2.JPG' %}" alt="Event setup">
+        <img src="{% static 'main/images/3.JPG' %}" alt="Wedding detail">
+        <div class="about-white-box"></div>
+    </div>
+
+    <div class="about-thoughtful-content">
+
+        <h2 class="about-block-title"
+            data-en="A Thoughtful Approach to Every Detail"
+            data-ar="نهج مدروس لكل تفصيلة">
+            A Thoughtful<br>Approach to Every Detail
+        </h2>
+
+        <p class="about-body"
+           data-en="Founded with a passion for elevated celebrations, Meram Events has built a reputation for delivering high-end experiences that balance artistry with organisation."
+           data-ar="تأسست ميرام إيفنتس بشغف للاحتفالات الراقية، وقد بنت سمعة في تقديم تجارب فاخرة تمزج بين الفن والتنظيم.">
+            Founded with a passion for elevated celebrations, Meram Events has built a reputation for delivering high-end experiences that balance artistry with organisation.
+        </p>
+
+        <p class="about-body"
+           data-en="From intimate gatherings to grand weddings, our team approaches every event with intention — carefully curating each element to reflect the client's vision while maintaining a cohesive and refined aesthetic."
+           data-ar="من التجمعات الصغيرة إلى حفلات الزفاف الكبرى، يتعامل فريقنا مع كل حدث بعناية وهدف — حيث يتم تنسيق كل عنصر ليعكس رؤية العميل مع الحفاظ على طابع أنيق ومترابط.">
+            From intimate gatherings to grand weddings, our team approaches every event with intention — carefully curating each element to reflect the client's vision while maintaining a cohesive and refined aesthetic.
+        </p>
+
+        <p class="about-quote"
+           data-en="We believe that true luxury lies in the details you don't have to worry about."
+           data-ar="نؤمن أن الفخامة الحقيقية تكمن في التفاصيل التي لا تحتاج للقلق بشأنها.">
+            We believe that true luxury lies in the details you don't have to worry about.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ===== SECTION 4: OUR PHILOSOPHY ===== -->
+<section class="about-philosophy">
+
+    <div class="about-philosophy-top"></div>
+
+    <div class="philosophy-inner">
+
+        <div class="about-philosophy-img-wrap">
+            <img class="about-philosophy-img"
+                 src="{% static 'main/images/p1.png' %}"
+                 alt="">
+
+            <span class="about-philosophy-label"
+                  data-en="Our Philosophy"
+                  data-ar="فلسفتنا">
+                Our Philosophy
+            </span>
+        </div>
+
+<h2 class="philosophy-title"
+    data-en="DESIGNED WITH INTENTION.<br>DELIVERED WITH PRECISION."
+    data-ar="مصممون بقصد. منفذون بدقة.">
+</h2>
+
+        <p class="philosophy-sub"
+           data-en="WE BELIEVE EVERY EVENT SHOULD FEEL EFFORTLESS — EVEN THOUGH IT IS ANYTHING BUT."
+           data-ar="نؤمن أن كل حدث يجب أن يبدو سهلاً — رغم أنه عكس ذلك تماماً.">
+            WE BELIEVE EVERY EVENT SHOULD FEEL EFFORTLESS — EVEN THOUGH IT IS ANYTHING BUT.
+        </p>
+
+        <p class="philosophy-sub"
+           data-en="OUR PHILOSOPHY IS CENTERED ON CREATING EXPERIENCES THAT ARE:"
+           data-ar="فلسفتنا تركز على خلق تجارب تكون:">
+            OUR PHILOSOPHY IS CENTERED ON CREATING EXPERIENCES THAT ARE:
+        </p>
+
+        <ul class="philosophy-list">
+            <li data-en="DEEPLY PERSONAL AND TAILORED" data-ar="شخصية ومصممة بعناية">DEEPLY PERSONAL AND TAILORED</li>
+            <li data-en="VISUALLY REFINED AND COHESIVE" data-ar="راقية ومتناغمة بصرياً">VISUALLY REFINED AND COHESIVE</li>
+            <li data-en="SEAMLESSLY EXECUTED FROM START TO FINISH" data-ar="منفذة بسلاسة من البداية للنهاية">SEAMLESSLY EXECUTED FROM START TO FINISH</li>
+            <li data-en="EMOTIONALLY MEANINGFUL AND MEMORABLE" data-ar="ذات معنى عاطفي ولا تُنسى">EMOTIONALLY MEANINGFUL AND MEMORABLE</li>
+        </ul>
+
+        <p class="philosophy-footer"
+           data-en="BECAUSE THE MOST BEAUTIFUL CELEBRATIONS ARE NOT JUST SEEN — THEY ARE FELT."
+           data-ar="لأن أجمل الاحتفالات لا تُرى فقط — بل تُشعر.">
+            BECAUSE THE MOST BEAUTIFUL CELEBRATIONS ARE NOT JUST SEEN — THEY ARE FELT.
+        </p>
+
+    </div>
+
+</section>
+<!-- ===== SECTION 5: TRUSTED VENUES ===== -->
+<section class="about-venues reveal">
+
+<span class="venues-eyebrow"
+      data-en="OUR EXPERIENCE"
+      data-ar="خبرتنا">
+    OUR EXPERIENCE
+</span>
+
+<h2 class="venues-title"
+    data-en="TRUSTED ACROSS THE UAE'S LEADING VENUES"
+    data-ar="موثوقون في أبرز أماكن الفعاليات في الإمارات">
+    TRUSTED ACROSS THE UAE'S LEADING VENUES
+</h2>
+
+<p class="venues-body"
+   data-en="OVER THE YEARS, MERAM EVENTS HAS DELIVERED PREMIUM CELEBRATIONS ACROSS SOME OF THE UAE'S MOST PRESTIGIOUS VENUES, INCLUDING BEACH ROTANA, RIXOS MARINA, HILTON YAS ISLAND, WALDORF ASTORIA, W HOTEL, AND DAMAC. THESE COLLABORATIONS REFLECT OUR CONSISTENT COMMITMENT TO EXCELLENCE, ATTENTION TO DETAIL, AND THE ABILITY TO EXECUTE AT THE HIGHEST STANDARDS."
+   data-ar="على مر السنين، قدمت ميرام إيفنتس احتفالات راقية في بعض أرقى أماكن الفعاليات في الإمارات، بما في ذلك بيتش روتانا، ريكسوس مارينا، هيلتون ياس آيلاند، والدورف أستوريا، دبليو هوتيل، وداماك. تعكس هذه الشراكات التزامنا المستمر بالتميز والدقة والقدرة على التنفيذ بأعلى المعايير.">
+    OVER THE YEARS, MERAM EVENTS HAS DELIVERED PREMIUM CELEBRATIONS ACROSS SOME OF THE UAE'S MOST PRESTIGIOUS VENUES, INCLUDING BEACH ROTANA, RIXOS MARINA, HILTON YAS ISLAND, WALDORF ASTORIA, W HOTEL, AND DAMAC. THESE COLLABORATIONS REFLECT OUR CONSISTENT COMMITMENT TO EXCELLENCE, ATTENTION TO DETAIL, AND THE ABILITY TO EXECUTE AT THE HIGHEST STANDARDS.
+</p>
+
+
+    <!-- LOGOS -->
+    <div class="venues-logos">
+
+        <div class="venue-logo-item">
+            <img src="{% static 'main/images/Br.png' %}" alt="">
+        </div>
+
+        <div class="venue-logo-item">
+            <img src="{% static 'main/images/D.png' %}" alt="">
+        </div>
+
+        <div class="venue-logo-item">
+            <img src="{% static 'main/images/Sr.png' %}" alt="">
+        </div>
+
+        <div class="venue-logo-item">
+            <img src="{% static 'main/images/GH.png' %}" alt="">
+        </div>
+
+        <div class="venue-logo-item">
+            <img src="{% static 'main/images/WA.png' %}" alt="">
+        </div>
+
+        <div class="venue-logo-item">
+            <img src="{% static 'main/images/H.png' %}" alt="">
+        </div>
+
+        <div class="venue-logo-item">
+            <img src="{% static 'main/images/R.png' %}" alt="">
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ===== SECTION 6: TRUST / VALUES ===== -->
+<section class="about-trust reveal">
+    <span class="trust-eyebrow"
+          data-en="Our Values"
+          data-ar="قيمنا">
+        Our Values
+    </span>
+
+    <h2 class="trust-title"
+        data-en="At Meram Events, Trust Isn't Optional —<br>It's the Foundation of Everything We Do."
+        data-ar="في ميرام إيفنتس، الثقة ليست خياراً — بل هي أساس كل ما نقوم به.">
+        At Meram Events, Trust Isn't Optional —<br>It's the Foundation of Everything We Do.
+    </h2>
+
+    <p class="trust-body"
+       data-en="We operate with a high level of professionalism, sharp attention to detail, and a commitment to getting every element right from first contact to final execution. Our focus is clear: deliver a smooth experience, handle everything with precision, and represent every event at its best."
+       data-ar="نعمل بمستوى عالٍ من الاحترافية واهتمام دقيق بالتفاصيل، مع التزام كامل بتنفيذ كل عنصر بشكل صحيح من أول تواصل حتى التنفيذ النهائي. هدفنا واضح: تقديم تجربة سلسة، إدارة كل شيء بدقة، وتمثيل كل حدث بأفضل صورة.">
+        We operate with a high level of professionalism, sharp attention to detail, and a commitment to getting every element right from first contact to final execution. Our focus is clear: deliver a smooth experience, handle everything with precision, and represent every event at its best.
+    </p>
+</section>
+
+<!-- ===== SECTION 7: MORE THAN PLANNING ===== -->
+<section class="about-more reveal">
+
+    <!-- IMAGE -->
+    <img src="{% static 'main/images/f4.png' %}"
+         alt="Luxury event setup">
+
+
+    <!-- CONTENT -->
+    <div class="about-more-content">
+
+        <span class="more-eyebrow"
+              data-en="WHAT WE DO DIFFERENTLY"
+              data-ar="ما الذي يميزنا">
+            WHAT WE DO DIFFERENTLY
+        </span>
+
+        <h2 class="more-title"
+            data-en="MORE THAN PLANNING,<br>A COMPLETE EXPERIENCE."
+            data-ar="أكثر من مجرد تخطيط،<br>تجربة متكاملة.">
+            MORE THAN PLANNING,<br>
+            A COMPLETE EXPERIENCE.
+        </h2>
+
+        <p class="more-body"
+           data-en="WE TAKE A 360° APPROACH TO EVERY EVENT, MANAGING EVERYTHING FROM CONCEPT AND DESIGN TO GUEST EXPERIENCE AND ON-SITE COORDINATION."
+           data-ar="نتعامل مع كل حدث بنهج شامل 360 درجة، حيث ندير كل شيء من الفكرة والتصميم إلى تجربة الضيوف والتنسيق في الموقع.">
+            WE TAKE A 360° APPROACH TO EVERY EVENT, MANAGING EVERYTHING FROM CONCEPT AND DESIGN TO GUEST EXPERIENCE AND ON-SITE COORDINATION.
+        </p>
+
+        <p class="more-body"
+           data-en="THIS MEANS:"
+           data-ar="وهذا يعني:">
+            THIS MEANS:
+        </p>
+
+        <ul class="more-list">
+            <li data-en="YOU DON'T HAVE TO MANAGE MULTIPLE VENDORS" data-ar="لن تحتاج لإدارة عدة مزودين">YOU DON'T HAVE TO MANAGE MULTIPLE VENDORS</li>
+            <li data-en="EVERY DETAIL IS ALIGNED AND COHESIVE" data-ar="كل التفاصيل متناسقة ومترابطة">EVERY DETAIL IS ALIGNED AND COHESIVE</li>
+            <li data-en="THE ENTIRE EXPERIENCE FEELS SEAMLESS" data-ar="تجربة متكاملة بدون تعقيد">THE ENTIRE EXPERIENCE FEELS SEAMLESS</li>
+            <li data-en="YOU CAN FULLY ENJOY YOUR EVENT WITHOUT STRESS" data-ar="يمكنك الاستمتاع بفعاليةك بدون أي توتر">YOU CAN FULLY ENJOY YOUR EVENT WITHOUT STRESS</li>
+        </ul>
+
+        <p class="more-quote"
+           data-en="Because your only focus should be the moment itself."
+           data-ar="لأن تركيزك الوحيد يجب أن يكون على اللحظة نفسها.">
+            Because your only focus should be the moment itself.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ===== SECTION 8: 4-IMAGE STRIP ===== -->
+<div class="about-strip">
+    <img src="{% static 'main/images/p4.jpg' %}" alt="">
+    <img src="{% static 'main/images/p11.jpeg' %}" alt="">
+    <img src="{% static 'main/images/p2.JPG' %}" alt="">
+    <img src="{% static 'main/images/p3.jpg' %}" alt="">
+</div>
+
+<!-- ===== SECTION 9: DARK CTA ===== -->
+<section class="about-cta">
+    <div class="overlay"></div>
+
+    <!-- Left Image -->
+    <div class="left-image">
+        <img src="{% static 'main/images/f1.jpg' %}" alt="">
+    </div>
+
+    <!-- Center Content -->
+<div class="about-cta-content">
+
+    <p class="cta-script"
+       data-en="Your Story, Beautifully Told"
+       data-ar="قصتك تُروى بأجمل صورة">
+        Your Story, Beautifully Told
+    </p>
+
+    <h2 class="cta-title"
+        data-en="AT MERAM EVENTS, WE DON'T BELIEVE<br>IN ONE-SIZE-FITS-ALL CELEBRATIONS."
+        data-ar="في ميرام إيفنتس، نحن لا نؤمن<br>بالحفلات ذات الطابع الواحد للجميع.">
+        AT MERAM EVENTS, WE DON'T BELIEVE<br>
+        IN ONE-SIZE-FITS-ALL CELEBRATIONS.
+    </h2>
+
+    <p class="cta-body"
+       data-en="WE BELIEVE IN CREATING SOMETHING THAT FEELS UNIQUELY YOURS —<br>ELEVATED, INTENTIONAL, AND UNFORGETTABLE."
+       data-ar="نؤمن بخلق شيء يعكسك أنت —<br>راقي، مدروس، ولا يُنسى.">
+        WE BELIEVE IN CREATING SOMETHING THAT FEELS UNIQUELY YOURS —<br>
+        ELEVATED, INTENTIONAL, AND UNFORGETTABLE.
+    </p>
+
+    <a href="#"
+       class="btn-outline-light"
+       data-en="BOOK A CALL NOW →"
+       data-ar="احجز مكالمة الآن ←">
+        BOOK A CALL NOW →
+    </a>
+
+</div>
+
+    <!-- Right Image -->
+    <div class="right-image">
+        <img src="{% static 'main/images/f3.jpg' %}" alt="">
+    </div>
+
+    <!-- Watermark -->
+    <!-- <div class="cta-watermark">
+        Effortless detail. Elevated experiences.
+        <br>
+        Thoughtfully designed moments.
+    </div> -->
+</section>
+
+{% endblock %}

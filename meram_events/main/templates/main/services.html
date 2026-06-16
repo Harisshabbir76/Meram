@@ -1,0 +1,1538 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Services — Meram Events{% endblock %}
+
+{% block extra_head %}
+<style>
+
+/* ============================================================
+   SERVICES PAGE — Exact Design Match
+============================================================ */
+
+/* ── SECTION 1: HERO INTRO ── */
+.srv-hero{
+    background:#FAF9F5;
+    padding: 220px 20px 100px;
+    text-align:center;
+}
+
+.srv-eyebrow{
+    display:block;
+    margin-bottom:25px;
+
+    font-family:'Hanken Grotesk',sans-serif;
+    font-size:15px;
+    font-weight:300;
+    line-height:20px;
+    letter-spacing:.9px;
+    text-transform:uppercase;
+    color:#000;
+}
+
+.srv-hero-title{
+    max-width:900px;
+    margin:0 auto 35px;
+
+    font-family:'FreightDisp Pro',serif;
+    font-size:73px;
+    font-weight:300;
+    line-height:74px;
+    letter-spacing:-0.95px;
+    text-transform:uppercase;
+    color:#311F13;
+}
+
+.srv-hero-sub{
+    margin-bottom:40px;
+
+    font-family:'Hanken Grotesk',sans-serif;
+    font-size:15px;
+    font-weight:300;
+    line-height:20px;
+    letter-spacing:.9px;
+    text-transform:uppercase;
+    color:#000;
+}
+
+.srv-hero-script{
+    font-family:'Pinyon Script',cursive;
+    font-size:32px;
+    line-height:40px;
+    color:#311F13;
+}
+/* ── SECTION 2: 3 SERVICE CARDS (image with dark overlay + title) ── */
+.srv-cards-row{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:28px;
+    max-width:1860px;
+    margin:0 auto;
+    padding:0 28px 80px;
+    background-color: #F4F1EA;
+}
+
+.srv-card{
+    position:relative;
+    height:734px;
+    overflow:hidden;
+}
+
+.srv-card::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:#311F13;
+    opacity:.61;
+}
+
+.srv-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:.6s ease;
+}
+
+.srv-card:hover img{
+    transform:scale(1.05);
+}
+
+.srv-card-label{
+    position:absolute;
+    z-index:2;
+    left:60px;
+    top:84px;
+    width:330px;
+}
+
+.srv-card-label span{
+    display:block;
+
+    font-family:'FreightDisp Pro',serif;
+    font-size:38px;
+    font-weight:300;
+    line-height:42px;
+    letter-spacing:-0.5px;
+    text-transform:uppercase;
+    color:#FAF9F5;
+}
+
+/* ── SECTION 3: DETAIL SECTIONS (image left col, content center, image right col) ── */
+.srv-detail-wrap{
+    display:grid;
+    grid-template-columns:420px 1fr 421px;
+    background:#FAF9F5;
+    min-height:748px;
+}
+
+.srv-img-col{
+    height:748px;
+}
+
+.srv-img-col img{
+    width:100%;
+    height:748px;
+    object-fit:cover;
+    display:block;
+}
+
+.srv-content-col{
+    padding:74px 50px 80px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.srv-block{
+    text-align:center;
+    max-width:696px;
+    margin:0 auto;
+    padding:0;
+    border:none;
+}
+
+.srv-block-title{
+    font-family:"FreightDisp Pro", serif;
+    font-size:45px;
+    line-height:57px;
+    font-weight:300;
+    letter-spacing:-0.54px;
+    color:#311F13;
+    text-transform:uppercase;
+    margin-bottom:35px;
+}
+
+.srv-block-tagline,
+.srv-block-body,
+.srv-block-sub,
+.srv-list{
+    font-family:"Hanken Grotesk", sans-serif;
+    font-size:15px;
+    line-height:20px;
+    font-weight:300;
+    letter-spacing:.9px;
+    color:#000;
+}
+
+.srv-block-tagline{
+    text-transform:uppercase;
+    margin-bottom:20px;
+}
+
+.srv-block-body{
+    margin-bottom:20px;
+}
+
+.srv-block-sub{
+    margin-bottom:12px;
+    text-transform:uppercase;
+}
+
+.srv-list{
+    list-style:none;
+    padding:0;
+    margin:0 0 22px;
+}
+
+.srv-list li{
+    margin-bottom:8px;
+}
+
+.srv-list li::before{
+    content:"• ";
+}
+
+.srv-block-quote{
+    font-family:"Pinyon Script", cursive;
+    font-size:22px;
+    line-height:30px;
+    letter-spacing:1.32px;
+    color:#000;
+    margin:30px auto 40px;
+    max-width:696px;
+}
+
+.btn-srv{
+    width:219px;
+    height:34px;
+    border:1px solid #000;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:#000;
+    background:transparent;
+}
+
+.btn-srv:hover{
+    background:#311F13;
+    color:#fff;
+}
+/* ── SCROLLING TEXT STRIP ── */
+.srv-marquee-strip {
+    background: var(--cream);
+    border-top: 1px solid rgba(0,0,0,0.07);
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    padding: 12px 0; overflow: hidden;
+}
+.srv-marquee-track {
+    display: flex; white-space: nowrap;
+    animation: srvMarquee 22s linear infinite;
+    width: max-content;
+}
+@keyframes srvMarquee { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+.srv-marquee-item {
+        font-family: "FreightDisp Pro", serif;
+    font-size: 13.5px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #311F13;
+}
+.srv-marquee-sep { color: rgba(44,36,32,0.25); padding: 0 8px; }
+
+/* ── SECTION 4: OUR PROCESS ── */
+.srv-process{
+    position:relative;
+    background:#F4F1EA;
+    padding:140px 40px 100px;
+    text-align:center;
+    overflow:hidden;
+}
+
+/* LEFT IMAGE */
+.srv-process-intro-img{
+    position:absolute;
+    left:185px;
+    top:250px;
+    width:212px;
+    height:212px;
+    object-fit:cover;
+}
+
+/* RIGHT IMAGE */
+.srv-process-bottom{
+    position:absolute;
+    right:250px;
+    bottom:180px;
+}
+
+.srv-process-bottom img{
+    width:212px;
+    height:212px;
+    object-fit:cover;
+}
+
+/* TITLE */
+.srv-process-title{
+    font-family:"FreightDisp Pro", serif;
+    font-size:45px;
+    line-height:57px;
+    font-weight:300;
+    letter-spacing:-0.54px;
+    text-transform:uppercase;
+    color:#311F13;
+    margin-bottom:40px;
+}
+
+/* INTRO */
+.srv-process-intro{
+    display:block;
+    max-width:696px;
+    margin:0 auto 60px;
+}
+
+.srv-process-intro-text{
+    font-family:"Hanken Grotesk", sans-serif;
+    font-size:15px;
+    line-height:20px;
+    font-weight:300;
+    letter-spacing:.9px;
+    text-transform:uppercase;
+    color:#000;
+    text-align:center;
+}
+
+/* STEPS */
+.srv-process-steps{
+    max-width:700px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.srv-step{
+    margin-bottom:10px;
+}
+
+.srv-step-num{
+    display:block;
+    font-family:"FreightDisp Pro", serif;
+    font-size:30px;
+    line-height:57px;
+    font-weight:300;
+    letter-spacing:-0.36px;
+    text-transform:uppercase;
+    color:#311F13;
+    margin-bottom:2px;
+}
+
+.srv-step-title{
+    font-family:"Hanken Grotesk", sans-serif;
+    font-size:15px;
+    line-height:20px;
+    font-weight:300;
+    letter-spacing:.9px;
+    text-transform:uppercase;
+    color:#000;
+    margin-bottom:6px;
+}
+
+.srv-step-body{
+    font-family:"Hanken Grotesk", sans-serif;
+    font-size:15px;
+    line-height:20px;
+    font-weight:300;
+    letter-spacing:.9px;
+    color:#000;
+    max-width:696px;
+}
+
+.srv-step-arrow{
+    font-size:28px;
+    color:#311F13;
+    opacity:.4;
+    margin:12px 0;
+}
+
+/* BUTTON */
+.srv-process .btn-srv{
+    width:219px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:30px;
+}
+
+/* ── SECTION 5: WHY CHOOSE ── */
+/* ===== WHY CHOOSE ===== */
+/* .why-section{
+    background:var(--cream-dark);
+    padding:80px 60px;
+    display:grid;
+    grid-template-columns:260px 1fr 240px;
+    gap:50px;align-items:center;
+    position:relative;overflow:hidden;
+} */
+/* ===== WHY CHOOSE MERAM EVENTS ===== */
+
+.why-section{
+    position:relative;
+    background:#E6DBC9;
+    /* min-height:646px; */
+
+    padding:77px 200px 58px;
+
+    display:grid;
+    grid-template-columns:204px 1fr 219px;
+    gap:80px;
+
+    overflow:hidden;
+}
+
+/* LEFT IMAGE */
+.why-img-left{
+    width:204px;
+    height:237px;
+    object-fit:cover;
+    align-self:start;
+}
+
+/* RIGHT IMAGE */
+.why-img-right{
+    width:219px;
+    height:197px;
+    object-fit:cover;
+    align-self:end;
+}
+
+/* CENTER CONTENT */
+.why-center{
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+/* EYEBROW */
+.why-eyebrow{
+    margin:0 0 22px;
+
+    font-family:"Hanken Grotesk", sans-serif;
+    font-size:18px;
+    line-height:1.2;
+    font-weight:300;
+
+    letter-spacing:-0.22px;
+    color:#000000;
+    text-transform:uppercase;
+}
+
+/* TITLE */
+.why-title{
+    margin:0 0 32px;
+
+    font-family:"FreightDisp Pro", serif;
+    font-size: 50px;
+    font-weight:400;
+    line-height: 46px;
+
+    letter-spacing:-0.72px;
+    color:#311F13;
+    text-transform:uppercase;
+
+    max-width:666px;
+}
+
+/* LIST */
+.why-list{
+    list-style:none;
+    padding:0;
+    margin:0 0 35px;
+    max-width:520px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.why-list li{
+    position:relative;
+
+    font-family:"Hanken Grotesk", sans-serif;
+    font-size:18px;
+    line-height:32px;
+    font-weight:300;
+
+    letter-spacing:-0.22px;
+    color:#000000;
+    text-transform:uppercase;
+
+    text-align:left;
+
+    padding-left:28px;
+}
+
+.why-list li::before{
+    content:"✓";
+    position:absolute;
+    left:0;
+    top:0;
+
+    font-size:16px;
+    font-weight:400;
+    color:#000000;
+}
+
+/* WATERMARK */
+.why-watermark{
+    position:absolute;
+    left:200px;
+    bottom:20px;
+
+    font-family:'Shabby Chic', cursive;
+    font-size:58px;
+    font-weight:400;
+    line-height:1;
+
+    color:#FAF9F5;
+
+    letter-spacing:2px;
+
+    white-space:nowrap;
+    pointer-events:none;
+    user-select:none;
+
+    z-index:1;}
+/* ── SECTION 6: CELEBRATION ── */
+.srv-celebration {
+    background: var(--white); padding: 90px 60px; text-align: center;
+}
+.srv-cel-eyebrow {
+    font-size: 9.5px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--text-light); display: block; margin-bottom: 18px;
+}
+.srv-cel-title {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(20px, 3.5vw, 42px);
+    font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-dark); line-height: 1.2; margin-bottom: 12px;
+}
+.srv-cel-script {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 20px;
+    color: var(--text-mid); margin-bottom: 14px;
+}
+.srv-cel-dot {
+    display: block; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--text-dark); margin: 0 auto 44px;
+}
+.srv-cel-grid {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    gap: 6px; margin-bottom: 36px;
+}
+.srv-cel-grid img {
+    width: 100%; height: 155px; object-fit: cover; transition: transform 0.4s;
+}
+.srv-cel-grid img:hover { transform: scale(1.04); }
+.back-top-link {
+    display: inline-block; font-size: 9.5px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--text-light);
+    text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.18);
+    padding-bottom: 2px; transition: color 0.3s;
+}
+.back-top-link:hover { color: var(--text-dark); }
+/* Celebration section at bottom */
+.celebration-section{
+    background:#FAF9F5;
+    padding:90px 200px 80px;
+    text-align:center;
+}
+
+/* EYEBROW */
+.celebration-eyebrow{
+    display:block;
+    margin-bottom:25px;
+
+    font-family:"Hanken Grotesk", sans-serif;
+    font-size:18px;
+    line-height:23px;
+    font-weight:300;
+
+    letter-spacing:-0.22px;
+    color:#000000;
+    text-transform:uppercase;
+}
+
+/* TITLE */
+.celebration-title{
+    margin:0 auto 25px;
+
+    font-family:"FreightDisp Pro", serif;
+    font-size:55px;
+    line-height:62px;
+    font-weight:400;
+
+    letter-spacing:-0.72px;
+    color:#311F13;
+    text-transform:uppercase;
+}
+
+/* SCRIPT TEXT */
+.celebration-script{
+    margin:0 0 50px;
+
+    font-family:'Pinyon Script', cursive;
+    font-size:34px;
+    line-height:1.2;
+    font-weight:400;
+
+    letter-spacing:-0.41px;
+    color:#000000;
+}
+
+/* BACK TO TOP */
+.back-to-top-link{
+    display:inline-block;
+    margin-bottom:60px;
+
+    font-family:"Hanken Grotesk", sans-serif;
+    font-size:15px;
+    line-height:20px;
+    font-weight:300;
+
+    letter-spacing:1.5px;
+    color:#000000;
+    text-transform:uppercase;
+
+    text-decoration:none;
+    padding-bottom:3px;
+
+    transition:all .3s ease;
+}
+
+.back-to-top-link:hover{
+    opacity:.7;
+}
+
+/* IMAGE GRID */
+.celebration-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:8px;
+}
+
+.celebration-grid img{
+    width:100%;
+    height:203px;
+    object-fit:cover;
+    display:block;
+
+    transition:transform .4s ease;
+}
+
+.celebration-grid img:hover{
+    transform:scale(1.03);
+}
+/* Lightbox */
+.lightbox {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.93); z-index: 9999;
+    align-items: center; justify-content: center;
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 88vw; max-height: 88vh; object-fit: contain; }
+.lb-close {
+    position: absolute; top: 22px; right: 28px;
+    color: white; font-size: 26px; cursor: pointer;
+    background: none; border: none; opacity: 0.7;
+}
+.lb-close:hover { opacity: 1; }
+.lb-prev, .lb-next {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    color: white; font-size: 32px; cursor: pointer;
+    background: none; border: none; opacity: 0.5; padding: 10px 20px;
+}
+.lb-prev:hover, .lb-next:hover { opacity: 1; }
+.lb-prev { left: 16px; }
+.lb-next { right: 16px; }
+/* ── RESPONSIVE ── */
+@media (max-width:1200px){
+
+    .srv-hero-title{
+        font-size:60px;
+        line-height:58px;
+    }
+
+    .srv-card{
+        height:550px;
+    }
+
+    .srv-card-label{
+        left:40px;
+        top:60px;
+    }
+
+    .srv-card-label span{
+        font-size:34px;
+        line-height:36px;
+    }
+     .srv-detail-wrap{
+        grid-template-columns:1fr;
+    }
+
+    .srv-img-col{
+        display:none;
+    }
+
+    .srv-content-col{
+        padding:60px 25px;
+    }
+
+    .srv-block-title{
+        font-size:34px;
+        line-height:42px;
+    }
+
+    .srv-block-tagline,
+    .srv-block-body,
+    .srv-block-sub,
+    .srv-list{
+        font-size:14px;
+    }
+
+    .srv-block-quote{
+        font-size:20px;
+    }
+    .srv-process-intro-img,
+    .srv-process-bottom{
+        position:static;
+    }
+
+    .srv-process-intro-img{
+        display:block;
+        margin:0 auto 30px;
+    }
+
+    .srv-process-bottom{
+        margin-top:40px;
+        text-align:center;
+    }
+
+    .srv-process-bottom img{
+        width:180px;
+        height:180px;
+    }
+
+    .srv-process-title{
+        font-size:34px;
+        line-height:42px;
+    }
+
+    .srv-step-num{
+        font-size:24px;
+        line-height:40px;
+    }
+}
+@media(max-width:1100px){
+    .srv-detail-wrap { grid-template-columns: 180px 1fr 180px; }
+           .celebration-section{
+        padding:80px 50px;
+    }
+
+    .celebration-title{
+        font-size:48px;
+        line-height:52px;
+    }
+
+    .celebration-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+@media (max-width:768px){
+
+    .srv-hero{
+        padding:80px 24px 60px;
+    }
+
+    .srv-eyebrow{
+        font-size:12px;
+        letter-spacing:.6px;
+    }
+
+    .srv-hero-title{
+        font-size:34px;
+        line-height:42px;
+        letter-spacing:-0.3px;
+        margin-bottom:24px;
+    }
+
+    .srv-hero-sub{
+        font-size:12px;
+        line-height:18px;
+        margin-bottom:24px;
+    }
+
+    .srv-hero-script{
+        font-size:26px;
+        line-height:32px;
+    }
+
+    .srv-cards-row{
+        grid-template-columns:1fr;
+    }
+
+    .srv-card{
+        height:420px;
+    }
+
+    .srv-card-label{
+        left:30px;
+        top:40px;
+        width:260px;
+    }
+
+    .srv-card-label span{
+        font-size: 21px;
+        line-height:30px;
+    }
+     .celebration-section{
+        padding:60px 20px;
+    }
+
+    .celebration-eyebrow{
+        font-size:14px;
+    }
+
+    .celebration-title{
+        font-size:32px;
+        line-height:38px;
+    }
+
+    .celebration-script{
+        font-size:26px;
+    }
+
+    .back-to-top-link{
+        font-size:13px;
+        letter-spacing:1px;
+    }
+
+    .celebration-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:6px;
+    }
+
+    .celebration-grid img{
+        height:130px;
+    }
+}
+@media(max-width:960px){
+    .srv-hero { padding: 140px 20px 40px; }
+    .srv-cards-row { grid-template-columns: 1fr; }
+    .srv-detail-wrap { grid-template-columns: 1fr; }
+    .srv-img-col { flex-direction: row; flex-wrap: wrap; }
+    .srv-img-col img { min-height: 160px; flex: 1 1 calc(50% - 2px); }
+    .srv-content-col { padding: 40px 24px; border: none; }
+    .srv-process { padding: 60px 24px; }
+    .srv-process-intro { flex-direction: column; }
+    .srv-why { grid-template-columns: 1fr; padding: 60px 24px; }
+    .srv-why-img, .srv-why-img-sm { display: none; }
+    .srv-celebration { padding: 60px 24px; }
+    .srv-cel-grid { grid-template-columns: repeat(3, 1fr); }
+        .why-section{
+        grid-template-columns:1fr;
+        padding:60px 24px;
+        gap:30px;
+        text-align:center;
+    }
+
+    /* Images Center */
+    .why-img-left,
+    .why-img-right{
+        margin:0 auto;
+        width:100%;
+        max-width:220px;
+        height:auto;
+    }
+
+    /* Order */
+    .why-img-left{
+        order:1;
+    }
+
+    .why-center{
+        order:2;
+    }
+
+    .why-img-right{
+        order:3;
+    }
+
+    /* Content */
+    .why-center{
+        width:100%;
+    }
+
+    .why-eyebrow{
+        font-size:15px;
+        margin-bottom:15px;
+    }
+
+    .why-title{
+        font-size:38px;
+        line-height:42px;
+        margin-bottom:24px;
+    }
+
+    .why-list{
+        max-width:100%;
+        margin:0 auto 30px;
+    }
+
+    .why-list li{
+        font-size:15px;
+        line-height:26px;
+        padding-left:24px;
+    }
+
+    .why-list li::before{
+        font-size:14px;
+    }
+
+    /* Watermark */
+    .why-watermark{
+        position:static;
+        display:block;
+        text-align:center;
+
+        font-size:42px;
+        line-height:1.2;
+
+        margin-top:25px;
+
+        white-space:normal;
+    }
+
+    .celebration-section{padding:60px 24px;}
+    .celebration-grid{grid-template-columns:repeat(3,1fr);}
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 — HERO INTRO
+══════════════════════════════════════════ -->
+<section class="srv-hero reveal">
+
+    <span class="srv-eyebrow"
+          data-en="Our Services"
+          data-ar="خدماتنا">
+        Our Services
+    </span>
+
+    <h1 class="srv-hero-title"
+        data-en="Luxury Weddings & Bespoke Celebrations"
+        data-ar="حفلات زفاف فاخرة واحتفالات مصممة خصيصًا">
+        Luxury Weddings &amp;<br>Bespoke Celebrations
+    </h1>
+
+    <p class="srv-hero-sub"
+       data-en="Built for those who no longer settle for ordinary"
+       data-ar="صُممت لمن لا يرضون بالعادي">
+        Built for those who no longer settle for ordinary
+    </p>
+
+    <p class="srv-hero-script"
+       data-en="and are ready to be remembered."
+       data-ar="والمستعدين لترك ذكرى لا تُنسى.">
+        and are ready to be remembered.
+    </p>
+
+</section>
+
+<!-- SERVICE CARDS -->
+
+<div class="srv-cards-row">
+
+    <div class="srv-card">
+        <img src="{% static 'main/images/sr1.jpg' %}" alt="Wedding & Event Planning">
+
+        <div class="srv-card-label">
+            <span
+                data-en="Wedding & Event Planning"
+                data-ar="تخطيط حفلات الزفاف والمناسبات">
+                Wedding &amp;<br>Event Planning
+            </span>
+        </div>
+    </div>
+
+    <div class="srv-card">
+        <img src="{% static 'main/images/sr2.jpg' %}" alt="Floral & Décor Design">
+
+        <div class="srv-card-label">
+            <span
+                data-en="Floral & Décor Design"
+                data-ar="تصميم الزهور والديكور">
+                Floral &amp; Décor Design
+            </span>
+        </div>
+    </div>
+
+    <div class="srv-card">
+        <img src="{% static 'main/images/sr3.jpg' %}" alt="VIP Hospitality">
+
+        <div class="srv-card-label">
+            <span
+                data-en="VIP Hospitality"
+                data-ar="خدمات الضيافة لكبار الشخصيات">
+                VIP Hospitality
+            </span>
+        </div>
+    </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 — DETAIL: 3 SERVICES
+     Left images col | Center content | Right images col
+══════════════════════════════════════════ -->
+<div class="srv-detail-wrap">
+
+    <!-- LEFT IMAGE COLUMN -->
+    <div class="srv-img-col">
+        <img src="{% static 'main/images/ser4.jpg' %}" alt="">
+        <img src="{% static 'main/images/ser3.jpeg' %}" alt="">
+        <img src="{% static 'main/images/sere.jpg' %}" alt="">
+    </div>
+
+    <!-- CENTER CONTENT COLUMN -->
+    <div class="srv-content-col">
+
+        <!-- WEDDING & EVENT PLANNING -->
+<div class="srv-block reveal">
+
+    <h2 class="srv-block-title"
+        data-en="Wedding & Event Planning"
+        data-ar="تخطيط حفلات الزفاف والمناسبات">
+        Wedding &amp; Event Planning
+    </h2>
+
+    <p class="srv-block-tagline"
+       data-en="Luxury Wedding Planner in the UAE"
+       data-ar="منظم حفلات زفاف فاخرة في الإمارات">
+        Luxury Wedding Planner in the UAE
+    </p>
+
+    <p class="srv-block-body"
+       data-en="Your celebration begins with a vision — we bring it to life with precision and artistry. Our wedding and event planning service is designed to guide you through every stage of the journey, from concept development and creative direction to guest management and on-site coordination, we ensure a smooth and stress-free experience."
+       data-ar="تبدأ احتفالتك برؤية مميزة، ونحن نحولها إلى واقع بدقة وإبداع. صُممت خدمة تخطيط حفلات الزفاف والمناسبات لدينا لمرافقتك في كل مرحلة من الرحلة، بدءًا من تطوير الفكرة والتوجيه الإبداعي وصولًا إلى إدارة الضيوف والتنسيق الميداني، لضمان تجربة سلسة وخالية من التوتر.">
+        Your celebration begins with a vision...
+    </p>
+
+    <p class="srv-block-sub"
+       data-en="We Specialise In:"
+       data-ar="نتخصص في:">
+        We Specialise In:
+    </p>
+
+    <ul class="srv-list">
+        <li data-en="Luxury Weddings" data-ar="حفلات زفاف فاخرة">Luxury Weddings</li>
+        <li data-en="Engagement Celebrations" data-ar="حفلات الخطوبة">Engagement Celebrations</li>
+        <li data-en="Private Gatherings" data-ar="المناسبات الخاصة">Private Gatherings</li>
+        <li data-en="Cultural and Destination Weddings" data-ar="حفلات الزفاف الثقافية وزفاف الوجهات">Cultural and Destination Weddings</li>
+    </ul>
+
+    <p class="srv-block-quote"
+       data-en="Every detail is carefully managed, allowing you to fully enjoy your celebration while we handle the complexities behind the scenes."
+       data-ar="يتم الاهتمام بكل تفصيل بعناية، مما يتيح لك الاستمتاع الكامل باحتفالك بينما نتولى جميع التفاصيل خلف الكواليس.">
+        Every detail is carefully managed...
+    </p>
+
+    <a href="{% url 'book_now' %}"
+       class="btn-srv"
+       data-en="Book a Call Now"
+       data-ar="احجز مكالمة الآن">
+        Book a Call Now
+    </a>
+
+</div>
+
+<!-- FLORAL & DÉCOR DESIGN -->
+<div class="srv-block reveal" style="padding-top:120px;">
+
+    <h2 class="srv-block-title"
+        data-en="Floral & Décor Design"
+        data-ar="تصميم الزهور والديكور">
+        Floral &amp; Décor Design
+    </h2>
+
+    <p class="srv-block-tagline"
+       data-en="Luxury Event Styling & Decoration in the UAE"
+       data-ar="تنسيق وتصميم مناسبات فاخرة في الإمارات">
+        Luxury Event Styling &amp; Decoration in the UAE
+    </p>
+
+    <p class="srv-block-body"
+       data-en="We transform spaces into immersive environments that reflect elegance, harmony, and intention. Our floral and décor services include complete venue styling — from refined table settings to full-scale event transformations. Every element is curated to create a cohesive, breathtaking experience."
+       data-ar="نحوّل المساحات إلى بيئات استثنائية تعكس الأناقة والانسجام والرؤية. تشمل خدمات الزهور والديكور لدينا تنسيق المكان بالكامل، من إعدادات الطاولات الراقية إلى التحولات الكاملة للمواقع. يتم اختيار كل عنصر بعناية لخلق تجربة متكاملة ومبهرة.">
+        We transform spaces into immersive environments...
+    </p>
+
+    <p class="srv-block-sub"
+       data-en="Our Expertise Includes:"
+       data-ar="تشمل خبراتنا:">
+        Our Expertise Includes:
+    </p>
+
+    <ul class="srv-list">
+        <li data-en="Custom Floral Arrangements" data-ar="تنسيقات زهور مخصصة">Custom Floral Arrangements</li>
+        <li data-en="Stage and Backdrop Design" data-ar="تصميم المسرح والخلفيات">Stage and Backdrop Design</li>
+        <li data-en="Table Styling & Centrepieces" data-ar="تنسيق الطاولات وقطع الوسط">Table Styling &amp; Centrepieces</li>
+        <li data-en="Luxury Décor Concepts" data-ar="مفاهيم ديكور فاخرة">Luxury Décor Concepts</li>
+        <li data-en="Venue Transformation" data-ar="تحويل وتجهيز المواقع">Venue Transformation</li>
+    </ul>
+
+    <p class="srv-block-quote"
+       data-en="Whether minimal or grand, each design is executed with attention to detail and aesthetic consistency."
+       data-ar="سواء كان التصميم بسيطًا أو فخمًا، يتم تنفيذه بعناية فائقة وبتناسق جمالي متكامل.">
+        Whether minimal or grand...
+    </p>
+
+    <a href="{% url 'book_now' %}"
+       class="btn-srv"
+       data-en="Book a Call Now"
+       data-ar="احجز مكالمة الآن">
+        Book a Call Now
+    </a>
+
+</div>
+
+<!-- VIP HOSPITALITY SERVICES -->
+<div class="srv-block reveal" style="padding-top:180px;">
+
+    <h2 class="srv-block-title"
+        data-en="VIP Hospitality Services"
+        data-ar="خدمات الضيافة لكبار الشخصيات">
+        VIP Hospitality Services
+    </h2>
+
+    <p class="srv-block-tagline"
+       data-en="Premium Guest Experience & Event Hospitality"
+       data-ar="تجربة ضيافة راقية للضيوف والمناسبات">
+        Premium Guest Experience &amp; Event Hospitality
+    </p>
+
+    <p class="srv-block-body"
+       data-en="Luxury is defined by how your guests feel. Meram Events provides end-to-end hospitality services to ensure every guest experiences comfort, elegance, and seamless flow throughout your event — from personalised experiences to sophisticated dining setups, every moment reflects your vision and standards."
+       data-ar="تُقاس الفخامة بما يشعر به ضيوفك. تقدم ميرام إيفنتس خدمات ضيافة متكاملة لضمان راحة الضيوف وأناقتهم وسلاسة تجربتهم طوال المناسبة، من التجارب الشخصية إلى ترتيبات الضيافة الراقية، بحيث تعكس كل لحظة رؤيتك ومعاييرك.">
+        Luxury is defined by how your guests feel...
+    </p>
+
+    <p class="srv-block-sub"
+       data-en="Our Hospitality Services Include:"
+       data-ar="تشمل خدمات الضيافة لدينا:">
+        Our Hospitality Services Include:
+    </p>
+
+    <ul class="srv-list">
+        <li data-en="VIP Guest Management" data-ar="إدارة كبار الشخصيات">VIP Guest Management</li>
+        <li data-en="Luxury Dining Setups" data-ar="ترتيبات ضيافة فاخرة">Luxury Dining Setups</li>
+        <li data-en="Welcome Arrangements" data-ar="ترتيبات الاستقبال">Welcome Arrangements</li>
+        <li data-en="On-Ground Coordination" data-ar="التنسيق الميداني">On-Ground Coordination</li>
+        <li data-en="Event Flow Management" data-ar="إدارة سير الفعالية">Event Flow Management</li>
+    </ul>
+
+    <p class="srv-block-quote"
+       data-en="We focus on creating a refined atmosphere where every guest feels valued and every moment unfolds effortlessly."
+       data-ar="نركز على خلق أجواء راقية يشعر فيها كل ضيف بالتقدير، وتسير فيها كل لحظة بسلاسة وأناقة.">
+        We focus on creating a refined atmosphere...
+    </p>
+
+    <a href="{% url 'book_now' %}"
+       class="btn-srv"
+       data-en="Book a Call Now"
+       data-ar="احجز مكالمة الآن">
+        Book a Call Now
+    </a>
+
+</div>
+
+    </div><!-- /center col -->
+
+    <!-- RIGHT IMAGE COLUMN -->
+    <div class="srv-img-col">
+        <img src="{% static 'main/images/sers.jpeg' %}" alt="">
+        <img src="{% static 'main/images/ser1.jpeg' %}" alt="">
+        <img src="{% static 'main/images/ser2.JPG' %}" alt="">
+    </div>
+
+</div><!-- /srv-detail-wrap -->
+
+<!-- SCROLLING MARQUEE TEXT STRIP -->
+ <section class="srv-strip reveal">
+
+<div class="srv-marquee-strip">
+    <div class="srv-marquee-track">
+
+        <span class="srv-marquee-item"
+              data-en="A Collection of Moments"
+              data-ar="مجموعة من اللحظات">
+            A Collection of Moments
+        </span>
+        <span class="srv-marquee-sep">·</span>
+
+        <span class="srv-marquee-item"
+              data-en="Beautifully Brought to Life"
+              data-ar="أُحييت بجمال وإتقان">
+            Beautifully Brought to Life
+        </span>
+        <span class="srv-marquee-sep">·</span>
+
+        <span class="srv-marquee-item"
+              data-en="Designed with Intention"
+              data-ar="صُممت بعناية وهدف">
+            Designed with Intention
+        </span>
+        <span class="srv-marquee-sep">·</span>
+
+        <span class="srv-marquee-item"
+              data-en="Where Every Detail Matters"
+              data-ar="حيث لكل تفصيل أهمية">
+            Where Every Detail Matters
+        </span>
+        <span class="srv-marquee-sep">·</span>
+
+        <!-- Repeat for seamless loop -->
+
+        <span class="srv-marquee-item"
+              data-en="A Collection of Moments"
+              data-ar="مجموعة من اللحظات">
+            A Collection of Moments
+        </span>
+        <span class="srv-marquee-sep">·</span>
+
+        <span class="srv-marquee-item"
+              data-en="Beautifully Brought to Life"
+              data-ar="أُحييت بجمال وإتقان">
+            Beautifully Brought to Life
+        </span>
+        <span class="srv-marquee-sep">·</span>
+
+        <span class="srv-marquee-item"
+              data-en="Designed with Intention"
+              data-ar="صُممت بعناية وهدف">
+            Designed with Intention
+        </span>
+        <span class="srv-marquee-sep">·</span>
+
+        <span class="srv-marquee-item"
+              data-en="Where Every Detail Matters"
+              data-ar="حيث لكل تفصيل أهمية">
+            Where Every Detail Matters
+        </span>
+        <span class="srv-marquee-sep">·</span>
+
+        <!-- Duplicate again -->
+
+        <span class="srv-marquee-item"
+              data-en="A Collection of Moments"
+              data-ar="مجموعة من اللحظات">
+            A Collection of Moments
+        </span>
+        <span class="srv-marquee-sep">·</span>
+
+        <span class="srv-marquee-item"
+              data-en="Beautifully Brought to Life"
+              data-ar="أُحييت بجمال وإتقان">
+            Beautifully Brought to Life
+        </span>
+        <span class="srv-marquee-sep">·</span>
+
+        <span class="srv-marquee-item"
+              data-en="Designed with Intention"
+              data-ar="صُممت بعناية وهدف">
+            Designed with Intention
+        </span>
+        <span class="srv-marquee-sep">·</span>
+
+        <span class="srv-marquee-item"
+              data-en="Where Every Detail Matters"
+              data-ar="حيث لكل تفصيل أهمية">
+            Where Every Detail Matters
+        </span>
+        <span class="srv-marquee-sep">·</span>
+
+    </div>
+</div></section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 4 — OUR PROCESS
+══════════════════════════════════════════ -->
+<section class="srv-process reveal">
+
+    <h2 class="srv-process-title"
+        data-en="Our Process"
+        data-ar="آلية عملنا">
+        Our Process
+    </h2>
+
+    <div class="srv-process-intro">
+        <img class="srv-process-intro-img"
+             src="{% static 'main/images/serr.JPG' %}"
+             alt="Our process">
+
+        <p class="srv-process-intro-text"
+           data-en="A seamless journey from vision to execution. We follow a structured and personalised process to ensure every event is exactly as you imagined it — and beyond."
+           data-ar="رحلة سلسة تبدأ من الفكرة وتنتهي بالتنفيذ. نتبع عملية منظمة ومخصصة لضمان أن يكون كل حدث كما تخيلته تماماً وأكثر.">
+            A seamless journey from vision to execution.<br>
+            We follow a structured and personalised process to ensure every event is exactly as you imagined it — and beyond.
+        </p>
+    </div>
+
+    <div class="srv-process-steps">
+
+        <!-- STEP 1 -->
+        <div class="srv-step">
+            <span class="srv-step-num"
+                  data-en="01 Consultation"
+                  data-ar="01 الاستشارة">
+                01 Consultation
+            </span>
+
+            <div class="srv-step-title"
+                 data-en="Consultation"
+                 data-ar="الاستشارة">
+                Consultation
+            </div>
+
+            <p class="srv-step-body"
+               data-en="Understanding your vision, preferences, and expectations"
+               data-ar="فهم رؤيتك وتفضيلاتك وتوقعاتك بشكل كامل">
+                Understanding your vision, preferences, and expectations
+            </p>
+        </div>
+
+        <span class="srv-step-arrow">↓</span>
+
+        <!-- STEP 2 -->
+        <div class="srv-step">
+            <span class="srv-step-num"
+                  data-en="02 Concept & Design"
+                  data-ar="02 الفكرة والتصميم">
+                02 Concept &amp; Design
+            </span>
+
+            <div class="srv-step-title"
+                 data-en="Concept & Design"
+                 data-ar="الفكرة والتصميم">
+                Concept &amp; Design
+            </div>
+
+            <p class="srv-step-body"
+               data-en="Developing a creative direction tailored to your event"
+               data-ar="ابتكار رؤية إبداعية مصممة خصيصاً لمناسبتك">
+                Developing a creative direction tailored to your event
+            </p>
+        </div>
+
+        <span class="srv-step-arrow">↓</span>
+
+        <!-- STEP 3 -->
+        <div class="srv-step">
+            <span class="srv-step-num"
+                  data-en="03 Planning & Coordination"
+                  data-ar="03 التخطيط والتنسيق">
+                03 Planning &amp; Coordination
+            </span>
+
+            <div class="srv-step-title"
+                 data-en="Planning & Coordination"
+                 data-ar="التخطيط والتنسيق">
+                Planning &amp; Coordination
+            </div>
+
+            <p class="srv-step-body"
+               data-en="Managing logistics, suppliers, and guest experience"
+               data-ar="إدارة الخدمات اللوجستية والموردين وتجربة الضيوف">
+                Managing logistics, suppliers, and guest experience
+            </p>
+        </div>
+
+        <span class="srv-step-arrow">↓</span>
+
+        <!-- STEP 4 -->
+        <div class="srv-step">
+            <span class="srv-step-num"
+                  data-en="04 Execution"
+                  data-ar="04 التنفيذ">
+                04 Execution
+            </span>
+
+            <div class="srv-step-title"
+                 data-en="Execution"
+                 data-ar="التنفيذ">
+                Execution
+            </div>
+
+            <p class="srv-step-body"
+               data-en="Flawless on-site coordination and event delivery"
+               data-ar="تنسيق وتنفيذ مثالي للمناسبة بكل تفاصيلها">
+                Flawless on-site coordination and event delivery
+            </p>
+        </div>
+
+        <span class="srv-step-arrow">↓</span>
+
+        <a href="{% url 'book_now' %}"
+           class="btn-srv"
+           style="margin-top:10px;"
+           data-en="Book a Call Now"
+           data-ar="احجز مكالمة الآن">
+            Book a Call Now
+        </a>
+
+    </div>
+
+    <div class="srv-process-bottom">
+        <img src="{% static 'main/images/sere.jpg' %}" alt="">
+    </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 5 — WHY CHOOSE MERAM EVENTS
+══════════════════════════════════════════ -->
+<!-- ===== WHY CHOOSE MERAM EVENTS ===== -->
+<section class="why-section reveal">
+    <img class="why-img-left"
+         src="{% static 'main/images/os4.jpeg' %}"
+         alt="Luxury event">
+    
+    <div class="why-center">
+
+        <p class="why-eyebrow"
+           data-en="Why Choose Meram Events"
+           data-ar="لماذا تختار ميرام إيفنتس">
+            Why Choose Meram Events
+        </p>
+
+        <h2 class="why-title"
+            data-en="A Seamless Experience Designed Around You"
+            data-ar="تجربة متكاملة مصممة خصيصاً من أجلك">
+            A Seamless Experience<br>Designed Around You
+        </h2>
+
+        <ul class="why-list">
+
+            <li
+                data-en="Personalized concepts tailored to your vision"
+                data-ar="أفكار مخصصة تعكس رؤيتك الفريدة">
+                Personalized concepts tailored to your vision
+            </li>
+
+            <li
+                data-en="Full-service planning from start to finish"
+                data-ar="تخطيط متكامل من البداية وحتى النهاية">
+                Full-service planning from start to finish
+            </li>
+
+            <li
+                data-en="Refined aesthetic with attention to detail"
+                data-ar="تصاميم راقية مع اهتمام دقيق بكل التفاصيل">
+                Refined aesthetic with attention to detail
+            </li>
+
+            <li
+                data-en="Trusted execution at luxury venues"
+                data-ar="تنفيذ احترافي في أرقى مواقع الفعاليات">
+                Trusted execution at luxury venues
+            </li>
+
+            <li
+                data-en="Dedicated team ensuring flawless coordination"
+                data-ar="فريق متخصص يضمن تنسيقاً مثالياً دون أخطاء">
+                Dedicated team ensuring flawless coordination
+            </li>
+
+        </ul>
+
+        <a href="{% url 'book_now' %}"
+           class="btn-primary"
+           data-en="Plan Your Event"
+           data-ar="خطط لفعاليتك">
+            Plan Your Event
+        </a>
+
+    </div>
+    <img class="why-img-right"
+         src="{% static 'main/images/osb1.JPG' %}"
+         alt="Event detail">
+    <!-- Script watermark -->
+    <div class="why-watermark">Meram Events</div>
+</section>
+
+<!-- ===== CREATE A CELEBRATION ===== -->
+<section class="celebration-section reveal">
+
+    <span class="celebration-eyebrow"
+          data-en="You Know, It's Time To"
+          data-ar="أنت تعلم، حان الوقت لـ">
+        You Know, It's Time To
+    </span>
+
+    <h2 class="celebration-title"
+        data-en="Create a Celebration That Reflects<br>Your Story Like Never Before."
+        data-ar="أنشئ احتفالًا يعكس<br>قصتك كما لم يحدث من قبل.">
+        Create a Celebration That Reflects<br>
+        Your Story Like Never Before.
+    </h2>
+
+    <p class="celebration-script"
+       data-en="Let's create your moment"
+       data-ar="لنصنع لحظتك">
+        Let's create your moment
+    </p>
+
+    <a href="#page-top"
+       class="back-to-top-link"
+       data-en="Back to Top"
+       data-ar="العودة للأعلى"
+       onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+        Back to Top
+    </a>
+
+
+    <!-- Images from admin panel -->
+    <div class="celebration-grid">
+        {% if celebration_images %}
+            {% for img in celebration_images %}
+            <img src="{{ img.image.url }}" alt="{{ img.title }}" loading="lazy">
+            {% endfor %}
+        {% else %}
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80" alt="">
+            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="">
+            <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&q=80" alt="">
+            <img src="https://images.unsplash.com/photo-1478146059778-26028b07395a?w=400&q=80" alt="">
+            <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&q=80" alt="">
+            <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&q=80" alt="">
+        {% endif %}
+    </div>
+
+</section>
+
+{% endblock %}

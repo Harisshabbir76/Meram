@@ -1,0 +1,661 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Meram Events - Luxury Event Planning{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600&family=Pinyon+Script&family=Hanken+Grotesk:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: "Shabby Chic";
+            src: url("/static/main/fonts/shabby.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: "charlotte";
+            src: url("/static/main/fonts/charlotte.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: "FreightDisp Pro";
+            src: url("/static/main/fonts/FD.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        :root {
+            --cream:       #F5F0E8;
+            --cream-dark:  #EDE6D6;
+            --cream-mid:   #E8DFD0;
+            --dark:        #1A1612;
+            --dark-mid:    #2C2420;
+            --gold:        #C9A96E;
+            --gold-light:  #D4B896;
+            --text-dark:   #2C2420;
+            --text-mid:    #5C4F42;
+            --text-light:  #8C7B6B;
+            --white:       #FFFFFF;
+            --font-display:'Cormorant Garamond', serif;
+            --font-body:   'Hanken Grotesk', 'Montserrat', sans-serif;
+            --font-arabic: 'Noto Sans Arabic', sans-serif;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:var(--font-body);background:var(--white);color:var(--text-dark);font-size:14px;line-height:1.7;}
+
+        /* Arabic body font switch */
+        html[lang="ar"] body,
+        html[dir="rtl"] body { font-family: var(--font-arabic), sans-serif; }
+
+        /* ======== NAVBAR ======== */
+        .navbar{
+            position:fixed;top:0;left:0;width:100%;z-index:1000;
+            height:110px;padding:0 50px;
+            display:flex;align-items:center;justify-content:space-between;
+            transition:height 0.4s ease, box-shadow 0.4s ease;
+            background:#FFFFFF;
+            box-shadow:0 1px 0 rgba(0,0,0,0.07);
+        }
+        .navbar.scrolled{ height:76px; box-shadow:0 2px 20px rgba(0,0,0,0.10); }
+
+        .nav-left{ display:flex;gap:32px;align-items:center;flex:1; }
+        .nav-left .nav-link,
+        .nav-left .nav-dropdown-toggle{
+            font-family:'Hanken Grotesk',sans-serif;
+            font-weight:300;font-size:15px;line-height:20px;letter-spacing:0.9px;
+            color:#311F13;text-transform:uppercase;text-decoration:none;
+            transition:opacity 0.3s ease;cursor:pointer;
+        }
+        .nav-left .nav-link:hover,
+        .nav-left .nav-dropdown-toggle:hover{ opacity:0.7; }
+        .nav-left .nav-link.active{ color:#311F13; }
+
+        .logo-img{ width:59.46px;height:56px;object-fit:contain;display:block; }
+
+        /* Dropdown */
+        .nav-dropdown{position:relative;}
+        .nav-dropdown-toggle{display:flex;align-items:center;gap:5px;}
+        .nav-dropdown-toggle .caret{font-size:15px;opacity:0.6;transition:transform 0.3s;}
+        .nav-dropdown:hover .caret{transform:rotate(180deg);}
+        .nav-dropdown-menu{
+            display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);
+            background:#000000;border-top:2px solid var(--text-dark);
+            min-width:190px;box-shadow:0 8px 24px rgba(0,0,0,0.15);
+        }
+        .nav-dropdown:hover .nav-dropdown-menu{display:block;}
+        .nav-dropdown-menu a{
+            display:block;padding:11px 22px;color:#FFFFFF;text-decoration:none;
+            font-family:'Hanken Grotesk',sans-serif;
+            font-size:11px;letter-spacing:1.8px;text-transform:uppercase;font-weight:300;
+            transition:all 0.2s;border-bottom:1px solid rgba(255,255,255,0.08);
+        }
+        .nav-dropdown-menu a:last-child{border-bottom:none;}
+        .nav-dropdown-menu a:hover{color:#000;background:var(--cream);}
+
+        /* Center logo */
+        .nav-center{
+            position:absolute;left:50%;transform:translateX(-50%);
+            display:flex;flex-direction:column;align-items:center;text-decoration:none;
+        }
+        .nav-monogram{ width:59.46px;height:56px;display:flex;align-items:center;justify-content:center; }
+
+        /* Right side */
+        .nav-right{display:flex;gap:16px;align-items:center;justify-content:flex-end;flex:1;}
+        .nav-social-icons{display:flex;gap:14px;align-items:center;}
+        .nav-social-icons a{
+            color:rgba(44,36,32,0.6);font-size:18px;
+            text-decoration:none;transition:opacity 0.3s;
+        }
+        .nav-social-icons a:hover{opacity:0.7;color:rgba(44,36,32,0.6);}
+        .nav-divider{width:1px;height:16px;background:rgba(44,36,32,0.15);}
+        .nav-book-link{
+            color:#311F13;text-decoration:underline;
+            font-family:'Hanken Grotesk',sans-serif;
+            font-weight:300;font-size:15px;line-height:20px;
+            letter-spacing:0;text-transform:uppercase;
+            transition:opacity 0.3s ease;
+        }
+        .nav-book-link:hover{opacity:0.7;color:#311F13;}
+
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+        .hamburger span{display:block;width:22px;height:1.5px;background:var(--text-dark);transition:all 0.3s;}
+
+        /* ======== BUTTONS ======== */
+        .btn-primary{
+            display:inline-block;border:1px solid var(--text-dark);
+            color:var(--text-dark);padding:10px 26px;
+            font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;
+            text-decoration:none;font-family:var(--font-body);font-weight:500;
+            transition:all 0.3s;background:transparent;cursor:pointer;
+        }
+        .btn-primary:hover{background:var(--text-dark);color:var(--white);}
+        .btn-light{
+            display:inline-block;border:1px solid rgba(255,255,255,0.6);
+            color:var(--white);padding:10px 26px;
+            font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;
+            text-decoration:none;font-family:var(--font-body);font-weight:500;
+            transition:all 0.3s;background:transparent;cursor:pointer;
+        }
+        .btn-light:hover{background:var(--white);color:var(--dark);}
+        .btn-gold{
+            display:inline-block;border:1px solid var(--gold);
+            color:var(--gold);padding:10px 26px;
+            font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;
+            text-decoration:none;font-family:var(--font-body);font-weight:500;
+            transition:all 0.3s;background:transparent;cursor:pointer;
+        }
+        .btn-gold:hover{background:var(--gold);color:var(--dark);}
+
+        /* ======== SECTION HELPERS ======== */
+        .section-eyebrow{
+            font-family:var(--font-body);font-size:9.5px;letter-spacing:4px;
+            text-transform:uppercase;color:var(--text-light);margin-bottom:14px;display:block;
+        }
+        .section-title{
+            font-family:var(--font-display);font-size:clamp(26px,4vw,46px);
+            font-weight:400;line-height:1.2;color:var(--text-dark);
+        }
+        .section-body{
+            font-family:var(--font-body);font-size:11.5px;letter-spacing:0.8px;
+            color:var(--text-mid);line-height:2;max-width:480px;
+        }
+
+        /* ======== PAGE HEADER ======== */
+        .page-header{
+            height:70vh;background:var(--dark);
+            display:flex;align-items:center;justify-content:center;
+            text-align:center;position:relative;overflow:hidden;padding-top:110px;
+        }
+        .page-header-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.4;}
+        .page-header-content{position:relative;z-index:1;}
+        .page-header-title{
+            font-family:var(--font-display);font-size:clamp(34px,6vw,70px);
+            font-weight:300;color:var(--white);letter-spacing:6px;text-transform:uppercase;
+        }
+        .page-header-subtitle{
+            font-family:var(--font-display);font-style:italic;font-size:18px;
+            color:var(--gold-light);margin-top:8px;letter-spacing:2px;
+        }
+
+        /* ======== FORMS ======== */
+        .form-control{
+            width:100%;padding:12px 16px;
+            border:1px solid rgba(0,0,0,0.11);background:var(--white);
+            font-family:var(--font-body);font-size:13px;color:var(--text-dark);
+            outline:none;transition:border-color 0.3s;border-radius:0;-webkit-appearance:none;
+        }
+        .form-control:focus{border-color:var(--text-dark);}
+        .form-label{
+            display:block;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;
+            color:var(--text-mid);margin-bottom:7px;font-weight:500;
+        }
+        .form-group{margin-bottom:20px;}
+        .errorlist{list-style:none;color:#c0392b;font-size:11px;margin-top:4px;}
+
+        /* ======== MESSAGES ======== */
+        .messages-container{position:fixed;top:120px;right:20px;z-index:9999;}
+        .alert{
+            padding:14px 24px;margin-bottom:10px;font-size:12px;
+            border-left:3px solid var(--gold);background:var(--white);
+            box-shadow:0 4px 20px rgba(0,0,0,0.12);font-family:var(--font-body);
+        }
+        .alert-success{border-color:#5a8a5a;}
+
+        /* ======== REVEAL ======== */
+        .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.75s ease,transform 0.75s ease;}
+        .reveal.visible{opacity:1;transform:translateY(0);}
+
+        /* ======================================================
+           FOOTER — exact match to your provided design
+        ====================================================== */
+        .footer{
+            background:#EAE7E1;
+            padding:0;margin:0;width:100%;
+        }
+        .footer-top{
+            max-width:1920px;margin:auto;
+            padding:42px 120px;
+            display:grid;
+            grid-template-columns:180px 280px 120px 120px 180px;
+            align-items:start;
+            column-gap:60px;
+            justify-content:center;
+        }
+        .footer-brand img{
+            width:130px;height:auto;display:block;
+            filter:invert(1) brightness(0);
+        }
+        .footer-desc-wrap p{
+            margin:0;
+            font-family:'Hanken Grotesk',sans-serif;
+            font-size:13px;line-height:1.8;font-weight:300;
+            letter-spacing:0.6px;color:#423f3f;text-transform:uppercase;
+        }
+        .footer-menu{display:flex;flex-direction:column;gap:12px;}
+        .footer-menu a{
+            text-decoration:none;
+            font-family:'Hanken Grotesk',sans-serif;
+            font-size:13px;font-weight:300;
+            color:#423f3f;text-transform:uppercase;transition:opacity 0.3s;
+        }
+        .footer-menu a:hover{opacity:0.7;}
+        .footer-social{display:flex;flex-direction:column;align-items:flex-start;gap:14px;}
+        .footer-social-label{
+            font-family:'Hanken Grotesk',sans-serif;
+            font-size:13px;font-weight:300;color:#423f3f;text-transform:uppercase;
+        }
+        .footer-icons{display:flex;gap:10px;align-items:center;}
+        .footer-icons a{color:#000;font-size:15px;text-decoration:none;transition:opacity 0.3s;}
+        .footer-icons a:hover{opacity:0.6;}
+
+        /* ===== LANGUAGE DROPDOWN — footer-lang-btn ===== */
+        .footer-lang-wrap{
+            position:relative;
+            display:inline-block;
+        }
+        .footer-lang-btn{
+            width:90px;height:26px;
+            border:1px solid #7B746E;
+            background:transparent;
+            font-family:'Hanken Grotesk',sans-serif;
+            font-size:13px;font-weight:300;
+            color:#423f3f;cursor:pointer;
+            display:flex;align-items:center;justify-content:space-between;
+            padding:0 8px;
+            transition:background 0.2s, color 0.2s;
+            gap:6px;
+        }
+        .footer-lang-btn:hover{background:rgba(0,0,0,0.05);}
+        .footer-lang-caret{font-size:8px;line-height:1;transition:transform 0.3s;}
+
+        /* Dropdown menu — opens ABOVE button */
+        .footer-lang-menu{
+            display:none;
+            position:absolute;
+            bottom:calc(100% + 4px);
+            left:0;
+            width:100%;
+            background:#FFFFFF;
+            border:1px solid #BEB8B1;
+            box-shadow:0 -4px 16px rgba(0,0,0,0.10);
+            z-index:200;
+        }
+        /* Show on wrap hover OR when btn has class open */
+        .footer-lang-wrap:hover .footer-lang-menu,
+        .footer-lang-wrap.open .footer-lang-menu{
+            display:block;
+        }
+        .footer-lang-wrap:hover .footer-lang-caret,
+        .footer-lang-wrap.open .footer-lang-caret{
+            transform:rotate(180deg);
+        }
+        .footer-lang-menu button{
+            display:block;width:100%;padding:9px 12px;
+            text-align:left;background:none;border:none;
+            font-family:'Hanken Grotesk',sans-serif;
+            font-size:12px;font-weight:300;color:#423f3f;
+            text-transform:uppercase;letter-spacing:0.5px;
+            cursor:pointer;border-bottom:1px solid rgba(0,0,0,0.06);
+            transition:background 0.2s;
+        }
+        .footer-lang-menu button:last-child{border-bottom:none;}
+        .footer-lang-menu button:hover{background:var(--cream-dark);}
+        .footer-lang-menu button.active{font-weight:600;color:#311F13;}
+
+        /* RTL: flip menu to right-align */
+        html[dir="rtl"] .footer-lang-menu{ left:auto;right:0;text-align:right; }
+        html[dir="rtl"] .footer-lang-menu button{ text-align:right; }
+
+        /* Footer bottom */
+        .footer-bottom{
+            border-top:1px solid #BEB8B1;
+            text-align:center;padding:12px 0;
+            font-family:'Hanken Grotesk',sans-serif;
+            font-size:13px;font-weight:300;
+            color:#423f3f;text-transform:uppercase;
+        }
+
+        /* RTL footer adjustments */
+        html[dir="rtl"] .footer-top{ direction:rtl; }
+        html[dir="rtl"] .footer-social{ align-items:flex-end; }
+
+        /* Mobile */
+        @media(max-width:960px){
+            .navbar{height:70px;padding:0 20px;}
+            .nav-left,.nav-social-icons,.nav-divider,.nav-book-link{display:none;}
+            .hamburger{display:flex;}
+        }
+        @media(max-width:992px){
+            .footer-top{
+                grid-template-columns:1fr;gap:25px;
+                padding:40px 25px;text-align:center;
+            }
+            .footer-brand img{margin:auto;}
+            .footer-social{align-items:center;}
+            html[dir="rtl"] .footer-social{align-items:center;}
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar {% block navbar_class %}{% endblock %}" id="navbar">
+    <div class="nav-left">
+        <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" data-en="About" data-ar="حول">About</a>
+        <div class="nav-dropdown">
+            <span class="nav-dropdown-toggle">
+                <span data-en="Services" data-ar="الخدمات">Services</span>
+                <span class="caret">▾</span>
+            </span>
+            <div class="nav-dropdown-menu">
+                <a href="{% url 'services' %}" data-en="All Services" data-ar="جميع الخدمات">All Services</a>
+                <a href="{% url 'corporate_events' %}" data-en="Corporate Events" data-ar="فعاليات الشركات">Corporate Events</a>
+                <a href="{% url 'other_services' %}" data-en="Other Services" data-ar="خدمات أخرى">Other Services</a>
+            </div>
+        </div>
+        <a href="{% url 'gallery' %}" class="nav-link {% if request.resolver_match.url_name == 'gallery' %}active{% endif %}" data-en="Gallery" data-ar="المعرض">Gallery</a>
+    </div>
+
+    <!-- CENTER LOGO -->
+<a href="{% url 'home' %}" class="nav-center" id="nav-logo">
+    <div class="nav-monogram">
+        <img src="{% static 'main/images/logo.png' %}"
+             alt="Meram Events Logo"
+             class="logo-img">
+    </div>
+</a>
+
+    <div class="nav-right">
+        <div class="nav-social-icons">
+            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="mailto:info@meramevents.com" title="Email"><i class="fa-regular fa-envelope"></i></a>
+        </div>
+        <div class="nav-divider"></div>
+        <a href="{% url 'book_now' %}" class="nav-book-link" data-en="Book Now" data-ar="احجز الآن">Book Now</a>
+        <div class="hamburger" onclick="toggleMobileMenu()">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu" style="display:none;position:fixed;inset:0;background:rgba(22,18,14,0.98);z-index:998;padding:90px 36px 40px;flex-direction:column;gap:28px;">
+    <a href="{% url 'home' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:16px;letter-spacing:3px;text-transform:uppercase;" data-en="Home" data-ar="الرئيسية">Home</a>
+    <a href="{% url 'about' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:16px;letter-spacing:3px;text-transform:uppercase;" data-en="About" data-ar="حول">About</a>
+    <a href="{% url 'services' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:16px;letter-spacing:3px;text-transform:uppercase;" data-en="Services" data-ar="الخدمات">Services</a>
+    <a href="{% url 'gallery' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:16px;letter-spacing:3px;text-transform:uppercase;" data-en="Gallery" data-ar="المعرض">Gallery</a>
+    <a href="{% url 'faq' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:16px;letter-spacing:3px;text-transform:uppercase;" data-en="FAQ" data-ar="أسئلة شائعة">FAQ</a>
+    <a href="{% url 'contact' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:16px;letter-spacing:3px;text-transform:uppercase;" data-en="Contact" data-ar="اتصل بنا">Contact</a>
+    <a href="{% url 'book_now' %}" class="btn-gold" style="text-align:center;margin-top:16px;" data-en="Book Now" data-ar="احجز الآن">Book Now</a>
+    <button onclick="toggleMobileMenu()" style="position:absolute;top:28px;right:28px;background:none;border:none;color:white;font-size:22px;cursor:pointer;">✕</button>
+</div>
+
+<!-- MESSAGES -->
+{% if messages %}
+<div class="messages-container">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% block content %}{% endblock %}
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="footer-top">
+
+        <!-- Logo -->
+        <div class="footer-brand">
+            <img src="{% static 'main/images/logo2.png' %}" alt="Meram Events">
+        </div>
+
+        <!-- Description -->
+        <div class="footer-desc-wrap">
+            <p data-en="MERAM EVENTS IS A LUXURY EVENT PLANNING AND DESIGN HOUSE DEDICATED TO CRAFTING REFINED WEDDINGS, ENGAGEMENTS, AND PRIVATE GATHERINGS ACROSS THE UAE."
+               data-ar="ميرام إيفنتس هي دار تخطيط فعاليات فاخرة متخصصة في تنظيم حفلات الأعراس والخطوبة والتجمعات الخاصة الراقية في الإمارات العربية المتحدة.">
+                MERAM EVENTS IS A LUXURY EVENT PLANNING AND DESIGN HOUSE DEDICATED TO CRAFTING REFINED WEDDINGS, ENGAGEMENTS, AND PRIVATE GATHERINGS ACROSS THE UAE.
+            </p>
+        </div>
+
+        <!-- Menu col 1 -->
+        <div class="footer-menu">
+            <a href="{% url 'about' %}" data-en="• ABOUT US" data-ar="• من نحن">• ABOUT US</a>
+            <a href="{% url 'services' %}" data-en="• SERVICES" data-ar="• الخدمات">• SERVICES</a>
+            <a href="{% url 'gallery' %}" data-en="• GALLERY" data-ar="• المعرض">• GALLERY</a>
+        </div>
+
+        <!-- Menu col 2 -->
+        <div class="footer-menu">
+            <a href="{% url 'faq' %}" data-en="• FAQ" data-ar="• أسئلة شائعة">• FAQ</a>
+            <a href="{% url 'contact' %}" data-en="• CONTACT US" data-ar="• اتصل بنا">• CONTACT US</a>
+        </div>
+
+        <!-- Social + Language -->
+        <div class="footer-social">
+            <div class="footer-icons">
+                <span class="footer-social-label" data-en="FOLLOW US ON:" data-ar="تابعنا على:">FOLLOW US ON:</span>
+                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" title="Facebook"><i class="fab fa-facebook-square"></i></a>
+            </div>
+
+            <!-- ===== LANGUAGE DROPDOWN ===== -->
+            <div class="footer-lang-wrap" id="lang-wrap">
+                <button class="footer-lang-btn" onclick="toggleLangMenu(event)">
+                    <span id="lang-label">ENGLISH</span>
+                    <span>▲</span>
+                </button>
+                <div class="footer-lang-menu">
+                    <button onclick="setLang('en')" class="active" id="lang-en-btn">🇬🇧 ENGLISH</button>
+                    <button onclick="setLang('ar')" id="lang-ar-btn">🇦🇪 عربي</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <span data-en="© 2026 MERAM EVENTS" data-ar="© 2026 ميرام إيفنتس">© 2026 MERAM EVENTS</span>
+    </div>
+</footer>
+
+<script>
+/* =============================================
+   NAVBAR SCROLL
+============================================= */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* =============================================
+   MOBILE MENU
+============================================= */
+function toggleMobileMenu(){
+    const m = document.getElementById('mobile-menu');
+    m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+}
+
+/* =============================================
+   LANGUAGE DROPDOWN TOGGLE (click to open/close)
+============================================= */
+function toggleLangMenu(e){
+    e.stopPropagation();
+    const wrap = document.getElementById('lang-wrap');
+    wrap.classList.toggle('open');
+}
+// Close when clicking outside
+document.addEventListener('click', function(e){
+    const wrap = document.getElementById('lang-wrap');
+    if(wrap && !wrap.contains(e.target)){
+        wrap.classList.remove('open');
+    }
+});
+
+/* =============================================
+   FULL BILINGUAL TRANSLATION SYSTEM
+============================================= */
+// Translation dictionary: English → Arabic
+const translations = {
+    // Navbar
+    'About':               'حول',
+    'Services':            'الخدمات',
+    'Gallery':             'المعرض',
+    'All Services':        'جميع الخدمات',
+    'Corporate Events':    'فعاليات الشركات',
+    'Other Services':      'خدمات أخرى',
+    'Book Now':            'احجز الآن',
+    'Home':                'الرئيسية',
+    'Contact':             'اتصل بنا',
+    'FAQ':                 'أسئلة شائعة',
+
+    // Footer
+    'FOLLOW US ON:':       'تابعنا على:',
+    '© 2026 MERAM EVENTS': '© 2026 ميرام إيفنتس',
+    'MERAM EVENTS IS A LUXURY EVENT PLANNING AND DESIGN HOUSE DEDICATED TO CRAFTING REFINED WEDDINGS, ENGAGEMENTS, AND PRIVATE GATHERINGS ACROSS THE UAE.':
+        'ميرام إيفنتس هي دار تخطيط فعاليات فاخرة متخصصة في تنظيم حفلات الأعراس والخطوبة والتجمعات الخاصة الراقية في الإمارات العربية المتحدة.',
+    '• ABOUT US':          '• من نحن',
+    '• SERVICES':          '• الخدمات',
+    '• GALLERY':           '• المعرض',
+    '• FAQ':               '• أسئلة شائعة',
+    '• CONTACT US':        '• اتصل بنا',
+
+    // Home page
+    'Where Refined Celebrations Come to Life': 'حيث تجسّد الاحتفالات الراقية',
+    'Plan Your Event':     'خطط لفعاليتك',
+    'Book a Consultation': 'احجز استشارة',
+    'View Gallery':        'مشاهدة المعرض',
+    'Explore Our Services':'استكشف خدماتنا',
+    'Crafting Experiences Beyond Expectations': 'إبداع تجارب تفوق التوقعات',
+    'A Seamless Experience Designed Around You': 'تجربة متكاملة مصممة حول رغباتك',
+    'Wedding & Event Planning':   'تخطيط الأعراس والفعاليات',
+    'Floral & Decor Design':      'تصميم الزهور والديكور',
+    'VIP Hospitality':            'الضيافة الفاخرة',
+    'Why Choose Meram Events':    'لماذا تختار ميرام إيفنتس',
+    'Create a Celebration That Reflects Your Story Like Never Before.':
+        'أنشئ احتفالًا يعكس قصتك كما لم يحدث من قبل.',
+    "Let's create your moment":  'دعنا نصنع لحظتك',
+    'You Know, It\'s Time To':   'حان الوقت',
+
+    // About page
+    "We Don't Just Plan Events. We Create Experiences That Stay With You.":
+        'لا نخطط فحسب، نصنع تجارب تبقى معك.',
+    "At Meram Events, every celebration begins with a story — yours.":
+        'في ميرام إيفنتس، كل احتفال يبدأ بقصة — قصتك.',
+    'A Thoughtful Approach to Every Detail.': 'نهج متأنٍّ لكل تفصيلة.',
+    'Designed with Intention, Delivered with Precision.':
+        'مصمم بقصد، منفَّذ بدقة.',
+    'Trusted Across the UAE\'s Leading Venues': 'موثوق في أبرز أماكن الإمارات',
+    'At Meram Events, Trust Isn\'t Optional — It\'s the Foundation of Everything We Do.':
+        'في ميرام إيفنتس، الثقة ليست خيارًا — إنها أساس كل ما نقوم به.',
+    'More Than Planning, A Complete Experience.': 'أكثر من تخطيط، تجربة متكاملة.',
+    'Book a Call Now':     'احجز مكالمة الآن',
+
+    // Contact page
+    "Let's Begin Something Beautiful": 'لنبدأ شيئًا جميلًا',
+    'Send Message':        'إرسال الرسالة',
+    'CONTACT US':          'اتصل بنا',
+    'First Name':          'الاسم الأول',
+    'Last Name':           'اسم العائلة',
+    'Email Address':       'البريد الإلكتروني',
+    'Contact No.':         'رقم الهاتف',
+    'Message':             'الرسالة',
+
+    // FAQ page
+    'FREQUENTLY ASKED QUESTIONS': 'الأسئلة الشائعة',
+    'BEFORE WE BEGIN SOMETHING UNFORGETTABLE.': 'قبل أن نبدأ شيئًا لا يُنسى.',
+    'Still Have Questions?': 'هل لا تزال لديك أسئلة؟',
+    'Contact Us Now':      'اتصل بنا الآن',
+
+    // Gallery page
+    'A COLLECTION OF MOMENTS, BEAUTIFULLY BROUGHT TO LIFE':
+        'مجموعة من اللحظات، أُحييت بجمال',
+    'LET\'S CREATE SOMETHING WORTH REMEMBERING.': 'لنخلق شيئًا يستحق الذكر.',
+    'Book a Call Now':     'احجز مكالمة الآن',
+
+    // Services
+    'Wedding & Event Planning': 'تخطيط الأعراس والفعاليات',
+    'Floral & Decor Design':    'تصميم الزهور والديكور',
+    'VIP Hospitality':          'الضيافة الفاخرة',
+    'Book a Consultation':      'احجز استشارة',
+};
+
+let currentLang = localStorage.getItem('meramLang') || 'en';
+
+function setLang(lang) {
+
+    currentLang = lang;
+    localStorage.setItem('meramLang', lang);
+
+    const html = document.getElementById('html-root');
+
+    html.setAttribute('lang', lang);
+    html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+    // text update
+    document.querySelectorAll('[data-en]').forEach(el => {
+        const text = (lang === 'ar') ? el.dataset.ar : el.dataset.en;
+        if (!text) return;
+        el.innerHTML = text;
+    });
+
+    // ✅ BUTTON ACTIVE STATE FIX (THIS WAS MISSING)
+    const enBtn = document.getElementById('lang-en-btn');
+    const arBtn = document.getElementById('lang-ar-btn');
+    const label = document.getElementById('lang-label');
+
+    if (lang === 'ar') {
+        enBtn.classList.remove('active');
+        arBtn.classList.add('active');
+        label.textContent = 'عربي';
+    } else {
+        arBtn.classList.remove('active');
+        enBtn.classList.add('active');
+        label.textContent = 'ENGLISH';
+    }
+
+    document.getElementById('lang-wrap')?.classList.remove('open');
+}
+function setPlaceholders(map) {
+    document.querySelectorAll('input[placeholder], textarea[placeholder]').forEach(el => {
+        const current = el.getAttribute('placeholder');
+        if (map[current]) el.setAttribute('placeholder', map[current]);
+    });
+}
+
+// Apply saved language on page load
+document.addEventListener('DOMContentLoaded', () => {
+    setLang(currentLang);
+});
+
+/* =============================================
+   SCROLL REVEAL
+============================================= */
+const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* =============================================
+   AUTO-DISMISS MESSAGES
+============================================= */
+setTimeout(() => {
+    document.querySelectorAll('.alert').forEach(a => {
+        a.style.transition = 'opacity 0.5s';
+        a.style.opacity = '0';
+        setTimeout(() => a.remove(), 500);
+    });
+}, 4000);
+</script>
+
+
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>
