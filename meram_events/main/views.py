@@ -63,19 +63,27 @@ def about(request):
 
 
 def services(request):
-    return render(request, 'main/services.html')
+    celebration_images = CelebrationImage.objects.filter(is_active=True)[:8]
+    return render(request, 'main/services.html', {
+        'celebration_images': celebration_images
+    })
 
 
 def corporate_events(request):
+    celebration_images = CelebrationImage.objects.filter(is_active=True)[:8]
     gallery = GalleryImage.objects.filter(category='corporate')[:9]
-    return render(request, 'main/corporate_events.html', {'gallery': gallery})
+    return render(request, 'main/corporate_events.html', {'gallery': gallery, 'celebration_images': celebration_images,})
 
 
 def other_services(request):
-    return render(request, 'main/other_services.html')
+    celebration_images = CelebrationImage.objects.filter(is_active=True)[:8]
+    return render(request, 'main/other_services.html', {
+        'celebration_images': celebration_images,
+    })
 
 
 def gallery(request):
+    celebration_images = CelebrationImage.objects.filter(is_active=True)[:8]
     category = request.GET.get('category', 'all')
     if category == 'all':
         images = GalleryImage.objects.all()
@@ -86,6 +94,7 @@ def gallery(request):
         'images': images,
         'categories': categories,
         'active_category': category,
+        'celebration_images': celebration_images,
     })
 
 

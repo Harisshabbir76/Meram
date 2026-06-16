@@ -1,0 +1,1 @@
+web: gunicorn meram_events.wsgi:application
