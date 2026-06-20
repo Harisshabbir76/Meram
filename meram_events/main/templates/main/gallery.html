@@ -1,20 +1,20 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block title %}Gallery — Meram Events{% endblock %}
-
+{% block navbar_class %}gallery-nav{% endblock %}
 {% block extra_head %}
 <style>
 /* ===== GALLERY PAGE ===== */
 
 /* Section 1: Intro — cream bg, centered */
 .gallery-intro {
-    background: var(--cream);
+    background: #F4F1EA;
     text-align: center;
-    padding: 220px 20px 100px;
+    padding: 220px 20px 70px 20px;
 }
 .gallery-eyebrow {
     font-family: "Hanken Grotesk", sans-serif;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 300;
     letter-spacing: 0.9px;
     text-transform: uppercase;
@@ -29,32 +29,29 @@
     text-transform: uppercase;
     color: #311F13;
 
-    font-size: clamp(34px, 5vw, 79px);
+    font-size:clamp(28px,4vw,54px);
     line-height: 1.1;
     letter-spacing: -0.95px;
 
-    margin-bottom: 28px;
+    margin-bottom: 45px;
 }
 .gallery-intro-body {
     font-family: "Hanken Grotesk", sans-serif;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 300;
     line-height: 1.7;
     letter-spacing: 0.9px;
     text-transform: uppercase;
-
     color: #000;
-
-    max-width: 911px;
-    margin: 0 auto 10px;
+    max-width: 790px;
+    margin: 0 auto 26px;
 }
 .gallery-intro-script {
     font-family: "Pinyon Script", cursive;
-    font-size: clamp(22px, 3vw, 32px);
+    font-size: 26px;
     line-height: 1.2;
     color: #311F13;
-
-    margin: 53px 0 55px;
+    margin: 50px 0 70px;
 }
 
 /* Ornate framed image */
@@ -65,7 +62,7 @@
     position: relative; display: inline-block;
 }
 .gallery-frame img {
-    width: 346px;
+    width: 330px;
     max-width: 80vw;
     height: auto;
     aspect-ratio: 1/1;
@@ -87,7 +84,7 @@
 
 /* Scrolling marquee text strip */
 .gallery-marquee-strip {
-    background: var(--cream);
+    background: #F4F1EA;
     border-top: 1px solid rgba(0,0,0,0.07);
     border-bottom: 1px solid rgba(0,0,0,0.07);
     padding: 12px 0; overflow: hidden;
@@ -113,16 +110,22 @@
 
 /* Section 2: First 6-image grid (3x2) */
 .gallery-grid-top {
-    background: var(--cream);
-    padding: 0 0 0 0;
+       background: #F4F1EA;
+    padding: 20px 0;
 }
 .gallery-grid-3col {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+        display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 400px));
+    gap: 10px;
+    justify-content: center;
 }
 .gallery-grid-3col img {
-    width: 100%; height: 300px; object-fit: cover;
-    display: block; transition: transform 0.5s;
+        width: 400px;
+    height: 400px;
+    object-fit: cover;
+    display: block;
     cursor: pointer;
+    transition: transform 0.5s ease;
 }
 .gallery-grid-3col img:hover { transform: scale(1.03); }
 
@@ -138,7 +141,7 @@
     text-transform: uppercase;
     color: #311F13;
 
-    font-size: clamp(24px, 3.5vw, 48px);
+    font-size:clamp(20px, 3.5vw, 35px);
     line-height: 1.2;
     letter-spacing: -0.58px;
 
@@ -146,33 +149,30 @@
 }
 .gallery-mid-cta-sub {
     font-family: "Hanken Grotesk", sans-serif;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 300;
     line-height: 1.6;
     letter-spacing: 0.9px;
     text-transform: uppercase;
-
     color: #000;
     max-width: 900px;
-    margin: 0 auto 24px;
+    margin: 38px auto 54px;
 }
 .btn-primary {
+    width: 219px;
+    height: 34px;
+
     display: inline-flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 
-    padding: 10px 26px;
     border: 1px solid #000;
-    background: transparent;
-
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-
     color: #000;
     text-decoration: none;
 
-    transition: 0.3s ease;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .btn-primary:hover {
@@ -181,23 +181,35 @@
 }
 /* Main big gallery grid — cream bg, 3 col */
 .gallery-main-section {
-    background: var(--cream);
-    padding: 10px 0;
+    background: #F4F1EA;
+    padding: 20px 0;
 }
+
 .gallery-main-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 400px));
+    gap: 10px;
+    justify-content: center;
 }
+
 .gallery-main-grid img {
-    width: 100%; height: 280px; object-fit: cover;
-    display: block; transition: transform 0.5s;
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    display: block;
     cursor: pointer;
+    transition: transform 0.5s ease;
 }
-.gallery-main-grid img:hover { transform: scale(1.03); }
+
+.gallery-main-grid img:hover {
+    transform: scale(1.03);
+}
+
 
 /* Instagram follow text */
 .gallery-insta {
-    background: var(--cream);
-    padding: 40px 120px 60px;
+    background: #F4F1EA;
+    padding: 2px 120px 2px;
     text-align: center;
 }
 .gallery-insta-text {
@@ -206,11 +218,10 @@
     color: var(--text-mid); letter-spacing: 0.5px;
 }
 
-/* Celebration section at bottom */
-.celebration-section{
-    background:#FAF9F5;
-    padding:90px 200px 80px;
-    text-align:center;
+.celebration-section {
+    background: #FAF9F5;
+    padding: 90px 164px 34px;
+    text-align: center;
 }
 
 /* EYEBROW */
@@ -219,7 +230,7 @@
     margin-bottom:25px;
 
     font-family:"Hanken Grotesk", sans-serif;
-    font-size:18px;
+    font-size:14px;
     line-height:23px;
     font-weight:300;
 
@@ -233,7 +244,7 @@
     margin:0 auto 25px;
 
     font-family:"FreightDisp Pro", serif;
-    font-size:55px;
+    font-size:44px;
     line-height:62px;
     font-weight:400;
 
@@ -244,35 +255,44 @@
 
 /* SCRIPT TEXT */
 .celebration-script{
-    margin:0 0 50px;
 
-    font-family:'Pinyon Script', cursive;
-    font-size:34px;
-    line-height:1.2;
-    font-weight:400;
-
-    letter-spacing:-0.41px;
-    color:#000000;
+    margin: 0 0 50px;
+    font-family: 'Pinyon Script', cursive;
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 400;
+    letter-spacing: -0.41px;
+    color: #000000;
 }
 
-/* BACK TO TOP */
-.back-to-top-link{
-    display:inline-block;
-    margin-bottom:60px;
+.back-to-top-link
+ {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    font-family: "Hanken Grotesk", sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 1.5px;
+    color: #000;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: .3s ease;
+}
 
-    font-family:"Hanken Grotesk", sans-serif;
-    font-size:15px;
-    line-height:20px;
-    font-weight:300;
+.back-top-icon
+ {
+    display: block;
+    font-size: 20px;
+    line-height: 1;
+    color: #767474;
+    margin-bottom: 6px;
+}
 
-    letter-spacing:1.5px;
-    color:#000000;
-    text-transform:uppercase;
-
-    text-decoration:none;
-    padding-bottom:3px;
-
-    transition:all .3s ease;
+.back-to-top-link:hover{
+    transform:translateY(-2px);
 }
 
 .back-to-top-link:hover{
@@ -280,24 +300,26 @@
 }
 
 /* IMAGE GRID */
+/* IMAGE GRID */
 .celebration-grid{
-    display:grid;
-    grid-template-columns:repeat(6,1fr);
-    gap:8px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    width: 100%;
 }
 
 .celebration-grid img{
-    width:100%;
-    height:203px;
-    object-fit:cover;
-    display:block;
-
-    transition:transform .4s ease;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* perfect square */
+    object-fit: cover;
+    display: block;
+    transition: transform .4s ease;
 }
 
 .celebration-grid img:hover{
-    transform:scale(1.03);
+    transform: scale(1.03);
 }
+
 /* Lightbox */
 .lightbox {
     display: none; position: fixed; inset: 0;
@@ -320,7 +342,18 @@
 .lb-prev:hover, .lb-next:hover { opacity: 1; }
 .lb-prev { left: 16px; }
 .lb-next { right: 16px; }
+@media (max-width:1400px){
 
+     .celebration-title {
+    font-size: 38px;}
+    .celebration-eyebrow {
+    font-size: 16px;}
+    .celebration-script {
+    font-size: 30px;}
+    .celebration-grid img {
+    max-width: 170px;
+    height: 170px;}
+}
 @media (max-width: 1024px) {
 
     .gallery-intro {
@@ -333,7 +366,11 @@
         .gallery-mid-cta {
         padding: 70px 60px;
     }
-       .celebration-section{
+
+}
+@media (max-width:1300px){
+
+.celebration-section{
         padding:80px 50px;
     }
 
@@ -344,8 +381,7 @@
 
     .celebration-grid{
         grid-template-columns:repeat(3,1fr);
-    }
-}
+    }}
 @media (max-width: 768px) {
 
     .gallery-intro {
@@ -353,16 +389,16 @@
     }
 
     .gallery-intro-title {
-        font-size: 32px;
+        font-size: 26px;
     }
 
     .gallery-intro-body {
-        font-size: 13px;
+        font-size: 8px;
         letter-spacing: 0.6px;
     }
 
     .gallery-intro-script {
-        font-size: 22px;
+        font-size: 11px;
     }
 
     .gallery-frame img {
@@ -373,7 +409,7 @@
     }
 
     .gallery-mid-cta-title {
-        font-size: 22px;
+        font-size: 9px;
     }
 
     .gallery-mid-cta-sub {
@@ -402,14 +438,19 @@
         letter-spacing:1px;
     }
 
-    .celebration-grid{
-        grid-template-columns:repeat(2,1fr);
-        gap:6px;
+        .celebration-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
     }
 
-    .celebration-grid img{
-        height:130px;
-    }
+        .celebration-grid img
+ {
+            max-width: 170px;
+    height: 170px;}
+    .btn-primary{
+       width: 136px;
+    height: 30px;
+    font-size: 8px;
+    letter-spacing: 1px;}
 }
 @media (max-width: 480px) {
 
@@ -421,21 +462,90 @@
         width: 220px;
     }
     .gallery-mid-cta-title {
-        font-size: 20px;
+        font-size: 18px;
     }
 
-    .btn-primary {
-        width: 100%;
-    }
-        .celebration-title{
-        font-size:26px;
-        line-height:32px;
+       .celebration-grid{
+        grid-template-columns:1fr;
     }
 }
 @media(max-width:960px){
-    .gallery-intro,.gallery-mid-cta,.gallery-insta,.gallery-celebration{padding:60px 24px;}
-    .gallery-grid-3col,.gallery-main-grid{grid-template-columns:repeat(2,1fr);}
+    .gallery-intro,.gallery-celebration{padding:140px 20px 40px;}
+    .gallery-intro-script {
+    margin: 20px;}
+
+    .gallery-main-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+    }
+    .gallery-insta {
+    padding: 2px 20px;}
+
+    .gallery-main-grid img{
+        width:100%;
+        height:220px;
+        object-fit:cover;
+    }
     .gallery-celebration-grid{grid-template-columns:repeat(3,1fr);}
+    .celebration-section{padding:60px 24px;}
+    .celebration-grid{grid-template-columns:repeat(3,1fr);}
+        .celebration-grid img {
+        max-width: 170px;
+        height: 115px;
+    }
+        .celebration-eyebrow {
+        font-size: 11px;
+    }
+        .celebration-title {
+        font-size: 18px;
+        line-height: 28px;
+    }
+        .celebration-script {
+        font-size: 22px;
+    }
+}
+/* Mobile gallery 2 columns */
+@media (max-width: 576px){
+
+    .gallery-main-section{
+        padding:15px 10px;
+    }
+
+    .gallery-main-grid{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:8px;
+    }
+
+    .gallery-main-grid img{
+        width:100%;
+                height: auto;
+
+        aspect-ratio:1/1;
+        object-fit:cover;
+    }
+
+    /* Last odd image center */
+    .gallery-main-grid img:last-child:nth-child(odd){
+        grid-column:1 / -1;
+        justify-self:center;
+        width:calc(50% - 4px);
+    }
+        .gallery-grid-top{
+        padding: 15px 10px;
+    }
+
+    .gallery-grid-3col{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .gallery-grid-3col img{
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+    }
 }
 </style>
 {% endblock %}
@@ -642,9 +752,9 @@
     </h2>
 
     <p class="gallery-mid-cta-sub"
-       data-en="Inspired by what you see? Let us design a celebration that reflects your vision and exceeds your expectations."
+       data-en="Inspired by what you see?<br> Let us design a celebration that reflects your vision and exceeds your expectations."
        data-ar="هل ألهمك ما تراه؟ دعنا نصمم احتفالًا يعكس رؤيتك ويتجاوز توقعاتك.">
-        Inspired by what you see? Let us design a celebration that reflects your vision and exceeds your expectations.
+        Inspired by what you see?<br> Let us design a celebration that reflects your vision and exceeds your expectations.
     </p>
 
     <a href="{% url 'book_now' %}"
@@ -717,14 +827,23 @@
        data-ar="لنصنع لحظتك">
         Let's create your moment
     </p>
+<a href="#page-top"
+   class="back-top-icon-link"
+   onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
 
-    <a href="#page-top"
-       class="back-to-top-link"
-       data-en="Back to Top"
-       data-ar="العودة للأعلى"
-       onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
-        Back to Top
-    </a>
+    <span class="back-top-icon">
+        <i class="fa-solid fa-caret-up"></i>
+    </span>
+
+</a>
+
+<a href="#page-top"
+   class="back-to-top-link"
+   data-en="Back to Top"
+   data-ar="العودة للأعلى"
+   onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    Back to Top
+</a>
 
 
     <!-- Images from admin panel -->

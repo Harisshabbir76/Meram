@@ -1,0 +1,159 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block extra_head %}
+<style>
+.db-form-card{
+    background: #fff;
+    border: 1px solid var(--db-border);
+    border-radius: 8px;
+    padding: 35px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .05);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.db-form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+}
+
+.db-form-group{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.db-form-group.full{
+    grid-column:1 / -1;
+}
+
+.db-form-group label{
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--db-text-mid);
+    font-weight:600;
+}
+
+.db-form-group input[type="text"],
+.db-form-group input[type="number"],
+.db-form-group input[type="file"]{
+    width:100%;
+    padding:12px 14px;
+    border:1px solid var(--db-border);
+    border-radius:4px;
+    font-size:14px;
+    background:#fff;
+}
+
+.db-form-group input:focus{
+    outline:none;
+    border-color:var(--db-dark);
+}
+
+.db-checkbox{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:10px;
+}
+
+.db-image-preview{
+    margin-top:10px;
+}
+
+.db-image-preview img{
+    width:220px;
+    height:150px;
+    object-fit:cover;
+    border-radius:8px;
+    border:1px solid var(--db-border);
+}
+
+.db-form-actions{
+    display:flex;
+    gap:12px;
+    margin-top:30px;
+}
+
+.db-cancel-btn{
+    padding:10px 20px;
+    border:1px solid var(--db-border);
+    background:#fff;
+    color:var(--db-text);
+    border-radius:4px;
+    font-weight:600;
+}
+
+@media(max-width:768px){
+    .db-form-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="db-breadcrumb">Meram Events Admin</div>
+
+<div class="db-header-row">
+    <h1 class="db-page-title">
+        {% if object %}
+            Edit Celebration Image
+        {% else %}
+            Add Celebration Image
+        {% endif %}
+    </h1>
+</div>
+
+<form method="post"
+      enctype="multipart/form-data"
+      class="db-form-card">
+
+    {% csrf_token %}
+
+    <div class="db-form-grid">
+
+        <div class="db-form-group">
+            <label>Title</label>
+            {{ form.title }}
+        </div>
+
+        <div class="db-form-group full">
+            <label>Upload Image</label>
+            {{ form.image }}
+
+            {% if object and object.image %}
+            <div class="db-image-preview">
+                <img src="{{ object.image.url }}" alt="">
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="db-form-group full">
+            <label>Status</label>
+
+            <div class="db-checkbox">
+                {{ form.is_active }}
+                <span>Show this image on website</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="db-form-actions">
+        <button type="submit" class="db-filter-go">
+            Save Image
+        </button>
+
+        <a href="{% url 'dashboard_celebration_images' %}"
+           class="db-cancel-btn">
+            Cancel
+        </a>
+    </div>
+
+</form>
+
+{% endblock %}

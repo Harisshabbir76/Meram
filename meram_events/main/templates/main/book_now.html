@@ -1,36 +1,688 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block title %}Book Now - Meram Events{% endblock %}
+{% block navbar_class %}transparent-nav{% endblock %}
 {% block extra_head %}
 <style>
-.booking-section { padding:100px 80px; background:var(--cream); display:grid; grid-template-columns:1fr 1.6fr; gap:80px; align-items:start; }
-.booking-info-title { font-family:var(--font-display); font-size:clamp(26px,3.5vw,46px); font-weight:400; font-style:italic; line-height:1.2; margin-bottom:20px; }
-.booking-info-body { font-size:13px; color:var(--text-mid); line-height:2; margin-bottom:30px; }
-.booking-step { display:flex; gap:20px; align-items:flex-start; margin-bottom:24px; }
-.booking-step-num { width:36px; height:36px; border:1px solid rgba(0,0,0,0.15); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:18px; flex-shrink:0; color:var(--text-mid); }
-.booking-step-text { font-size:12px; color:var(--text-mid); line-height:1.7; }
-.booking-step-text strong { display:block; color:var(--text-dark); margin-bottom:3px; font-size:13px; }
-.booking-form-wrap { background:var(--white); padding:50px; }
-.form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.form-section-title { font-family:var(--font-body); font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--text-light); margin:24px 0 18px; padding-bottom:10px; border-bottom:1px solid rgba(0,0,0,0.07); }
-@media(max-width:900px){.booking-section{grid-template-columns:1fr;padding:60px 24px;gap:40px;}.booking-form-wrap{padding:30px 20px;}.form-row{grid-template-columns:1fr;}}
+    /* ===== BOOKING FORM ALIGN FIX ===== */
+
+    .booking-form-wrap input,
+    .booking-form-wrap select,
+    .booking-form-wrap textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px 16px;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        background: transparent;
+        font-size: 13px;
+        font-family: var(--font-body);
+        outline: none;
+    }
+
+    .page-header-title {
+        font-family: "FreightDisp Pro", serif;
+        font-weight: 300;
+        text-transform: uppercase;
+        color: #fff;
+
+        font-size: clamp(28px, 4vw, 54px);
+        line-height: 1.1;
+        letter-spacing: -1.05px;
+
+        margin-bottom: 45px;
+    }
+
+    .page-header-subtitle {
+        font-family: "Hanken Grotesk", sans-serif;
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 1.7;
+        letter-spacing: 0.9px;
+        text-transform: uppercase;
+        color: #fff;
+        max-width: 790px;
+        margin: 0 auto 26px;
+    }
+
+    .booking-form-wrap input,
+    .booking-form-wrap select {
+        height: 52px;
+    }
+
+    .booking-form-wrap .btn-primary {
+        display: block;
+        margin: 30px auto 0;
+    }
+
+    .booking-form-wrap textarea {
+        min-height: 140px;
+        resize: vertical;
+    }
+
+
+    /* same spacing */
+    .form-group {
+        width: 100%;
+        margin-bottom: 18px;
+    }
+
+
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+
+    /* two columns perfect alignment */
+    .form-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    /* ===== WHY CHOOSE ===== */
+
+    .why-section {
+        position: relative;
+        background: #E6DBC9;
+        /* min-height:646px; */
+
+        padding: 62px 166px 62px;
+
+        display: grid;
+        grid-template-columns: 204px 1fr 204px;
+        gap: 80px;
+
+        overflow: hidden;
+    }
+
+    /* LEFT IMAGE */
+    .why-img-left {
+        width: 204px;
+        height: 204px;
+        object-fit: cover;
+        align-self: start;
+    }
+
+    /* RIGHT IMAGE */
+    .why-img-right {
+        width: 204px;
+        height: 204px;
+        object-fit: cover;
+        align-self: end;
+    }
+
+    /* CENTER CONTENT */
+    .why-center {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* EYEBROW */
+    .why-eyebrow {
+        margin: 0 0 22px;
+
+        font-family: "Hanken Grotesk", sans-serif;
+        font-size: 14px;
+        line-height: 1.2;
+        font-weight: 300;
+
+        letter-spacing: -0.22px;
+        color: #000000;
+        text-transform: uppercase;
+    }
+
+    /* TITLE */
+    .why-title {
+        margin: 0 0 32px;
+
+        font-family: "FreightDisp Pro", serif;
+        font-size: 44px;
+        font-weight: 400;
+        line-height: 46px;
+
+        letter-spacing: -0.72px;
+        color: #311F13;
+        text-transform: uppercase;
+
+        max-width: 666px;
+    }
+
+    .why-watermark {
+        position: absolute;
+        left: 200px;
+        bottom: 20px;
+
+        font-family: 'Shabby Chic', cursive;
+        font-size: 58px;
+        font-weight: 400;
+        line-height: 1;
+
+        color: #F4F1EA;
+
+        letter-spacing: 2px;
+
+        white-space: nowrap;
+        pointer-events: none;
+        user-select: none;
+
+        z-index: 1;
+    }
+
+    /* LIST */
+    .why-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 35px;
+        max-width: 520px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .why-list li {
+        position: relative;
+
+        font-family: "Hanken Grotesk", sans-serif;
+        font-size: 14px;
+        line-height: 32px;
+        font-weight: 300;
+
+        letter-spacing: -0.22px;
+        color: #000000;
+        text-transform: uppercase;
+
+        text-align: left;
+
+        padding-left: 28px;
+    }
+
+    .why-list li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        font-size: 16px;
+        font-weight: 400;
+        color: #000000;
+    }
+
+    /* WATERMARK */
+    .intro-watermark {
+        position: absolute;
+        left: -66px;
+        top: 271px;
+        width: 528px;
+        font-family: "charlotte", cursive;
+        font-size: 14px;
+        line-height: 39px;
+        font-weight: 400;
+        letter-spacing: 1.92px;
+        color: #F4F1EA;
+        text-align: center;
+        transform: rotate(-11deg);
+        white-space: normal;
+        z-index: 1;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    /* ===== CELEBRATION ===== */
+    /* ===== CELEBRATION SECTION ===== */
+    .celebration-section {
+        background: #FAF9F5;
+        padding: 90px 164px 34px;
+        text-align: center;
+    }
+
+    /* EYEBROW */
+    .celebration-eyebrow {
+        display: block;
+        margin-bottom: 25px;
+
+        font-family: "Hanken Grotesk", sans-serif;
+        font-size: 14px;
+        line-height: 23px;
+        font-weight: 300;
+
+        letter-spacing: -0.22px;
+        color: #000000;
+        text-transform: uppercase;
+    }
+
+    /* TITLE */
+    .celebration-title {
+        margin: 0 auto 25px;
+
+        font-family: "FreightDisp Pro", serif;
+        font-size: 44px;
+        line-height: 62px;
+        font-weight: 400;
+
+        letter-spacing: -0.72px;
+        color: #311F13;
+        text-transform: uppercase;
+    }
+
+    /* SCRIPT TEXT */
+    .celebration-script {
+
+        margin: 0 0 50px;
+        font-family: 'Pinyon Script', cursive;
+        font-size: 28px;
+        line-height: 1.2;
+        font-weight: 400;
+        letter-spacing: -0.41px;
+        color: #000000;
+    }
+
+    .back-to-top-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 20px;
+        font-family: "Hanken Grotesk", sans-serif;
+        font-size: 12px;
+        font-weight: 300;
+        letter-spacing: 1.5px;
+        color: #000;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: .3s ease;
+    }
+
+    .back-top-icon {
+        display: block;
+        font-size: 20px;
+        line-height: 1;
+        color: #767474;
+        margin-bottom: 6px;
+    }
+
+    .back-to-top-link:hover {
+        transform: translateY(-2px);
+    }
+
+    .back-to-top-link:hover {
+        opacity: .7;
+    }
+
+    /* IMAGE GRID */
+    /* IMAGE GRID */
+    .celebration-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+        width: 100%;
+    }
+
+    .celebration-grid img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        /* perfect square */
+        object-fit: cover;
+        display: block;
+        transition: transform .4s ease;
+    }
+
+    .celebration-grid img:hover {
+        transform: scale(1.03);
+    }
+
+    /* Mobile */
+    @media (max-width:1200px) {
+        .celebration-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width:1300px) {
+        .celebration-section {
+            padding: 80px 50px;
+        }
+
+        .celebration-title {
+            font-size: 48px;
+            line-height: 52px;
+        }
+
+        .celebration-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width:1400px) {
+        .why-title {
+            font-size: 36px;
+        }
+
+        .why-eyebrow {
+            font-size: 15px;
+        }
+
+        .why-list li {
+            font-size: 14px;
+        }
+
+        .celebration-title {
+            font-size: 38px;
+        }
+
+        .celebration-eyebrow {
+            font-size: 16px;
+        }
+
+        .celebration-script {
+            font-size: 30px;
+        }
+
+        .celebration-grid img {
+            max-width: 170px;
+            height: 170px;
+        }
+    }
+
+    @media (max-width:768px) {
+
+        .celebration-section {
+            padding: 60px 20px;
+        }
+
+        .celebration-eyebrow {
+            font-size: 14px;
+        }
+
+        .celebration-title {
+            font-size: 32px;
+            line-height: 38px;
+        }
+
+        .celebration-script {
+            font-size: 26px;
+        }
+
+        .back-to-top-link {
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .celebration-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .celebration-section {
+            padding: 60px 20px 30px;
+        }
+
+    }
+
+    /* Small Mobile */
+    @media (max-width:480px) {
+
+        .celebration-grid {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+    @media (max-width:576px) {
+
+        .why-img-left,
+        .why-img-right {
+            width: 180px;
+            height: 180px;
+        }
+
+        .why-title {
+            font-size: 26px;
+            line-height: 32px;
+        }
+
+        .why-watermark {
+            font-size: 38px;
+        }
+
+        .why-list li {
+            font-size: 11px;
+            line-height: 22px;
+        }
+    }
+
+    @media(max-width:960px) {
+        .why-section {
+            grid-template-columns: 1fr;
+            padding: 10px 60px 24px;
+            gap: 30px;
+            text-align: center;
+            justify-items: center;
+        }
+
+        /* Images */
+        .why-img-left,
+        .why-img-right {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            margin: 0 auto;
+        }
+
+        /* Order */
+        .why-img-left {
+            order: 1;
+        }
+
+        .why-center {
+            order: 2;
+            width: 100%;
+        }
+
+        .why-img-right {
+            order: 3;
+        }
+
+        /* Watermark last */
+        .why-watermark {
+            order: 4;
+
+            position: static;
+            display: block;
+            width: 100%;
+
+            text-align: center;
+
+            font-size: 42px;
+            line-height: 1.1;
+
+            white-space: normal;
+        }
+
+        .why-list {
+            max-width: 100%;
+        }
+
+        .why-list li {
+            text-align: left;
+            font-size: 12px;
+            line-height: 24px;
+        }
+
+        .celebration-section {
+            padding: 60px 24px;
+        }
+
+        .celebration-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .celebration-grid img {
+            max-width: 170px;
+            height: 115px;
+        }
+
+        .crafting-title {
+            font-size: 24px;
+        }
+
+        .crafting-body {
+            font-size: 8px;
+        }
+
+        .celebration-eyebrow {
+            font-size: 11px;
+        }
+
+        .celebration-title {
+            font-size: 18px;
+            line-height: 38px;
+        }
+
+        .celebration-script {
+            font-size: 22px;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .page-header-subtitle {
+            font-size: 7px;
+            max-width: 312px;
+        }
+
+        .section-eyebrow {
+            text-align: center;
+        }
+
+        .booking-info-title {
+            text-align: center;
+        }
+
+        .booking-info-body {
+            text-align: center;
+        }
+
+        .page-header-title {
+            margin-bottom: 20px;
+
+        }
+    }
+
+    .booking-section {
+        padding: 100px 166px;
+        background: var(--cream);
+        display: grid;
+        grid-template-columns: 1fr 1.6fr;
+        gap: 80px;
+        align-items: start;
+    }
+
+    .booking-info-title {
+        font-family: var(--font-display);
+        font-size: clamp(20px, 3.5vw, 44px);
+        font-weight: 400;
+        font-style: italic;
+        line-height: 1.2;
+        margin-bottom: 20px;
+    }
+
+    .booking-info-body {
+        font-size: 9px;
+        color: var(--text-mid);
+        line-height: 2;
+        margin-bottom: 30px;
+    }
+
+    .booking-step {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        margin-bottom: 24px;
+    }
+
+    .booking-step-num {
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-size: 18px;
+        flex-shrink: 0;
+        color: var(--text-mid);
+    }
+
+    .booking-step-text {
+        font-size: 9px;
+        color: var(--text-mid);
+        line-height: 1.7;
+    }
+
+    .booking-step-text strong {
+        display: block;
+        color: var(--text-dark);
+        margin-bottom: 3px;
+        font-size: 13px;
+    }
+
+    .booking-form-wrap {
+        background: var(--white);
+        padding: 50px;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .form-section-title {
+        font-family: var(--font-body);
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--text-light);
+        margin: 24px 0 18px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    }
+
+    @media(max-width:900px) {
+        .booking-section {
+            grid-template-columns: 1fr;
+            padding: 60px 24px;
+            gap: 40px;
+        }
+
+        .booking-form-wrap {
+            padding: 30px 20px;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
 {% endblock %}
 {% block content %}
 <div class="page-header">
-    <div class="page-header-bg" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80');"></div>
+    <div class="page-header-bg"
+        style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80');"></div>
+
     <div class="page-header-content">
 
-        <h1 class="page-header-title"
-            data-en="Book Now"
-            data-ar="احجز الآن">
+        <h1 class="page-header-title" data-en="Book Now" data-ar="احجز الآن">
             Book Now
         </h1>
 
         <p class="page-header-subtitle"
-           data-en="Begin Your Journey"
-           data-ar="ابدأ رحلتك">
-            Begin Your Journey
+            data-en="Let us bring your vision to life with beautifully planned moments,<br> unforgettable experiences, and flawless event management from start to finish."
+            data-ar="دعونا نحقق رؤيتكم من خلال لحظات مصممة بعناية، وتجارب لا تُنسى، وإدارة متكاملة للفعاليات من البداية حتى النهاية.">
+            Let us bring your vision to life with beautifully planned moments, unforgettable experiences, and flawless
+            event management from start to finish.
         </p>
 
     </div>
@@ -41,29 +693,26 @@
 
     <div class="reveal">
 
-        <span class="section-eyebrow"
-              data-en="Start Planning"
-              data-ar="ابدأ التخطيط">
+        <span class="section-eyebrow" data-en="Start Planning" data-ar="ابدأ التخطيط">
             Start Planning
         </span>
 
-        <h2 class="booking-info-title"
-            data-en="Let's Create<br>Something<br>Extraordinary"
-            data-ar="لنصنع شيئًا<br>استثنائيًا<br>معًا">
-            Let's Create<br>Something<br>Extraordinary
+        <h2 class="booking-info-title" data-en="Let's Create Something Extraordinary"
+            data-ar="لنصنع شيئًااستثنائيًامعًا">
+            Let's Create Something Extraordinary
         </h2>
 
         <p class="booking-info-body"
-           data-en="Fill out the form and one of our event specialists will contact you within 24 hours to discuss your vision."
-           data-ar="املأ النموذج وسيتواصل معك أحد خبراء الفعاليات خلال 24 ساعة لمناقشة رؤيتك.">
+            data-en="Fill out the form and one of our event specialists will contact you within 24 hours to discuss your vision."
+            data-ar="املأ النموذج وسيتواصل معك أحد خبراء الفعاليات خلال 24 ساعة لمناقشة رؤيتك.">
             Fill out the form and one of our event specialists will contact you within 24 hours to discuss your vision.
         </p>
 
         <div class="booking-step">
             <div class="booking-step-num">1</div>
             <div class="booking-step-text"
-                 data-en="<strong>Submit Your Request</strong>Tell us about your event vision and requirements."
-                 data-ar="<strong>إرسال طلبك</strong>أخبرنا عن رؤيتك ومتطلبات فعاليتك.">
+                data-en="<strong>Submit Your Request</strong>Tell us about your event vision and requirements."
+                data-ar="<strong>إرسال طلبك</strong>أخبرنا عن رؤيتك ومتطلبات فعاليتك.">
                 <strong>Submit Your Request</strong>
                 Tell us about your event vision and requirements.
             </div>
@@ -72,8 +721,8 @@
         <div class="booking-step">
             <div class="booking-step-num">2</div>
             <div class="booking-step-text"
-                 data-en="<strong>Initial Consultation</strong>We'll schedule a meeting to discuss your vision in detail."
-                 data-ar="<strong>الاستشارة الأولية</strong>سنحدد اجتماعًا لمناقشة رؤيتك بالتفصيل.">
+                data-en="<strong>Initial Consultation</strong>We'll schedule a meeting to discuss your vision in detail."
+                data-ar="<strong>الاستشارة الأولية</strong>سنحدد اجتماعًا لمناقشة رؤيتك بالتفصيل.">
                 <strong>Initial Consultation</strong>
                 We'll schedule a meeting to discuss your vision in detail.
             </div>
@@ -82,8 +731,8 @@
         <div class="booking-step">
             <div class="booking-step-num">3</div>
             <div class="booking-step-text"
-                 data-en="<strong>Custom Proposal</strong>Receive a tailored proposal crafted specifically for your event."
-                 data-ar="<strong>عرض مخصص</strong>ستحصل على عرض مصمم خصيصًا لفعاليتك.">
+                data-en="<strong>Custom Proposal</strong>Receive a tailored proposal crafted specifically for your event."
+                data-ar="<strong>عرض مخصص</strong>ستحصل على عرض مصمم خصيصًا لفعاليتك.">
                 <strong>Custom Proposal</strong>
                 Receive a tailored proposal crafted specifically for your event.
             </div>
@@ -92,8 +741,8 @@
         <div class="booking-step">
             <div class="booking-step-num">4</div>
             <div class="booking-step-text"
-                 data-en="<strong>Begin Planning</strong>Once approved, we begin crafting your perfect event."
-                 data-ar="<strong>بدء التخطيط</strong>بعد الموافقة نبدأ في تنفيذ فعاليتك المثالية.">
+                data-en="<strong>Begin Planning</strong>Once approved, we begin crafting your perfect event."
+                data-ar="<strong>بدء التخطيط</strong>بعد الموافقة نبدأ في تنفيذ فعاليتك المثالية.">
                 <strong>Begin Planning</strong>
                 Once approved, we begin crafting your perfect event.
             </div>
@@ -104,20 +753,16 @@
 
     <div class="booking-form-wrap reveal">
 
-        <h3 data-en="Request a Booking"
-            data-ar="طلب حجز">
+        <h3 data-en="Request a Booking" data-ar="طلب حجز">
             Request a Booking
         </h3>
 
-        <p data-en="All fields marked * are required"
-           data-ar="جميع الحقول التي تحمل * مطلوبة">
+        <p data-en="All fields marked * are required" data-ar="جميع الحقول التي تحمل * مطلوبة">
             All fields marked * are required
         </p>
         <form method="post">
             {% csrf_token %}
-            <div class="form-section-title"
-                 data-en="Personal Information"
-                 data-ar="المعلومات الشخصية">
+            <div class="form-section-title" data-en="Personal Information" data-ar="المعلومات الشخصية">
                 Personal Information
             </div>
             <div class="form-row">
@@ -126,7 +771,8 @@
                     {{ form.full_name }}
                 </div>
                 <div class="form-group">
-                    <label class="form-label" data-en="Email Address *" data-ar="البريد الإلكتروني *">Email Address *</label>
+                    <label class="form-label" data-en="Email Address *" data-ar="البريد الإلكتروني *">Email Address
+                        *</label>
                     {{ form.email }}
                 </div>
 
@@ -139,9 +785,7 @@
             </div>
 
 
-            <div class="form-section-title"
-                 data-en="Event Details"
-                 data-ar="تفاصيل الحدث">
+            <div class="form-section-title" data-en="Event Details" data-ar="تفاصيل الحدث">
                 Event Details
             </div>
 
@@ -179,12 +823,14 @@
             <div class="form-row">
 
                 <div class="form-group">
-                    <label class="form-label" data-en="Estimated Guest Count" data-ar="عدد الضيوف المتوقع">Estimated Guest Count</label>
+                    <label class="form-label" data-en="Estimated Guest Count" data-ar="عدد الضيوف المتوقع">Estimated
+                        Guest Count</label>
                     {{ form.guest_count }}
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" data-en="Approximate Budget" data-ar="الميزانية التقريبية">Approximate Budget</label>
+                    <label class="form-label" data-en="Approximate Budget" data-ar="الميزانية التقريبية">Approximate
+                        Budget</label>
                     {{ form.budget }}
                 </div>
 
@@ -198,21 +844,115 @@
 
 
             <div class="form-group">
-                <label class="form-label" data-en="Tell Us About Your Dream Event"
-                       data-ar="أخبرنا عن حلمك للحدث">
+                <label class="form-label" data-en="Tell Us About Your Dream Event" data-ar="أخبرنا عن حلمك للحدث">
                     Tell Us About Your Dream Event
                 </label>
                 {{ form.details }}
             </div>
 
 
-            <button type="submit" class="btn-primary"
-                    data-en="Submit Booking Request"
-                    data-ar="إرسال طلب الحجز">
+            <button type="submit" class="btn-primary" data-en="Submit Booking Request" data-ar="إرسال طلب الحجز">
                 Submit Booking Request
             </button>
 
         </form>
+    </div>
+
+</section>
+<!-- ===== WHY CHOOSE MERAM EVENTS ===== -->
+<section class="why-section reveal">
+    <img class="why-img-left" src="{% static 'main/images/os4.jpeg' %}" alt="Luxury event">
+
+    <div class="why-center">
+
+        <p class="why-eyebrow" data-en="Why Choose Meram Events" data-ar="لماذا تختار ميرام إيفنتس">
+            Why Choose Meram Events
+        </p>
+
+        <h2 class="why-title" data-en="A Seamless Experience Designed Around You"
+            data-ar="تجربة متكاملة مصممة خصيصاً من أجلك">
+            A Seamless Experience<br>Designed Around You
+        </h2>
+
+        <ul class="why-list">
+
+            <li data-en="Personalized concepts tailored to your vision" data-ar="أفكار مخصصة تعكس رؤيتك الفريدة">
+                Personalized concepts tailored to your vision
+            </li>
+
+            <li data-en="Full-service planning from start to finish" data-ar="تخطيط متكامل من البداية وحتى النهاية">
+                Full-service planning from start to finish
+            </li>
+
+            <li data-en="Refined aesthetic with attention to detail" data-ar="تصاميم راقية مع اهتمام دقيق بكل التفاصيل">
+                Refined aesthetic with attention to detail
+            </li>
+
+            <li data-en="Trusted execution at luxury venues" data-ar="تنفيذ احترافي في أرقى مواقع الفعاليات">
+                Trusted execution at luxury venues
+            </li>
+
+            <li data-en="Dedicated team ensuring flawless coordination"
+                data-ar="فريق متخصص يضمن تنسيقاً مثالياً دون أخطاء">
+                Dedicated team ensuring flawless coordination
+            </li>
+
+        </ul>
+
+        <a href="{% url 'book_now' %}" class="btn-primary" data-en="Plan Your Event" data-ar="خطط لفعاليتك">
+            Plan Your Event
+        </a>
+
+    </div>
+    <img class="why-img-right" src="{% static 'main/images/osb1.JPG' %}" alt="Event detail">
+    <!-- Script watermark -->
+    <div class="why-watermark">Meram Events</div>
+</section>
+
+<!-- ===== CREATE A CELEBRATION ===== -->
+<section class="celebration-section reveal">
+
+    <span class="celebration-eyebrow" data-en="You Know, It's Time To" data-ar="أنت تعلم، حان الوقت لـ">
+        You Know, It's Time To
+    </span>
+
+    <h2 class="celebration-title" data-en="Create a Celebration That Reflects<br>Your Story Like Never Before."
+        data-ar="أنشئ احتفالًا يعكس<br>قصتك كما لم يحدث من قبل.">
+        Create a Celebration That Reflects<br>
+        Your Story Like Never Before.
+    </h2>
+
+    <p class="celebration-script" data-en="Let's create your moment" data-ar="لنصنع لحظتك">
+        Let's create your moment
+    </p>
+    <a href="#page-top" class="back-top-icon-link" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+
+        <span class="back-top-icon">
+            <i class="fa-solid fa-caret-up"></i>
+        </span>
+
+    </a>
+
+    <a href="#page-top" class="back-to-top-link" data-en="Back to Top" data-ar="العودة للأعلى"
+        onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+        Back to Top
+    </a>
+
+
+    <!-- Images from admin panel -->
+    <div class="celebration-grid">
+        {% if celebration_images %}
+        {% for img in celebration_images %}
+        <img src="{{ img.image.url }}" alt="{{ img.title }}" loading="lazy">
+        {% endfor %}
+        {% else %}
+        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80" alt="">
+        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="">
+        <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&q=80" alt="">
+        <img src="https://images.unsplash.com/photo-1478146059778-26028b07395a?w=400&q=80" alt="">
+        <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&q=80" alt="">
+        <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&q=80" alt="">
+        {% endif %}
     </div>
 
 </section>

@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block title %}Contact Us - Meram Events{% endblock %}
+{% block navbar_class %}transparent-nav{% endblock %}
 {% block extra_head %}
 <style>
     /* ===== CONTACT PAGE ===== */
@@ -34,7 +35,7 @@
         z-index: 1;
         background: #F5F0E8;
         width: 100%;
-        max-width: 680px;
+        max-width: 876px;
         padding: 60px 70px 70px;
         margin-top: 30px;
     }
@@ -57,7 +58,7 @@
     /* CONTACT US */
     .contact-card-eyebrow {
         font-family: 'Hanken Grotesk', sans-serif;
-        font-size: 15px;
+        font-size: 12px;
         line-height: 20px;
         font-weight: 300;
         letter-spacing: .9px;
@@ -71,21 +72,21 @@
     /* LET'S BEGIN SOMETHING BEAUTIFUL */
     .contact-card-title {
         font-family: 'FreightDisp Pro', serif;
-        font-size: 46px;
+        font-size:clamp(28px,4vw,54px);
         line-height: 49px;
         font-weight: 300;
         letter-spacing: -0.88px;
         color: #311F13;
         text-transform: uppercase;
         text-align: center;
-        margin: 0 0 40px;
+        margin: 0 0 60px;
     }
 
     /* SMALL UPPERCASE TEXT */
     .contact-card-sub,
     .contact-card-desc {
         font-family: 'Hanken Grotesk', sans-serif;
-        font-size: 15px;
+        font-size: 12px;
         line-height: 20px;
         font-weight: 300;
         letter-spacing: .9px;
@@ -95,18 +96,18 @@
     }
 
     .contact-card-sub {
-        margin-bottom: 15px;
+        margin-bottom: 14px;
     }
 
     .contact-card-desc {
         max-width: 911px;
-        margin: 0 auto 50px;
+        margin: 0 auto 60px;
     }
 
     /* SCRIPT TEXT */
     .contact-card-script {
         font-family: 'Pinyon Script', cursive;
-        font-size: 32px;
+        font-size: 26px;
         line-height: 40px;
         font-weight: 400;
         color: #311F13;
@@ -124,7 +125,7 @@
 
     .contact-input {
         width: 100%;
-        height: 56px;
+        height: 48px;
         padding: 0 16px;
 
         background: #FFFFFF;
@@ -178,7 +179,7 @@
 
     .contact-submit {
         width: 100%;
-        height: 56px;
+        height: 40px;
 
         background: transparent;
         border: 1px solid #000;
@@ -196,12 +197,32 @@
         background: #000;
         color: #fff;
     }
+        /* .contact-submit {
 
-    .contact-submit:hover {
-        background: var(--text-dark);
-        color: var(--white);
-        border-color: var(--text-dark);
-    }
+    width: 219px;
+    height: 34px;
+
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid #000;
+    color: #000;
+    text-decoration: none;
+
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: transparent;
+
+    display:block;
+    margin:20px auto 0;
+
+}
+
+.contact-submit:hover {
+    background: #000;
+    color: #fff;
+} */
 
     .errorlist {
         list-style: none;
@@ -211,6 +232,10 @@
     }
 
     @media(max-width:640px) {
+            .contact-card-script {
+        font-size: 11px;
+        line-height: 27px;
+    }
         .contact-card {
             padding: 50px 24px 50px;
         }
@@ -220,9 +245,17 @@
         }
 
         .contact-card-title {
-            font-size: 40px;
-            line-height: 35px;
+            font-size: 24px;
+            line-height: 28px;
+            margin: 0 0 35px;
         }
+        .contact-card-sub, .contact-card-desc {
+    font-size: 9px;
+    line-height: 20px;}
+    .contact-card-desc {
+    max-width: 911px;
+    margin: 0 auto 38px;
+}
     }
 </style>
 {% endblock %}

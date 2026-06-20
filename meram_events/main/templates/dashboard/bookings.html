@@ -1,0 +1,93 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block title %}Bookings — Meram Events Admin{% endblock %}
+
+{% block dashboard_content %}
+<div class="db-breadcrumb">Meram Events Admin</div>
+<div class="db-header-row">
+    <h1 class="db-page-title">Bookings</h1>
+    <div class="db-total-badge">Total &nbsp;<strong>{{ total }}</strong></div>
+</div>
+
+<!-- FILTER BAR -->
+<form method="get" class="db-filter-bar">
+    <div class="db-quick-filters">
+        <a href="?quick=all" class="{% if quick_filter == 'all' %}active{% endif %}">All</a>
+        <a href="?quick=today" class="{% if quick_filter == 'today' %}active{% endif %}">Today</a>
+        <a href="?quick=yesterday" class="{% if quick_filter == 'yesterday' %}active{% endif %}">Yesterday</a>
+        <a href="?quick=last3" class="{% if quick_filter == 'last3' %}active{% endif %}">Last 3 days</a>
+    </div>
+
+    <div class="db-date-field">
+        <label>On Date</label>
+        <input type="date" name="on_date" value="{{ on_date }}">
+    </div>
+    <div class="db-date-field">
+        <label>From</label>
+        <input type="date" name="from" value="{{ date_from }}">
+    </div>
+    <div class="db-date-field">
+        <label>To</label>
+        <input type="date" name="to" value="{{ date_to }}">
+    </div>
+    <button type="submit" class="db-filter-go">Filter</button>
+</form>
+
+<!-- TABLE -->
+<div class="db-table-wrap">
+    <table class="db-table">
+        <thead>
+            <tr>
+                <th>Client</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Service</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for b in bookings %}
+            <tr id="booking-row-{{ b.pk }}">
+                <td>{{ b.full_name }}</td>
+                <td>{{ b.email }}</td>
+                <td>{{ b.phone }}</td>
+                <td>{{ b.get_event_type_display }}</td>
+                <td>{{ b.event_date|date:"M j, Y" }}</td>
+                <td>
+                    <span class="db-status-pill db-status-{{ b.status }}">{{ b.get_status_display }}</span>
+                </td>
+                <td>
+                    <div class="db-action-icons">
+                        <a href="{% url 'dashboard_booking_detail' b.pk %}" title="View"><i class="fa-solid fa-eye"></i></a>
+                        <button class="db-delete-btn" title="Delete" onclick="deleteBooking({{ b.pk }})"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7" class="db-empty">No bookings found for the selected filter.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function deleteBooking(pk){
+    if(!confirm('Delete this booking? This cannot be undone.')) return;
+    fetch(`/dashboard/bookings/${pk}/delete/`, {
+        method:'POST',
+        headers:{'X-CSRFToken': getCookie('csrftoken')}
+    }).then(r=>r.json()).then(data=>{
+        if(data.success){
+            document.getElementById(`booking-row-${pk}`).remove();
+        }
+    });
+}
+function getCookie(name){
+    const v = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return v ? v.pop() : '';
+}
+</script>
+{% endblock %}

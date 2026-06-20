@@ -1,0 +1,180 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block title %}
+{% if object %}Edit Gallery Image{% else %}Add Gallery Image{% endif %}
+{% endblock %}
+
+{% block extra_head %}
+<style>
+
+.gallery-form-wrap{
+    max-width:900px;
+    margin:0 auto;
+}
+
+.gallery-form-card{
+    background:#fff;
+    border:1px solid var(--db-border);
+    border-radius:12px;
+    padding:30px;
+    box-shadow:0 4px 20px rgba(0,0,0,.04);
+}
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.gallery-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.gallery-group label{
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:8px;
+    color:#222;
+}
+
+.gallery-group input,
+.gallery-group select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.preview-box{
+    margin-top:15px;
+}
+
+.preview-box img{
+    width:100%;
+    max-width:300px;
+    border-radius:10px;
+    border:1px solid #eee;
+}
+
+.gallery-actions{
+    margin-top:30px;
+    display:flex;
+    gap:12px;
+}
+
+.gallery-btn{
+    border:none;
+    padding:12px 22px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.gallery-btn-primary{
+    background:#111;
+    color:#fff;
+}
+
+.gallery-btn-secondary{
+    background:#f3f3f3;
+    color:#111;
+    text-decoration:none;
+}
+
+.switch-wrap{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:10px;
+}
+
+@media(max-width:768px){
+    .gallery-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="db-breadcrumb">
+    Meram Events Admin
+</div>
+
+<div class="db-header-row">
+    <h1 class="db-page-title">
+        {% if object %}
+            Edit Gallery Image
+        {% else %}
+            Add Gallery Image
+        {% endif %}
+    </h1>
+</div>
+
+<div class="gallery-form-wrap">
+
+<form method="post"
+      enctype="multipart/form-data"
+      class="gallery-form-card">
+
+    {% csrf_token %}
+
+    <div class="gallery-grid">
+
+        <div class="gallery-group">
+            <label>Title</label>
+            {{ form.title }}
+        </div>
+
+        <div class="gallery-group">
+            <label>Upload Image</label>
+            {{ form.image }}
+        </div>
+
+    </div>
+
+    <div class="switch-wrap">
+        {{ form.is_featured }}
+        <label style="margin:0;">
+            Featured Image
+        </label>
+    </div>
+
+    {% if object and object.image %}
+    <div class="preview-box">
+        <label style="display:block;margin-bottom:10px;">
+            Current Image
+        </label>
+
+        <img src="{{ object.image.url }}"
+             alt="{{ object.title }}">
+    </div>
+    {% endif %}
+
+    <div class="gallery-actions">
+        {% if form.errors %}
+<div style="background:#ffe8e8;padding:15px;border-radius:10px;margin-bottom:20px;">
+    {{ form.errors }}
+</div>
+{% endif %}
+
+        <button type="submit"
+                class="gallery-btn gallery-btn-primary">
+            Save Image
+        </button>
+
+        <a href="{% url 'dashboard_gallery' %}"
+           class="gallery-btn gallery-btn-secondary">
+            Cancel
+        </a>
+
+    </div>
+
+</form>
+
+</div>
+
+{% endblock %}

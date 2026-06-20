@@ -1,7 +1,35 @@
 from django import forms
-from .models import ContactSubmission, BookingRequest
+from .models import ContactSubmission, BookingRequest, CelebrationImage, GalleryImage
 
 
+class GalleryImageForm(forms.ModelForm):
+    class Meta:
+        model = GalleryImage
+        fields = [
+            'title',
+            'image',
+            'is_featured',
+        ]
+
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'db-input',
+                'placeholder': 'Image title'
+            }),
+            'is_featured': forms.CheckboxInput(attrs={
+                'class': 'db-checkbox'
+            }),
+        }
+
+class CelebrationImageForm(forms.ModelForm):
+    class Meta:
+        model = CelebrationImage
+        fields = [
+            'title',
+            'image',
+            'order',
+            'is_active',
+        ]
 class ContactForm(forms.ModelForm):
     class Meta:
         model = ContactSubmission
@@ -20,3 +48,27 @@ class BookingForm(forms.ModelForm):
     class Meta:
         model = BookingRequest
         fields = '__all__'
+
+        widgets = {
+
+            'event_date': forms.DateInput(
+                attrs={
+                    'type': 'date',
+                    'class': 'form-control'
+                }
+            ),
+
+            'start_time': forms.TimeInput(
+                attrs={
+                    'type': 'time',
+                    'class': 'form-control'
+                }
+            ),
+
+            'end_time': forms.TimeInput(
+                attrs={
+                    'type': 'time',
+                    'class': 'form-control'
+                }
+            ),
+        }

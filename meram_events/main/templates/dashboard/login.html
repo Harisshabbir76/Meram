@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In — Meram Events Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --lg-dark:#311F13;
+            --lg-cream:#FBF8F1;
+            --lg-border:#E1DACB;
+            --lg-text:#2C2420;
+            --lg-text-mid:#6B5D50;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{
+            font-family:'Hanken Grotesk',sans-serif;
+            background:var(--lg-cream);
+            color:var(--lg-text);
+            min-height:100vh;
+        }
+        a{ text-decoration:none; color:inherit; }
+
+        /* ===== TOP NAV (matches main site) ===== */
+        .lg-nav{
+            display:flex; align-items:center; justify-content:space-between;
+            padding:22px 50px; border-bottom:1px solid var(--lg-border);
+        }
+        .lg-brand{
+            font-family:'Cormorant Garamond',serif;
+            font-size:24px; font-weight:500; color:var(--lg-dark);
+            letter-spacing:0.5px;
+        }
+        .lg-nav-links{ display:flex; gap:36px; align-items:center; }
+        .lg-nav-links a{
+            font-size:12px; letter-spacing:1px; text-transform:uppercase;
+            color:var(--lg-text-mid); font-weight:500;
+        }
+        .lg-nav-links a.book-now{
+            text-decoration:underline; color:var(--lg-dark); font-weight:600;
+        }
+
+        /* ===== LOGIN CARD ===== */
+        .lg-wrap{
+            display:flex; align-items:center; justify-content:center;
+            padding:80px 24px;
+            min-height:calc(100vh - 80px);
+        }
+        .lg-card{
+            background:#fff; border:1px solid var(--lg-border);
+            width:100%; max-width:500px;
+            padding:50px 56px 44px;
+        }
+        .lg-title{
+            font-family:'Cormorant Garamond',serif;
+            font-size:38px; font-weight:500; text-align:center;
+            color:var(--lg-text); margin-bottom:34px;
+        }
+        .lg-label{
+            display:block; font-size:13px; font-weight:600;
+            color:var(--lg-text); margin-bottom:8px;
+        }
+        .lg-group{ margin-bottom:22px; }
+        .lg-input{
+            width:100%; padding:13px 16px;
+            border:1px solid var(--lg-border); border-radius:3px;
+            font-family:'Hanken Grotesk',sans-serif; font-size:13.5px;
+            color:var(--lg-text); outline:none; transition:border-color 0.2s;
+        }
+        .lg-input:focus{ border-color:var(--lg-dark); }
+
+        .lg-forgot{
+            text-align:right; margin-bottom:24px;
+        }
+        .lg-forgot a{
+            font-size:12.5px; text-decoration:underline; color:var(--lg-text);
+        }
+
+        .lg-error{
+            background:#FBEAEA; border:1px solid #E3A6A2; color:#9c3a32;
+            padding:11px 16px; border-radius:3px; font-size:12.5px;
+            margin-bottom:20px;
+        }
+
+        .lg-btn{
+            width:100%; padding:15px;
+            background:var(--lg-dark); color:#fff; border:none;
+            font-family:'Hanken Grotesk',sans-serif;
+            font-size:14px; font-weight:600; letter-spacing:0.5px;
+            cursor:pointer; transition:opacity 0.2s; border-radius:2px;
+        }
+        .lg-btn:hover{ opacity:0.88; }
+
+        .lg-signup{
+            text-align:center; margin-top:20px;
+            font-size:13px; color:var(--lg-text-mid);
+        }
+        .lg-signup a{ text-decoration:underline; color:var(--lg-text); font-weight:500; }
+
+        @media(max-width:600px){
+            .lg-nav{ padding:18px 20px; }
+            .lg-nav-links{ display:none; }
+            .lg-card{ padding:36px 26px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="lg-nav">
+    <div class="lg-brand">Meram Events</div>
+    <div class="lg-nav-links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'services' %}">Services</a>
+        <a href="{% url 'gallery' %}">Gallery</a>
+        <a href="{% url 'faq' %}">FAQ</a>
+        <a href="{% url 'book_now' %}" class="book-now">Book Now</a>
+    </div>
+</nav>
+
+<!-- LOGIN CARD -->
+<div class="lg-wrap">
+    <div class="lg-card">
+        <h1 class="lg-title">Log In</h1>
+
+        {% if error %}
+        <div class="lg-error">{{ error }}</div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="lg-group">
+                <label class="lg-label">Email</label>
+                <input type="email" name="email" class="lg-input" required autofocus>
+            </div>
+            <div class="lg-group">
+                <label class="lg-label">Password</label>
+                <input type="password" name="password" class="lg-input" required>
+            </div>
+
+            <!-- <div class="lg-forgot">
+                <a href="#">Forgot Password?</a>
+            </div> -->
+
+            <button type="submit" class="lg-btn">Log In</button>
+        </form>
+
+        <div class="lg-signup">
+            Need access? <a href="{% url 'contact' %}">Contact Admin</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

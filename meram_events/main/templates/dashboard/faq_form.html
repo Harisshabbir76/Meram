@@ -1,0 +1,335 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+
+{% block extra_head %}
+
+<style>
+    .faq-form-wrapper {
+        max-width: 850px;
+        margin: 40px auto;
+    }
+
+
+    .faq-form-card {
+        background: #fff;
+        border: 1px solid var(--db-border);
+        border-radius: 6px;
+        padding: 40px 45px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+    }
+
+
+    .faq-form-card h3 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 28px;
+        color: var(--db-text);
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+
+    .faq-field {
+        margin-bottom: 22px;
+    }
+
+
+    .faq-field label {
+        display: block;
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--db-text-mid);
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+
+
+    .faq-input,
+    .faq-textarea,
+    .faq-select {
+
+        width: 100%;
+        border: 1px solid var(--db-border);
+        background: #fff;
+        padding: 13px 15px;
+
+        font-family: 'Hanken Grotesk', sans-serif;
+        font-size: 13px;
+
+        color: var(--db-text);
+
+        border-radius: 4px;
+
+    }
+
+
+    .faq-input:focus,
+    .faq-textarea:focus,
+    .faq-select:focus {
+
+        outline: none;
+        border-color: var(--db-dark);
+
+    }
+
+
+
+    .faq-textarea {
+
+        min-height: 130px;
+        resize: vertical;
+
+    }
+
+
+
+    .faq-active {
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        font-size: 13px;
+        color: var(--db-text);
+
+        margin: 20px 0;
+
+    }
+
+
+
+    .faq-save {
+
+        width: 100%;
+
+        padding: 14px;
+
+        background: var(--db-dark);
+
+        color: white;
+
+        border: none;
+
+        border-radius: 4px;
+
+        font-size: 13px;
+
+        font-weight: 600;
+
+        letter-spacing: 1px;
+
+        cursor: pointer;
+
+        transition: .2s;
+
+    }
+
+
+    .faq-save:hover {
+
+        opacity: .85;
+
+    }
+</style>
+
+{% endblock %}
+
+
+
+
+
+{% block dashboard_content %}
+
+
+
+<a href="{% url 'dashboard_faqs' %}" class="bd-back">
+
+    ← Back to FAQs
+
+</a>
+
+
+
+<div class="faq-form-wrapper">
+
+
+    <div class="faq-form-card">
+
+
+        <h3>
+
+            {% if faq %}
+            Edit FAQ
+            {% else %}
+            Add New FAQ
+            {% endif %}
+
+        </h3>
+
+
+
+        <form method="post">
+
+
+            {% csrf_token %}
+
+
+
+            <div class="faq-field">
+
+                <label>
+                    Question
+                </label>
+
+                <input class="faq-input" name="question" value="{{faq.question}}" placeholder="Enter question">
+
+            </div>
+
+
+
+
+
+            <div class="faq-field">
+
+                <label>
+                    Arabic Question
+                </label>
+
+
+                <input class="faq-input" name="question_ar" value="{{faq.question_ar}}"
+                    placeholder="Enter Arabic question">
+
+            </div>
+
+
+
+
+
+            <div class="faq-field">
+
+                <label>
+                    Answer
+                </label>
+
+
+                <textarea class="faq-textarea" name="answer" placeholder="Enter answer">{{faq.answer}}</textarea>
+
+
+            </div>
+
+
+
+
+
+            <div class="faq-field">
+
+                <label>
+                    Arabic Answer
+                </label>
+
+
+                <textarea class="faq-textarea" name="answer_ar"
+                    placeholder="Enter Arabic answer">{{faq.answer_ar}}</textarea>
+
+
+            </div>
+
+
+
+
+
+
+            <!-- <div class="faq-field">
+
+                <label>
+                    Category
+                </label>
+
+
+                <select name="category" class="faq-select">
+
+
+                    <option value="general"
+{% if faq.category == 'general' %}selected{% endif %}>
+General
+</option>
+
+
+<option value="wedding"
+{% if faq.category == 'wedding' %}selected{% endif %}>
+Wedding
+</option>
+
+
+<option value="corporate"
+{% if faq.category == 'corporate' %}selected{% endif %}>
+Corporate
+</option>
+
+
+<option value="booking"
+{% if faq.category == 'booking' %}selected{% endif %}>
+Booking
+</option>
+
+
+                </select>
+
+
+            </div>
+
+
+
+
+
+            <div class="faq-field">
+
+
+                <label>
+                    Order
+                </label>
+
+
+                <input class="faq-input" type="number" name="order" value="{{faq.order|default:0}}">
+
+
+            </div> -->
+
+
+
+
+
+            <label class="faq-active">
+
+                <input type="checkbox" name="is_active" {% if faq.is_active %}checked{% endif %}>
+
+                Show FAQ on website
+
+            </label>
+
+
+
+
+
+            <button class="faq-save">
+
+                Save FAQ
+
+            </button>
+
+
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+{% endblock %}

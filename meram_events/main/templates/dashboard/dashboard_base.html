@@ -1,0 +1,263 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Dashboard — Meram Events{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root{
+            --db-dark:    #2A1810;
+            --db-dark-2:  #311F13;
+            --db-maroon:  #3D1A12;
+            --db-cream:   #FBF8F2;
+            --db-border:  #E5DFD3;
+            --db-text:    #2C2420;
+            --db-text-mid:#6B5D50;
+            --db-red:     #B23A2E;
+            --db-green:   #3F7D4A;
+            --db-gold:    #C9A96E;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{
+            font-family:'Hanken Grotesk',sans-serif;
+            background:var(--db-cream);
+            color:var(--db-text);
+            font-size:14px;
+        }
+        a{text-decoration:none;color:inherit;}
+
+        .db-layout{ display:flex; min-height:100vh; }
+
+        /* ===== SIDEBAR ===== */
+        .db-sidebar{
+            width:248px; flex-shrink:0;
+            background:var(--db-dark);
+            color:#fff;
+            display:flex; flex-direction:column;
+            padding:28px 0 24px;
+            position:fixed; top:0; left:0; bottom:0;
+        }
+        .db-sidebar-brand{
+            padding:0 24px 24px;
+            border-bottom:1px solid rgba(255,255,255,0.08);
+            margin-bottom:20px;
+        }
+        .db-sidebar-brand-name{
+            font-family:'Cormorant Garamond',serif;
+            font-size:13px; letter-spacing:1px; font-style:italic;
+            color:rgba(255,255,255,0.55);
+        }
+        .db-sidebar-title{
+            font-size:16px; font-weight:700; letter-spacing:0.5px;
+            text-transform:uppercase; color:#fff; margin-top:4px;
+        }
+        .db-nav{ flex:1; display:flex; flex-direction:column; gap:2px; padding:0 12px; }
+        .db-nav a{
+            display:flex; align-items:center; gap:12px;
+            padding:13px 16px; border-radius:4px;
+            font-size:13.5px; font-weight:500; color:rgba(255,255,255,0.78);
+            transition:all 0.2s; position:relative;
+        }
+        .db-nav a i{ width:16px; text-align:center; font-size:13px; opacity:0.8; }
+        .db-nav a:hover{ background:rgba(255,255,255,0.06); color:#fff; }
+        .db-nav a.active{
+            background:#fff; color:var(--db-dark);
+            font-weight:600;
+        }
+        .db-nav a.active i{ color:var(--db-dark); opacity:1; }
+        .db-nav-badge{
+            background:var(--db-red); color:#fff;
+            font-size:10px; font-weight:700;
+            padding:1px 7px; border-radius:10px;
+            margin-left:auto;
+        }
+        .db-sidebar-footer{ padding:0 12px; margin-top:20px; }
+        .db-logout{
+            display:flex; align-items:center; gap:10px;
+            padding:13px 16px; border-radius:4px;
+            font-size:13.5px; font-weight:500; color:rgba(255,255,255,0.7);
+            border:1px solid rgba(255,255,255,0.15);
+            transition:all 0.2s; cursor:pointer; background:none; width:100%;
+        }
+        .db-logout:hover{ background:rgba(255,255,255,0.08); color:#fff; }
+
+        /* ===== MAIN CONTENT ===== */
+        .db-main{ flex:1; margin-left:248px; padding:36px 48px; }
+        .db-breadcrumb{
+            font-size:10.5px; letter-spacing:2px; text-transform:uppercase;
+            color:var(--db-text-mid); margin-bottom:6px; font-weight:500;
+        }
+        .db-page-title{
+            font-family:'Cormorant Garamond',serif;
+            font-size:42px; font-weight:500; color:var(--db-text);
+            margin-bottom:28px;
+        }
+        .db-header-row{
+            display:flex; justify-content:space-between; align-items:flex-start;
+            margin-bottom:28px;
+        }
+        .db-total-badge{
+            border:1px solid var(--db-border); background:#fff;
+            padding:10px 20px; font-size:11px; letter-spacing:1.5px;
+            text-transform:uppercase; font-weight:600; color:var(--db-text-mid);
+            display:flex; gap:10px; align-items:center;
+        }
+        .db-total-badge strong{ color:var(--db-text); font-size:14px; }
+
+        /* ===== FILTER BAR ===== */
+        .db-filter-bar{
+            display:flex; align-items:flex-end; gap:24px;
+            margin-bottom:24px; flex-wrap:wrap;
+        }
+        .db-quick-filters{ display:flex; gap:0; }
+        .db-quick-filters a{
+            padding:10px 20px; border:1px solid var(--db-border);
+            font-size:12.5px; font-weight:500; color:var(--db-text-mid);
+            margin-right:-1px; background:#fff; transition:all 0.2s;
+        }
+        .db-quick-filters a:first-child{ border-radius:4px 0 0 4px; }
+        .db-quick-filters a:last-child{ border-radius:0 4px 4px 0; }
+        .db-quick-filters a.active{
+            background:var(--db-dark); color:#fff; border-color:var(--db-dark);
+            z-index:1; position:relative;
+        }
+        .db-date-field{ display:flex; flex-direction:column; gap:6px; }
+        .db-date-field label{
+            font-size:10px; letter-spacing:1.5px; text-transform:uppercase;
+            color:var(--db-text-mid); font-weight:600;
+        }
+        .db-date-field input{
+            border:1px solid var(--db-border); padding:9px 12px;
+            font-family:'Hanken Grotesk',sans-serif; font-size:12.5px;
+            color:var(--db-text); border-radius:3px; background:#fff;
+            min-width:150px;
+        }
+        .db-date-field input:focus{ outline:none; border-color:var(--db-dark); }
+        .db-filter-go{
+            border:1px solid var(--db-dark); background:var(--db-dark); color:#fff;
+            padding:9px 22px; font-size:11.5px; letter-spacing:1px; text-transform:uppercase;
+            font-weight:600; border-radius:3px; cursor:pointer; transition:opacity 0.2s;
+        }
+        .db-filter-go:hover{ opacity:0.85; }
+
+        /* ===== TABLE ===== */
+        .db-table-wrap{
+            background:#fff; border:1px solid var(--db-border);
+            border-radius:4px; overflow:hidden;
+        }
+        table.db-table{ width:100%; border-collapse:collapse; }
+        table.db-table thead th{
+            background:var(--db-maroon); color:#fff;
+            text-align:left; padding:15px 20px;
+            font-size:11.5px; letter-spacing:1px; text-transform:uppercase;
+            font-weight:600;
+        }
+        table.db-table tbody td{
+            padding:16px 20px; border-bottom:1px solid var(--db-border);
+            font-size:13px; color:var(--db-text); vertical-align:middle;
+        }
+        table.db-table tbody tr:last-child td{ border-bottom:none; }
+        table.db-table tbody tr:hover{ background:#FAF6EE; }
+        .db-action-icons{ display:flex; gap:14px; }
+        .db-action-icons a, .db-action-icons button{
+            background:none; border:none; cursor:pointer;
+            font-size:14px; color:var(--db-text-mid); transition:color 0.2s;
+            padding:0;
+        }
+        .db-action-icons a:hover{ color:var(--db-dark); }
+        .db-action-icons .db-delete-btn:hover{ color:var(--db-red); }
+
+        .db-status-pill{
+            display:inline-block; padding:4px 12px; border-radius:20px;
+            font-size:10.5px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase;
+        }
+        .db-status-pending{ background:#FCEFD0; color:#8a6d1f; }
+        .db-status-confirmed{ background:#DCEEDD; color:var(--db-green); }
+        .db-status-cancelled{ background:#F8DADA; color:var(--db-red); }
+        .db-status-completed{ background:#DDE5F5; color:#3a5a9e; }
+
+        .db-empty{
+            padding:60px 20px; text-align:center; color:var(--db-text-mid);
+            font-size:13px;
+        }
+
+        /* Messages */
+        .db-messages{ margin-bottom:20px; }
+        .db-alert{
+            padding:12px 20px; border-left:3px solid var(--db-green);
+            background:#fff; font-size:12.5px; margin-bottom:10px;
+            box-shadow:0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        @media(max-width:900px){
+            .db-sidebar{ width:200px; }
+            .db-main{ margin-left:200px; padding:24px; }
+            .db-page-title{ font-size:30px; }
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<div class="db-layout">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="db-sidebar">
+        <div class="db-sidebar-brand">
+            <div class="db-sidebar-brand-name">Meram Events</div>
+            <div class="db-sidebar-title">Admin Dashboard</div>
+        </div>
+
+        <nav class="db-nav">
+            <a href="{% url 'dashboard_bookings' %}" class="{% if active_page == 'booking' %}active{% endif %}">
+                <i class="fa-solid fa-calendar-check"></i> Bookings
+            </a>
+            <a href="{% url 'dashboard_contacts' %}" class="{% if active_page == 'contacts' %}active{% endif %}">
+                <i class="fa-solid fa-envelope"></i> Messages
+                {% if unread_contacts %}<span class="db-nav-badge">{{ unread_contacts }}</span>{% endif %}
+            </a>
+            <a href="{% url 'dashboard_faqs' %}" 
+   class="{% if active_page == 'faq' %}active{% endif %}">
+    <i class="fa-solid fa-circle-question"></i> FAQ
+</a>
+            <a href="{% url 'dashboard_gallery' %}" class="{% if active_page == 'gallery' %}active{% endif %}">
+                <i class="fa-solid fa-images"></i> Gallery
+            </a>
+            <a href="{% url 'dashboard_celebration_images' %}"
+   class="{% if active_page == 'celebration' %}active{% endif %}">
+    <i class="fa-solid fa-calendar-check"></i> Celebration Images
+</a>
+            <a href="/" target="_blank">
+                <i class="fa-solid fa-globe"></i> View Website
+            </a>
+        </nav>
+
+        <div class="db-sidebar-footer">
+            <form method="post" action="{% url 'dashboard_logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="db-logout">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <main class="db-main">
+        {% if messages %}
+        <div class="db-messages">
+            {% for message in messages %}
+            <div class="db-alert">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% block dashboard_content %}{% endblock %}
+    </main>
+</div>
+
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

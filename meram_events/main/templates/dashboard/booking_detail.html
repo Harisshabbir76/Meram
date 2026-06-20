@@ -1,0 +1,87 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block title %}Booking Detail — {{ booking.full_name }}{% endblock %}
+
+{% block extra_head %}
+<style>
+.bd-back{ display:inline-flex; align-items:center; gap:8px; font-size:12.5px; color:var(--db-text-mid); margin-bottom:20px; }
+.bd-back:hover{ color:var(--db-text); }
+.bd-grid{ display:grid; grid-template-columns:1.4fr 1fr; gap:30px; align-items:start; }
+.bd-card{ background:#fff; border:1px solid var(--db-border); border-radius:4px; padding:32px; margin-bottom:20px; }
+.bd-card h3{ font-family:'Cormorant Garamond',serif; font-size:20px; margin-bottom:18px; color:var(--db-text); }
+.bd-row{ display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--db-border); font-size:13px; }
+.bd-row:last-child{ border-bottom:none; }
+.bd-row-label{ color:var(--db-text-mid); font-weight:500; }
+.bd-row-value{ color:var(--db-text); font-weight:500; text-align:right; max-width:60%; }
+.bd-details-text{ font-size:13px; color:var(--db-text); line-height:1.9; }
+.bd-form-label{ display:block; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--db-text-mid); font-weight:600; margin-bottom:8px; }
+.bd-select, .bd-textarea{
+    width:100%; padding:11px 14px; border:1px solid var(--db-border); border-radius:3px;
+    font-family:'Hanken Grotesk',sans-serif; font-size:13px; color:var(--db-text); margin-bottom:18px;
+}
+.bd-textarea{ min-height:110px; resize:vertical; }
+.bd-save-btn{
+    width:100%; padding:13px; background:var(--db-dark); color:#fff; border:none;
+    font-size:13px; font-weight:600; letter-spacing:0.5px; cursor:pointer; border-radius:3px;
+    transition:opacity 0.2s;
+}
+.bd-save-btn:hover{ opacity:0.88; }
+</style>
+{% endblock %}
+
+{% block dashboard_content %}
+<a href="{% url 'dashboard_bookings' %}" class="bd-back">← Back to Bookings</a>
+
+<div class="db-header-row">
+    <h1 class="db-page-title" style="font-size:32px;">{{ booking.full_name }}</h1>
+    <span class="db-status-pill db-status-{{ booking.status }}">{{ booking.get_status_display }}</span>
+</div>
+
+<div class="bd-grid">
+    <!-- LEFT: Booking Info -->
+    <div>
+        <div class="bd-card">
+            <h3>Client Information</h3>
+            <div class="bd-row"><span class="bd-row-label">Full Name</span><span class="bd-row-value">{{ booking.full_name }}</span></div>
+            <div class="bd-row"><span class="bd-row-label">Email</span><span class="bd-row-value">{{ booking.email }}</span></div>
+            <div class="bd-row"><span class="bd-row-label">Phone</span><span class="bd-row-value">{{ booking.phone }}</span></div>
+        </div>
+
+        <div class="bd-card">
+            <h3>Event Details</h3>
+            <div class="bd-row"><span class="bd-row-label">Event Type</span><span class="bd-row-value">{{ booking.get_event_type_display }}</span></div>
+            <div class="bd-row"><span class="bd-row-label">Event Date</span><span class="bd-row-value">{{ booking.event_date|date:"F j, Y" }}</span></div>
+            <div class="bd-row"><span class="bd-row-label">Guest Count</span><span class="bd-row-value">{{ booking.guest_count|default:"—" }}</span></div>
+            <div class="bd-row"><span class="bd-row-label">Venue</span><span class="bd-row-value">{{ booking.venue|default:"—" }}</span></div>
+            <div class="bd-row"><span class="bd-row-label">Budget</span><span class="bd-row-value">{{ booking.budget|default:"—" }}</span></div>
+            <div class="bd-row"><span class="bd-row-label">Submitted</span><span class="bd-row-value">{{ booking.submitted_at|date:"M j, Y — g:i A" }}</span></div>
+        </div>
+
+        {% if booking.details %}
+        <div class="bd-card">
+            <h3>Event Vision &amp; Details</h3>
+            <p class="bd-details-text">{{ booking.details }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- RIGHT: Admin Actions -->
+    <div class="bd-card">
+        <h3>Manage Booking</h3>
+        <form method="post">
+            {% csrf_token %}
+            <label class="bd-form-label">Status</label>
+            <select name="status" class="bd-select">
+                <option value="pending" {% if booking.status == 'pending' %}selected{% endif %}>Pending</option>
+                <option value="confirmed" {% if booking.status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+                <option value="cancelled" {% if booking.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                <option value="completed" {% if booking.status == 'completed' %}selected{% endif %}>Completed</option>
+            </select>
+
+            <label class="bd-form-label">Internal Notes</label>
+            <textarea name="notes" class="bd-textarea" placeholder="Add internal notes about this booking...">{{ booking.notes }}</textarea>
+
+            <button type="submit" class="bd-save-btn">Save Changes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

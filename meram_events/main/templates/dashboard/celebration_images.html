@@ -1,0 +1,241 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block title %}Celebration Images — Meram Events Admin{% endblock %}
+
+{% block extra_head %}
+<style>
+
+.cm-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.cm-card{
+    background:#fff;
+    border:1px solid var(--db-border);
+    border-radius:8px;
+    overflow:hidden;
+    transition:.2s;
+}
+
+.cm-card:hover{
+    transform:translateY(-2px);
+}
+
+.cm-card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    display:block;
+}
+
+.cm-card-body{
+    padding:16px;
+}
+
+.cm-card-title{
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+.cm-status{
+    display:inline-block;
+    font-size:11px;
+    padding:5px 12px;
+    border-radius:30px;
+    margin-bottom:14px;
+}
+
+.cm-active{
+    background:#ecfdf3;
+    color:#067647;
+}
+
+.cm-inactive{
+    background:#fef3f2;
+    color:#b42318;
+}
+
+.cm-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:14px;
+}
+
+.cm-actions a,
+.cm-actions button{
+    border:none;
+    background:none;
+    cursor:pointer;
+    color:var(--db-dark);
+    font-size:15px;
+}
+
+@media(max-width:1200px){
+    .cm-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:900px){
+    .cm-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .cm-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="db-breadcrumb">
+    Meram Events Admin
+</div>
+
+<div class="db-header-row">
+
+    <h1 class="db-page-title">
+        Celebration Images
+    </h1>
+
+    <div style="display:flex;gap:12px;">
+
+        <div class="db-total-badge">
+            Total <strong>{{ total }}</strong>
+        </div>
+
+        <a href="{% url 'dashboard_celebration_create' %}"
+           class="db-filter-go">
+            Add Image
+        </a>
+
+    </div>
+
+</div>
+
+<form method="get" class="db-filter-bar">
+
+    <div class="db-date-field">
+        <label>Search</label>
+        <input type="text"
+               name="q"
+               value="{{ query }}"
+               placeholder="Search title">
+    </div>
+
+    <button class="db-filter-go">
+        Filter
+    </button>
+
+</form>
+
+<div class="cm-grid">
+
+    {% for image in images %}
+
+    <div class="cm-card"
+         id="image-row-{{ image.pk }}">
+
+        <img src="{{ image.image.url }}"
+             alt="{{ image.title }}">
+
+        <div class="cm-card-body">
+
+            <div class="cm-card-title">
+                {{ image.title }}
+            </div>
+
+            {% if image.is_active %}
+                <span class="cm-status cm-active">
+                    Active
+                </span>
+            {% else %}
+                <span class="cm-status cm-inactive">
+                    Inactive
+                </span>
+            {% endif %}
+
+            <div class="cm-actions">
+
+                <a href="{% url 'dashboard_celebration_update' image.pk %}"
+                   title="Edit">
+                    <i class="fa-solid fa-pen"></i>
+                </a>
+
+                <button type="button"
+                        onclick="deleteImage({{ image.pk }})"
+                        title="Delete">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="db-empty">
+        No celebration images found.
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+
+function deleteImage(pk){
+
+    if(!confirm("Delete this image?")) return;
+
+    fetch(`/dashboard/celebration-images/${pk}/delete/`,{
+        method:"POST",
+        headers:{
+            "X-CSRFToken":getCookie("csrftoken")
+        }
+    })
+    .then(r=>r.json())
+    .then(data=>{
+
+        if(data.success){
+
+            const row =
+                document.getElementById(
+                    `image-row-${pk}`
+                );
+
+            if(row){
+                row.remove();
+            }
+
+        }
+
+    });
+
+}
+
+function getCookie(name){
+
+    const v =
+    document.cookie.match(
+    '(^|;)\\s*'+name+'\\s*=\\s*([^;]+)'
+    );
+
+    return v ? v.pop() : '';
+
+}
+
+</script>
+{% endblock %}

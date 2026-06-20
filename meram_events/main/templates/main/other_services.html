@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block title %}Services — Meram Events{% endblock %}
-
+{% block navbar_class %}light-nav{% endblock %}
 {% block extra_head %}
 <style>
 
@@ -11,7 +11,7 @@
 
 /* ── SECTION 1: HERO INTRO ── */
 .srv-hero{
-    background:#FAF9F5;
+    background:#F4F1EA;
     padding: 220px 20px 350px;
     text-align:center;
 }
@@ -21,7 +21,7 @@
     margin-bottom:25px;
 
     font-family:'Hanken Grotesk',sans-serif;
-    font-size:15px;
+    font-size:12px;
     font-weight:300;
     line-height:20px;
     letter-spacing:.9px;
@@ -30,23 +30,23 @@
 }
 
 .srv-hero-title{
-    max-width:900px;
-    margin:0 auto 35px;
-
-    font-family:'FreightDisp Pro',serif;
-    font-size:73px;
+    font-family:'FreightDisp Pro', serif;
+    font-size:clamp(26px,4vw,44px);
+    line-height:0.95;
     font-weight:300;
-    line-height:74px;
     letter-spacing:-0.95px;
     text-transform:uppercase;
     color:#311F13;
+
+    max-width:1100px;
+    margin:0 auto 42px;
 }
 
 .srv-hero-sub{
     margin-bottom:40px;
 
     font-family:'Hanken Grotesk',sans-serif;
-    font-size:15px;
+    font-size:12px;
     font-weight:300;
     line-height:20px;
     letter-spacing:.9px;
@@ -56,7 +56,7 @@
 
 .srv-hero-script{
     font-family:'Pinyon Script',cursive;
-    font-size:32px;
+    font-size:28px;
     line-height:40px;
     color:#311F13;
 }
@@ -164,34 +164,24 @@
 /* BUTTON */
 
 .btn-os{
-    width:219px;
-    height:34px;
+     width: 219px;
+    height: 34px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 
-    border:1px solid #000;
+    border: 1px solid #000;
+    color: #000;
+    text-decoration: none;
 
-    background:transparent;
-
-    font-family:'Hanken Grotesk', sans-serif;
-    font-size:10px;
-    font-weight:400;
-
-    letter-spacing:2px;
-    text-transform:uppercase;
-
-    color:#000;
-    text-decoration:none;
-
-    transition:.3s ease;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
-
 .btn-os:hover{
-    background:#311F13;
+    background:#000;
     color:#fff;
-    border-color:#311F13;
 }
 
 /* ── SECTION 2: 3 SERVICE CARDS (image with dark overlay + title) ── */
@@ -248,14 +238,14 @@
     line-height:42px;
     letter-spacing:-0.5px;
     text-transform:uppercase;
-    color:#FAF9F5;
+    color:#F4F1EA;
 }
 
 /* ── SECTION 3: DETAIL SECTIONS (image left col, content center, image right col) ── */
 .srv-detail-wrap{
     display:grid;
     grid-template-columns:420px 1fr 421px;
-    background:#FAF9F5;
+    background:#F4F1EA;
     min-height:748px;
 }
 
@@ -391,7 +381,7 @@
 .srv-process{
     position:relative;
     background:#F4F1EA;
-    padding:140px 40px 100px;
+    padding:90px 166px;
     text-align:center;
     overflow:hidden;
 }
@@ -399,9 +389,9 @@
 /* LEFT IMAGE */
 .srv-process-intro-img{
     position:absolute;
-    left:185px;
-    top:250px;
-    width:212px;
+    left: 165px;
+    /* top: 250px; */
+    width: 212px;
     height:212px;
     object-fit:cover;
 }
@@ -409,8 +399,8 @@
 /* RIGHT IMAGE */
 .srv-process-bottom{
     position:absolute;
-    right:250px;
-    bottom:180px;
+    right: 165px;
+    bottom: 198px;
 }
 
 .srv-process-bottom img{
@@ -422,13 +412,13 @@
 /* TITLE */
 .srv-process-title{
     font-family:"FreightDisp Pro", serif;
-    font-size:45px;
+    font-size:44px;
     line-height:57px;
     font-weight:300;
     letter-spacing:-0.54px;
     text-transform:uppercase;
     color:#311F13;
-    margin-bottom:40px;
+    margin-bottom:35px;
 }
 
 /* INTRO */
@@ -440,7 +430,7 @@
 
 .srv-process-intro-text{
     font-family:"Hanken Grotesk", sans-serif;
-    font-size:15px;
+    font-size:12px;
     line-height:20px;
     font-weight:300;
     letter-spacing:.9px;
@@ -465,7 +455,7 @@
 .srv-step-num{
     display:block;
     font-family:"FreightDisp Pro", serif;
-    font-size:30px;
+    font-size:28px;
     line-height:57px;
     font-weight:300;
     letter-spacing:-0.36px;
@@ -487,7 +477,7 @@
 
 .srv-step-body{
     font-family:"Hanken Grotesk", sans-serif;
-    font-size:15px;
+    font-size:12px;
     line-height:20px;
     font-weight:300;
     letter-spacing:.9px;
@@ -504,152 +494,22 @@
 
 /* BUTTON */
 .srv-process .btn-srv{
-    width:219px;
-    height:34px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-top:30px;
+    width: 219px;
+    height: 34px;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid #000;
+    color: #000;
+    text-decoration: none;
+
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
-/* ── SECTION 5: WHY CHOOSE ── */
-/* ===== WHY CHOOSE ===== */
-/* .why-section{
-    background:var(--cream-dark);
-    padding:80px 60px;
-    display:grid;
-    grid-template-columns:260px 1fr 240px;
-    gap:50px;align-items:center;
-    position:relative;overflow:hidden;
-} */
-/* ===== WHY CHOOSE MERAM EVENTS ===== */
-
-.why-section{
-    position:relative;
-    background:#E6DBC9;
-    /* min-height:646px; */
-
-    padding:77px 200px 58px;
-
-    display:grid;
-    grid-template-columns:204px 1fr 219px;
-    gap:80px;
-
-    overflow:hidden;
-}
-
-/* LEFT IMAGE */
-.why-img-left{
-    width:204px;
-    height:237px;
-    object-fit:cover;
-    align-self:start;
-}
-
-/* RIGHT IMAGE */
-.why-img-right{
-    width:219px;
-    height:197px;
-    object-fit:cover;
-    align-self:end;
-}
-
-/* CENTER CONTENT */
-.why-center{
-    text-align:center;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-/* EYEBROW */
-.why-eyebrow{
-    margin:0 0 22px;
-
-    font-family:"Hanken Grotesk", sans-serif;
-    font-size:18px;
-    line-height:1.2;
-    font-weight:300;
-
-    letter-spacing:-0.22px;
-    color:#000000;
-    text-transform:uppercase;
-}
-
-/* TITLE */
-.why-title{
-    margin:0 0 32px;
-
-    font-family:"FreightDisp Pro", serif;
-    font-size: 50px;
-    font-weight:400;
-    line-height: 46px;
-
-    letter-spacing:-0.72px;
-    color:#311F13;
-    text-transform:uppercase;
-
-    max-width:666px;
-}
-
-/* LIST */
-.why-list{
-    list-style:none;
-    padding:0;
-    margin:0 0 35px;
-    max-width:520px;
-    margin-left:auto;
-    margin-right:auto;
-}
-
-.why-list li{
-    position:relative;
-
-    font-family:"Hanken Grotesk", sans-serif;
-    font-size:18px;
-    line-height:32px;
-    font-weight:300;
-
-    letter-spacing:-0.22px;
-    color:#000000;
-    text-transform:uppercase;
-
-    text-align:left;
-
-    padding-left:28px;
-}
-
-.why-list li::before{
-    content:"✓";
-    position:absolute;
-    left:0;
-    top:0;
-
-    font-size:16px;
-    font-weight:400;
-    color:#000000;
-}
-
-/* WATERMARK */
-.why-watermark{
-    position:absolute;
-    left:200px;
-    bottom:20px;
-
-    font-family:'Shabby Chic', cursive;
-    font-size:58px;
-    font-weight:400;
-    line-height:1;
-
-    color:#FAF9F5;
-
-    letter-spacing:2px;
-
-    white-space:nowrap;
-    pointer-events:none;
-    user-select:none;
-
-    z-index:1;}
 /* ── SECTION 6: CELEBRATION ── */
 .srv-celebration {
     background: var(--white); padding: 90px 60px; text-align: center;
@@ -688,11 +548,157 @@
     padding-bottom: 2px; transition: color 0.3s;
 }
 .back-top-link:hover { color: var(--text-dark); }
-/* Celebration section at bottom */
-.celebration-section{
-    background:#FAF9F5;
-    padding:90px 200px 80px;
+/* ===== WHY CHOOSE MERAM EVENTS ===== */
+
+.why-section{
+    position:relative;
+    background:#E6DBC9;
+    /* min-height:646px; */
+
+    padding: 62px 166px 62px;
+
+    display:grid;
+    grid-template-columns:204px 1fr 204px;
+    gap:80px;
+
+    overflow:hidden;
+}
+
+/* LEFT IMAGE */
+.why-img-left{
+    width:204px;
+    height:204px;
+    object-fit:cover;
+    align-self:start;
+}
+
+/* RIGHT IMAGE */
+.why-img-right{
+    width:204px;
+    height:204px;
+    object-fit:cover;
+    align-self:end;
+}
+
+/* CENTER CONTENT */
+.why-center{
     text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+/* EYEBROW */
+.why-eyebrow{
+    margin:0 0 22px;
+
+    font-family:"Hanken Grotesk", sans-serif;
+    font-size:14px;
+    line-height:1.2;
+    font-weight:300;
+
+    letter-spacing:-0.22px;
+    color:#000000;
+    text-transform:uppercase;
+}
+
+/* TITLE */
+.why-title{
+    margin:0 0 32px;
+
+    font-family:"FreightDisp Pro", serif;
+    font-size: 44px;
+    font-weight:400;
+    line-height: 46px;
+
+    letter-spacing:-0.72px;
+    color:#311F13;
+    text-transform:uppercase;
+
+    max-width:666px;
+}
+.why-watermark{
+    position:absolute;
+    left:200px;
+    bottom:20px;
+
+    font-family:'Shabby Chic', cursive;
+    font-size:58px;
+    font-weight:400;
+    line-height:1;
+
+    color:#F4F1EA;
+
+    letter-spacing:2px;
+
+    white-space:nowrap;
+    pointer-events:none;
+    user-select:none;
+
+    z-index:1;
+}
+
+/* LIST */
+.why-list{
+    list-style:none;
+    padding:0;
+    margin:0 0 35px;
+    max-width:520px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.why-list li{
+    position:relative;
+
+    font-family:"Hanken Grotesk", sans-serif;
+    font-size:14px;
+    line-height:32px;
+    font-weight:300;
+
+    letter-spacing:-0.22px;
+    color:#000000;
+    text-transform:uppercase;
+
+    text-align:left;
+
+    padding-left:28px;
+}
+
+.why-list li::before{
+    content:"✓";
+    position:absolute;
+    left:0;
+    top:0;
+
+    font-size:16px;
+    font-weight:400;
+    color:#000000;
+}
+/* WATERMARK */
+.intro-watermark {
+    position: absolute;
+    left: -66px;
+    top: 271px;
+    width: 528px;
+    font-family: "charlotte", cursive;
+    font-size: 14px;
+    line-height: 39px;
+    font-weight: 400;
+    letter-spacing: 1.92px;
+    color: #F4F1EA;
+    text-align: center;
+    transform: rotate(-11deg);
+    white-space: normal;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+}
+
+.celebration-section {
+    background: #FAF9F5;
+    padding: 90px 164px 34px;
+    text-align: center;
 }
 
 /* EYEBROW */
@@ -701,7 +707,7 @@
     margin-bottom:25px;
 
     font-family:"Hanken Grotesk", sans-serif;
-    font-size:18px;
+    font-size:14px;
     line-height:23px;
     font-weight:300;
 
@@ -715,7 +721,7 @@
     margin:0 auto 25px;
 
     font-family:"FreightDisp Pro", serif;
-    font-size:55px;
+    font-size:44px;
     line-height:62px;
     font-weight:400;
 
@@ -726,35 +732,44 @@
 
 /* SCRIPT TEXT */
 .celebration-script{
-    margin:0 0 50px;
 
-    font-family:'Pinyon Script', cursive;
-    font-size:34px;
-    line-height:1.2;
-    font-weight:400;
-
-    letter-spacing:-0.41px;
-    color:#000000;
+    margin: 0 0 50px;
+    font-family: 'Pinyon Script', cursive;
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 400;
+    letter-spacing: -0.41px;
+    color: #000000;
 }
 
-/* BACK TO TOP */
-.back-to-top-link{
-    display:inline-block;
-    margin-bottom:60px;
+.back-to-top-link
+ {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    font-family: "Hanken Grotesk", sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 1.5px;
+    color: #000;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: .3s ease;
+}
 
-    font-family:"Hanken Grotesk", sans-serif;
-    font-size:15px;
-    line-height:20px;
-    font-weight:300;
+.back-top-icon
+ {
+    display: block;
+    font-size: 20px;
+    line-height: 1;
+    color: #767474;
+    margin-bottom: 6px;
+}
 
-    letter-spacing:1.5px;
-    color:#000000;
-    text-transform:uppercase;
-
-    text-decoration:none;
-    padding-bottom:3px;
-
-    transition:all .3s ease;
+.back-to-top-link:hover{
+    transform:translateY(-2px);
 }
 
 .back-to-top-link:hover{
@@ -762,24 +777,27 @@
 }
 
 /* IMAGE GRID */
+/* IMAGE GRID */
 .celebration-grid{
-    display:grid;
-    grid-template-columns:repeat(6,1fr);
-    gap:8px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    width: 100%;
 }
 
 .celebration-grid img{
-    width:100%;
-    height:203px;
-    object-fit:cover;
-    display:block;
-
-    transition:transform .4s ease;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* perfect square */
+    object-fit: cover;
+    display: block;
+    transition: transform .4s ease;
 }
 
 .celebration-grid img:hover{
-    transform:scale(1.03);
+    transform: scale(1.03);
 }
+
+
 /* Lightbox */
 .lightbox {
     display: none; position: fixed; inset: 0;
@@ -806,7 +824,7 @@
 @media (max-width: 1400px){
 
     .os-card{
-        width:90%;
+                max-width: 1069px;
         grid-template-columns:45% 1fr;
     }
 
@@ -824,13 +842,18 @@
         font-size:28px;
         line-height:34px;
     }
+    .celebration-title {
+    font-size: 38px;}
+    .celebration-eyebrow {
+    font-size: 16px;}
+    .celebration-script {
+    font-size: 30px;}
+    .celebration-grid img {
+    max-width: 170px;
+    height: 170px;}
 }
 @media (max-width:1200px){
 
-    .srv-hero-title{
-        font-size:60px;
-        line-height:58px;
-    }
 
     .srv-card{
         height:550px;
@@ -872,7 +895,7 @@
     .srv-block-quote{
         font-size:20px;
     }
-    .srv-process-intro-img,
+     .srv-process-intro-img,
     .srv-process-bottom{
         position:static;
     }
@@ -893,14 +916,82 @@
     }
 
     .srv-process-title{
-        font-size:34px;
+        font-size:28px;
         line-height:42px;
     }
+    .srv-process-intro-text {
+    font-size: 9px;
+padding: 0 20px;}
 
     .srv-step-num{
-        font-size:24px;
+        font-size:22px;
         line-height:40px;
     }
+    .srv-step-body
+ {
+    font-size: 9px;
+    padding: 0 20px;
+}
+.srv-step-arrow {
+    font-size: 16px;
+    color: #311F13;
+    opacity: .4;
+    /* margin: 12px 0; */
+}
+.srv-step {
+    margin-bottom: 0;
+}
+.srv-process-intro {
+    margin: 0 auto 10px;
+}
+        .celebration-grid{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (max-width:1300px){
+
+.celebration-section{
+        padding:80px 50px;
+    }
+
+    .celebration-title{
+        font-size:48px;
+        line-height:52px;
+    }
+
+    .celebration-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+@media (max-width:1400px){
+
+.srv-content-col {
+    padding: 34px 50px 0}
+    .srv-block-title
+ {
+    font-size: 28px;}
+    .srv-block-tagline, .srv-block-body, .srv-block-sub, .srv-list
+ {
+    font-size: 12px;}
+    .srv-block-quote {
+    font-size: 15px;}
+
+.why-title {
+    font-size: 36px;}
+
+.why-eyebrow {
+    font-size: 15px;}
+    .why-list li {
+    font-size: 14px;}
+    .celebration-title {
+    font-size: 38px;}
+    .celebration-eyebrow {
+    font-size: 16px;}
+    .celebration-script {
+    font-size: 30px;}
+    .celebration-grid img {
+    max-width: 170px;
+    height: 170px;}
 }
 @media(max-width:1100px){
     .srv-detail-wrap { grid-template-columns: 180px 1fr 180px; }
@@ -959,9 +1050,6 @@
     }
 
     .srv-hero-title{
-        font-size:34px;
-        line-height:42px;
-        letter-spacing:-0.3px;
         margin-bottom:24px;
     }
 
@@ -994,7 +1082,7 @@
         font-size:30px;
         line-height:30px;
     }
-     .celebration-section{
+        .celebration-section{
         padding:60px 20px;
     }
 
@@ -1015,14 +1103,12 @@
         font-size:13px;
         letter-spacing:1px;
     }
-
     .celebration-grid{
-        grid-template-columns:repeat(2,1fr);
-        gap:6px;
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .celebration-grid img{
-        height:130px;
+    .celebration-section{
+        padding: 60px 20px 30px;
     }
      .os-cards-section{
         padding:80px 20px;
@@ -1058,9 +1144,12 @@
         margin-bottom:25px;
     }
 
-    .btn-os{
-        width:100%;
-        max-width:220px;
+        .btn-os{
+              width: 136px;
+    height: 30px;
+    font-size: 8px;
+    letter-spacing: 1px;
+        margin: 25px auto 0;
     }
 }
 @media (max-width: 480px){
@@ -1075,26 +1164,48 @@
 
     .os-card-content{
         padding:24px 18px;
+                text-align: center;
     }
 
     .os-card-title{
-        font-size:18px;
+        font-size:24px;
         line-height:24px;
     }
 
     .os-card-body{
-        font-size:12px;
+        font-size:9px;
         line-height:18px;
     }
-
-    .btn-os{
-        width:100%;
-        max-width:none;
-        height:42px;
+       .celebration-grid{
+        grid-template-columns:1fr;
     }
 }
+    @media (max-width:576px) {
+
+        .why-img-left,
+        .why-img-right {
+            width: 180px;
+            height: 180px;
+        }
+
+        .why-title {
+            font-size: 26px;
+            line-height: 32px;
+        }
+
+        .why-watermark {
+            font-size: 38px;
+        }
+
+        .why-list li {
+            font-size: 11px;
+            line-height: 22px;
+        }
+        .os-card-img {
+    padding: 20px 25px;}
+    }
 @media(max-width:960px){
-    .srv-hero { padding: 140px 20px 220px; }
+    .srv-hero { padding: 140px 20px 65px; }
     .srv-cards-row { grid-template-columns: 1fr; }
     .srv-detail-wrap { grid-template-columns: 1fr; }
     .srv-img-col { flex-direction: row; flex-wrap: wrap; }
@@ -1106,82 +1217,79 @@
     .srv-why-img, .srv-why-img-sm { display: none; }
     .srv-celebration { padding: 60px 24px; }
     .srv-cel-grid { grid-template-columns: repeat(3, 1fr); }
-        .why-section{
-        grid-template-columns:1fr;
-        padding:60px 24px;
-        gap:30px;
-        text-align:center;
-    }
-
-    /* Images Center */
-    .why-img-left,
-    .why-img-right{
-        margin:0 auto;
-        width:100%;
-        max-width:220px;
-        height:auto;
-    }
-
-    /* Order */
-    .why-img-left{
-        order:1;
-    }
-
-    .why-center{
-        order:2;
-    }
-
-    .why-img-right{
-        order:3;
-    }
-
-    /* Content */
-    .why-center{
-        width:100%;
-    }
-
-    .why-eyebrow{
-        font-size:15px;
-        margin-bottom:15px;
-    }
-
-    .why-title{
-        font-size:38px;
-        line-height:42px;
-        margin-bottom:24px;
-    }
-
-    .why-list{
-        max-width:100%;
-        margin:0 auto 30px;
-    }
-
-    .why-list li{
-        font-size:15px;
-        line-height:26px;
-        padding-left:24px;
-    }
-
-    .why-list li::before{
-        font-size:14px;
-    }
-
-    /* Watermark */
-    .why-watermark{
-        position:static;
-        display:block;
-        text-align:center;
-
-        font-size:42px;
-        line-height:1.2;
-
-        margin-top:25px;
-
-        white-space:normal;
-    }
-
     .celebration-section{padding:60px 24px;}
     .celebration-grid{grid-template-columns:repeat(3,1fr);}
+        .celebration-grid img {
+        max-width: 170px;
+        height: 115px;
+    }
+        .celebration-eyebrow {
+        font-size: 11px;
+    }
+        .celebration-title {
+        font-size: 18px;
+        line-height: 28px;
+    }
+        .celebration-script {
+        font-size: 22px;
+    }
+     .why-section {
+            grid-template-columns: 1fr;
+            padding: 10px 60px 24px;
+            gap: 30px;
+            text-align: center;
+            justify-items: center;
+        }
+
+        /* Images */
+        .why-img-left,
+        .why-img-right {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            margin: 0 auto;
+        }
+
+        /* Order */
+        .why-img-left {
+            order: 1;
+        }
+
+        .why-center {
+            order: 2;
+            width: 100%;
+        }
+
+        .why-img-right {
+            order: 3;
+        }
+
+        /* Watermark last */
+        .why-watermark {
+            order: 4;
+
+            position: static;
+            display: block;
+            width: 100%;
+
+            text-align: center;
+
+            font-size: 42px;
+            line-height: 1.1;
+
+            white-space: normal;
+        }
+
+        .why-list {
+            max-width: 100%;
+        }
+
+        .why-list li {
+            text-align: left;
+            font-size: 12px;
+            line-height: 24px;
+        }
+
 }
 </style>
 {% endblock %}
@@ -1212,9 +1320,9 @@
     </p>
 
     <p class="srv-hero-script"
-       data-en="LET'S CREATE YOUR EVENT"
+       data-en="Let’s Create Your Event"
        data-ar="لنصنع فعاليتك معًا">
-        LET'S CREATE YOUR EVENT
+        Let’s Create Your Event
     </p>
 
 </section>
@@ -1225,7 +1333,7 @@
     <div class="os-card reveal">
 
         <img class="os-card-img"
-             src="{% static 'main/images/oser3.png' %}"
+             src="{% static 'main/images/abaya.jpg' %}"
              alt="Abaya Service">
 
         <div class="os-card-content">
@@ -1287,7 +1395,7 @@
     <div class="os-card reveal">
 
         <img class="os-card-img"
-             src="{% static 'main/images/oers4.png' %}"
+             src="{% static 'main/images/king.jpg' %}"
              alt="Phone Service & Privacy Control">
 
         <div class="os-card-content">
@@ -1460,10 +1568,9 @@
              alt="Our process">
 
         <p class="srv-process-intro-text"
-           data-en="A seamless journey from vision to execution. We follow a structured and personalised process to ensure every event is exactly as you imagined it — and beyond."
+           data-en="A SEAMLESS JOURNEY FROM VISION TO EXECUTION <br>WE FOLLOW A STRUCTURED YET PERSONALIZED PROCESS TO ENSURE EVERY EVENT IS <br>DELIVERED TO THE HIGHEST STANDARD:"
            data-ar="رحلة سلسة تبدأ من الفكرة وتنتهي بالتنفيذ. نتبع عملية منظمة ومخصصة لضمان أن يكون كل حدث كما تخيلته تماماً وأكثر.">
-            A seamless journey from vision to execution.<br>
-            We follow a structured and personalised process to ensure every event is exactly as you imagined it — and beyond.
+            A SEAMLESS JOURNEY FROM VISION TO EXECUTION <br>WE FOLLOW A STRUCTURED YET PERSONALIZED PROCESS TO ENSURE EVERY EVENT IS <br>DELIVERED TO THE HIGHEST STANDARD:
         </p>
     </div>
 
@@ -1472,16 +1579,10 @@
         <!-- STEP 1 -->
         <div class="srv-step">
             <span class="srv-step-num"
-                  data-en="01 Consultation"
-                  data-ar="01 الاستشارة">
-                01 Consultation
+                  data-en="01. Consultation"
+                  data-ar="01. الاستشارة">
+                01. Consultation
             </span>
-
-            <div class="srv-step-title"
-                 data-en="Consultation"
-                 data-ar="الاستشارة">
-                Consultation
-            </div>
 
             <p class="srv-step-body"
                data-en="Understanding your vision, preferences, and expectations"
@@ -1495,16 +1596,10 @@
         <!-- STEP 2 -->
         <div class="srv-step">
             <span class="srv-step-num"
-                  data-en="02 Concept & Design"
-                  data-ar="02 الفكرة والتصميم">
-                02 Concept &amp; Design
+                  data-en="02. Concept & Design"
+                  data-ar="02. الفكرة والتصميم">
+                02. Concept &amp; Design
             </span>
-
-            <div class="srv-step-title"
-                 data-en="Concept & Design"
-                 data-ar="الفكرة والتصميم">
-                Concept &amp; Design
-            </div>
 
             <p class="srv-step-body"
                data-en="Developing a creative direction tailored to your event"
@@ -1518,16 +1613,10 @@
         <!-- STEP 3 -->
         <div class="srv-step">
             <span class="srv-step-num"
-                  data-en="03 Planning & Coordination"
-                  data-ar="03 التخطيط والتنسيق">
-                03 Planning &amp; Coordination
+                  data-en="03. Planning & Coordination"
+                  data-ar="03. التخطيط والتنسيق">
+                03. Planning &amp; Coordination
             </span>
-
-            <div class="srv-step-title"
-                 data-en="Planning & Coordination"
-                 data-ar="التخطيط والتنسيق">
-                Planning &amp; Coordination
-            </div>
 
             <p class="srv-step-body"
                data-en="Managing logistics, suppliers, and guest experience"
@@ -1541,16 +1630,10 @@
         <!-- STEP 4 -->
         <div class="srv-step">
             <span class="srv-step-num"
-                  data-en="04 Execution"
-                  data-ar="04 التنفيذ">
-                04 Execution
+                  data-en="04. Execution"
+                  data-ar="04. التنفيذ">
+                04. Execution
             </span>
-
-            <div class="srv-step-title"
-                 data-en="Execution"
-                 data-ar="التنفيذ">
-                Execution
-            </div>
 
             <p class="srv-step-body"
                data-en="Flawless on-site coordination and event delivery"
@@ -1576,10 +1659,6 @@
     </div>
 
 </section>
-
-<!-- ══════════════════════════════════════════
-     SECTION 5 — WHY CHOOSE MERAM EVENTS
-══════════════════════════════════════════ -->
 <!-- ===== WHY CHOOSE MERAM EVENTS ===== -->
 <section class="why-section reveal">
     <img class="why-img-left"
@@ -1670,14 +1749,23 @@
        data-ar="لنصنع لحظتك">
         Let's create your moment
     </p>
+<a href="#page-top"
+   class="back-top-icon-link"
+   onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
 
-    <a href="#page-top"
-       class="back-to-top-link"
-       data-en="Back to Top"
-       data-ar="العودة للأعلى"
-       onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
-        Back to Top
-    </a>
+    <span class="back-top-icon">
+        <i class="fa-solid fa-caret-up"></i>
+    </span>
+
+</a>
+
+<a href="#page-top"
+   class="back-to-top-link"
+   data-en="Back to Top"
+   data-ar="العودة للأعلى"
+   onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+    Back to Top
+</a>
 
 
     <!-- Images from admin panel -->

@@ -1,0 +1,227 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+
+{% block title %}
+FAQs — Meram Events Admin
+{% endblock %}
+
+
+{% block dashboard_content %}
+
+
+
+<div class="db-breadcrumb">
+    Meram Events Admin
+</div>
+
+
+
+<div class="db-header-row">
+
+    <h1 class="db-page-title">
+        FAQs
+    </h1>
+
+
+    <div class="db-total-badge">
+        Total &nbsp;
+        <strong>{{total}}</strong>
+    </div>
+
+
+    <a href="{% url 'dashboard_faq_create' %}" class="db-filter-go">
+
+        + Add FAQ
+
+    </a>
+
+
+</div>
+
+
+
+
+
+<div class="db-table-wrap">
+
+    <table class="db-table">
+
+
+        <thead>
+
+            <tr>
+
+                <th>Question</th>
+                <th>Status</th>
+                <th>Actions</th>
+
+
+            </tr>
+
+        </thead>
+
+
+
+        <tbody>
+
+
+            {% for f in faqs %}
+
+
+            <tr id="faq-row-{{f.pk}}">
+
+
+                <td>
+                    {{f.question}}
+                </td>
+
+
+                <td>
+
+
+                    {% if f.is_active %}
+
+                    <span class="db-status-pill db-status-confirmed">
+                        Active
+                    </span>
+
+
+                    {% else %}
+
+                    <span class="db-status-pill db-status-cancelled">
+                        Hidden
+                    </span>
+
+
+                    {% endif %}
+
+
+                </td>
+
+
+
+                <td>
+
+
+                    <div class="db-action-icons">
+
+
+                        <a href="{% url 'dashboard_faq_detail' f.pk %}">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+
+
+
+                        <button class="db-delete-btn" onclick="deleteFAQ({{f.pk}})">
+
+                            <i class="fa-solid fa-trash"></i>
+
+                        </button>
+
+
+                    </div>
+
+
+                </td>
+
+
+            </tr>
+
+
+
+            {% empty %}
+
+
+            <tr>
+                <td colspan="5">
+                    No FAQs found
+                </td>
+            </tr>
+
+
+            {% endfor %}
+
+
+
+        </tbody>
+
+
+    </table>
+
+
+</div>
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+{% block extra_scripts %}
+
+
+<script>
+
+
+    function deleteFAQ(pk) {
+
+
+        if (!confirm("Delete this FAQ?")) return;
+
+
+
+        fetch(`/dashboard/faqs/${pk}/delete/`,
+            {
+
+                method: "POST",
+
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken")
+                }
+
+
+            })
+
+            .then(r => r.json())
+
+            .then(data => {
+
+
+                if (data.success) {
+
+                    document
+                        .getElementById(`faq-row-${pk}`)
+                        .remove();
+
+                }
+
+
+            });
+
+
+    }
+
+
+
+    function getCookie(name) {
+
+        let v = document.cookie.match(
+            '(^|;)\\s*' + name + '\\s*=\\s*([^;]+)'
+        );
+
+        return v ? v.pop() : "";
+
+
+    }
+
+
+
+</script>
+
+
+
+{% endblock %}

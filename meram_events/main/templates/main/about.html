@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block title %}About Us — Meram Events{% endblock %}
-
+{% block navbar_class %}about-nav{% endblock %}
 {% block extra_head %}
 <style>
 
@@ -35,7 +35,7 @@
 
 .about-hero-title{
     font-family:'FreightDisp Pro', serif;
-    font-size:clamp(42px,5vw,76px);
+    font-size:clamp(26px,4vw,44px);
     line-height:0.95;
     font-weight:300;
     letter-spacing:-0.95px;
@@ -48,7 +48,7 @@
 
 .about-hero-script{
     font-family:'Pinyon Script', cursive;
-    font-size:clamp(24px,3vw,32px);
+    font-size:clamp(9px,3vw,28px);
     line-height:40px;
     color:#311F13;
 }
@@ -59,13 +59,14 @@
 ========================= */
 
 .about-cinematic{
-        position: relative;
-    width: 100%;
-    max-width: 1340px;
-    height: 574px;
-    margin: -180px auto 0;
-    overflow: hidden;
-    z-index: 2;
+    position:relative;
+    width:100%;
+    padding:0 166px 40px;
+    box-sizing:border-box;   /* add this */
+    height:574px;
+    margin:-200px auto 0;
+    overflow:hidden;
+    z-index:2;
 }
 
 .about-cinematic img{
@@ -74,14 +75,13 @@
     object-fit:cover;
     display:block;
 
-    filter:brightness(0.45);
+    filter:brightness(1.10);
 }
 
 .about-cinematic::after{
     content:'';
     position:absolute;
     inset:0;
-    background:rgba(0,0,0,0.18);
 }
 
 .about-cinematic-text{
@@ -99,10 +99,9 @@
 }
 
 .about-cinematic-text p{
-    max-width:750px;
-
-    font-family:'Hanken Grotesk', sans-serif;
-    font-size:15px;
+    max-width: 584px;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 12px;
     line-height:20px;
     font-weight:300;
 
@@ -120,14 +119,9 @@
     grid-template-columns: 513px 1fr;
     gap: 80px;
     /* align-items: center; */
-    padding: 43px 122px;
+    padding:0 166px 40px;
     overflow: hidden;
 }
-
-
-/* =========================
-   IMAGES LAYOUT
-========================= */
 
 .about-two-imgs{
     position:relative;
@@ -154,10 +148,10 @@
 /* IMAGE 2 (MAIN BIG IMAGE) */
 .about-two-imgs img:nth-child(2){
     position: absolute;
-    bottom: 70px;
+    bottom: 110px;
     left: 90px;
     width: 389px;
-    height: 284px;
+    height: 246px;
     object-fit: cover;
     z-index: 1;
 }
@@ -196,11 +190,10 @@
 
 .about-block-title{
     font-family:'FreightDisp Pro', serif;
-    font-size:clamp(32px,3vw,48px);
-    line-height:1.02;
-    font-weight:300;
-
-    letter-spacing:-0.58px;
+    font-size:clamp(18px,3vw,35px);
+    line-height: 1.2;
+    font-weight: 400;
+    letter-spacing: -0.44px;
     text-transform:uppercase;
 
     color:#311F13;
@@ -211,7 +204,7 @@
 .about-body{
     font-family:'Hanken Grotesk', sans-serif;
 
-    font-size:15px;
+    font-size:12px;
     line-height:20px;
     font-weight:300;
 
@@ -229,7 +222,7 @@
     margin-top:50px;
 
     font-family:'Pinyon Script', cursive;
-    font-size:28px;
+    font-size:20px;
     line-height:35px;
 
     color:#311F13;
@@ -266,12 +259,12 @@
 .philosophy-inner{
     position:relative;
 
-    width:90%;
-    max-width:1560px;
+    width: 100%;
+    max-width: 1265px;
 
     margin: -331px auto 0;
 
-    background:#F8F5F0;
+    background: #F4F1EA ;
 
     padding:
         100px
@@ -308,7 +301,7 @@
 /* RESPONSIVE IMAGE */
 .about-philosophy-img{
     width:100%;
-    max-width:370px;
+    max-width:340px;
 
     aspect-ratio:370/236;
 
@@ -347,7 +340,7 @@
 .philosophy-title{
     font-family:'FreightDisp Pro', serif;
 
-    font-size:clamp(30px,4vw,48px);
+    font-size: clamp(22px, 4vw, 44px);
     line-height:1.02;
     font-weight:300;
 
@@ -370,7 +363,7 @@
 .philosophy-footer{
     font-family:'Hanken Grotesk', sans-serif;
 
-    font-size:15px;
+    font-size:12px;
     line-height:20px;
     font-weight:300;
 
@@ -396,7 +389,7 @@
 }
 
 .philosophy-footer{
-    margin-top:34px;
+    margin-top:22px;
 }
 
 /* Section 5: Trusted Venues — white bg */
@@ -412,6 +405,7 @@
     padding:
         clamp(80px,8vw,140px)
         clamp(20px,7vw,120px);
+            margin-bottom: 20px;
 }
 
 
@@ -427,7 +421,7 @@
 
     font-family:'Hanken Grotesk', sans-serif;
 
-    font-size:15px;
+    font-size:14px;
     line-height:20px;
     font-weight:300;
 
@@ -452,7 +446,7 @@
 
     font-family:'FreightDisp Pro', serif;
 
-    font-size:clamp(28px,4vw,48px);
+    font-size: clamp(22px, 4vw, 35px);
     line-height:1.02;
     font-weight:300;
 
@@ -469,22 +463,15 @@
 ========================================================= */
 
 .venues-body{
-    max-width:1149px;
-
-    margin:
-        0 auto
-        70px;
-
-    font-family:'Hanken Grotesk', sans-serif;
-
-    font-size:clamp(12px,1vw,15px);
-    line-height:20px;
-    font-weight:300;
-
-    letter-spacing:0.9px;
-    text-transform:uppercase;
-
-    color:#000;
+    max-width: 841px;
+    margin: 0 auto 70px;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 300;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+    color: #000;
 }
 
 
@@ -522,7 +509,7 @@
 
 .venue-logo-item img{
     width: auto;
-    max-width: 120px;
+    max-width: 135px;
     max-height: 60px;
 
     object-fit:contain;
@@ -541,22 +528,19 @@
 /* =========================================================
    TRUST SECTION
 ========================================================= */
-
-.about-trust{
-    width:100%;
-    max-width:1520px;
-
-    margin:auto;
-
-    background:#F4F1EA;
-
-    text-align:center;
-
-    padding:
-        clamp(60px,7vw,90px)
-        clamp(20px,7vw,120px);
-
-    overflow:hidden;
+.about-trust {
+    width: 100%;
+    /* max-width: 1520px; */
+    margin: auto;
+    /* background: #F4F1EA; */
+    text-align: center;
+    /* padding: clamp(60px, 7vw, 90px) clamp(20px, 7vw, 120px); */
+    overflow: hidden;
+    padding: 12px 166px;
+}
+.trust-div {
+    background: #F4F1EA;
+    padding: 72px 0;
 }
 
 
@@ -572,7 +556,7 @@
 
     font-family:'Hanken Grotesk', sans-serif;
 
-    font-size:15px;
+    font-size:14px;
     line-height:20px;
     font-weight:300;
 
@@ -598,7 +582,7 @@
 
     font-family:'FreightDisp Pro', serif;
 
-    font-size:clamp(28px,4vw,48px);
+    font-size:clamp(22px, 4vw, 35px);
     line-height:1.02;
     font-weight:300;
 
@@ -616,13 +600,13 @@
 
 .trust-body{
     width:100%;
-    max-width:1149px;
+    max-width: 938px;
 
     margin:auto;
 
     font-family:'Hanken Grotesk', sans-serif;
 
-    font-size:clamp(12px,1vw,15px);
+    font-size:clamp(10px,1vw,12px);
     line-height:20px;
     font-weight:300;
 
@@ -637,25 +621,15 @@
    MORE SECTION
 ========================================================= */
 
-.about-more{
-    background:#fff;
-
-    display:grid;
-    grid-template-columns:
-        minmax(320px,667px)
-        1fr;
-
-    align-items:center;
-
-    gap:clamp(40px,6vw,90px);
-
-    padding:
-        clamp(80px,8vw,140px)
-        clamp(20px,7vw,120px);
-
-    overflow:hidden;
+.about-more {
+    background: #fff;
+    display: grid;
+    grid-template-columns: minmax(320px, 467px) 1fr;
+    align-items: center;
+    gap: clamp(40px, 6vw, 90px);
+    padding: 90px 166px;
+    overflow: hidden;
 }
-
 
 
 /* =========================================================
@@ -701,7 +675,7 @@
 
     font-family:'Hanken Grotesk', sans-serif;
 
-    font-size:15px;
+    font-size:12px;
     line-height:20px;
     font-weight:300;
 
@@ -721,11 +695,11 @@
     width:100%;
     max-width:610px;
 
-    margin-bottom:36px;
+    margin-bottom:30px;
 
     font-family:'FreightDisp Pro', serif;
 
-    font-size:clamp(30px,4vw,48px);
+    font-size:clamp(22px, 4vw, 35px);
     line-height:1.02;
     font-weight:300;
 
@@ -741,22 +715,18 @@
    BODY
 ========================================================= */
 
-.more-body{
-    font-family:'Hanken Grotesk', sans-serif;
-
-    font-size:clamp(12px,1vw,15px);
-    line-height:20px;
-    font-weight:300;
-
-    letter-spacing:0.9px;
-    text-transform:uppercase;
-
-    color:#000;
-
-    margin-bottom:20px;
-
-    max-width:615px;
+.more-body {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: clamp(10px, 1vw, 12px);
+    line-height: 16px;
+    font-weight: 300;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+    color: #000;
+    margin-bottom: 18px;
+    max-width: 615px;
 }
+
 
 
 
@@ -781,11 +751,10 @@
 
     font-family:'Hanken Grotesk', sans-serif;
 
-    font-size:clamp(12px,1vw,15px);
-    line-height:20px;
-    font-weight:300;
-
-    letter-spacing:0.9px;
+    font-size:clamp(10px,1vw,12px);
+    line-height: 7px;
+    font-weight: 300;
+    letter-spacing: 0.11px;
     text-transform:uppercase;
 
     color:#000;
@@ -796,7 +765,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 900;
     color: #000;
 }
@@ -812,7 +781,7 @@
 
     font-family:'Pinyon Script', cursive;
 
-    font-size:clamp(22px,2.5vw,28px);
+    font-size:24px;
     line-height:35px;
 
     color:#311F13;
@@ -820,22 +789,29 @@
 
 
 /* Section 8: 4-image horizontal strip */
-.about-strip {
-    display: grid; grid-template-columns: repeat(4, 1fr);     
-    gap: 10px;
-    margin-bottom: 10px;
+.about-strip{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:10px;
 }
-.about-strip img {
-    width: 100%; height: 220px; object-fit: cover;
-    display: block; transition: transform 0.5s;
-}
-.about-strip img:hover { transform: scale(1.03); }
 
+.about-strip img{
+    width:100%;
+    aspect-ratio:1/1;   /* square */
+    object-fit:cover;
+    display:block;
+    transition:transform .5s ease;
+}
+
+.about-strip img:hover{
+    transform:scale(1.03);
+}
 /* Section 9: Dark CTA block */
 .about-cta {
     position: relative;
     width: 100%;
-    min-height: 767px;
+    min-height: 647px;
     background: #311F13;
     overflow: hidden;
 
@@ -844,19 +820,41 @@
     align-items: center;
 }
 
-/* Background texture */
+.about-cta .intro-watermark {
+    position: absolute;
+    left: 120px;
+    bottom: 100px;
+    /* width: 554px; */
+    max-width: 360px;
+    font-family: "Charlotte", cursive;
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: 400;
+    letter-spacing: 1.92px;
+    color: #d1d1d0;
+    text-align: center;
+    transform: rotate(-14deg);
+    opacity: 0.9;
+    pointer-events: none;
+    user-select: none;
+    z-index: 2;
+}
+
 .about-cta::before {
     content: "";
     position: absolute;
     inset: 0;
 
     background:
-        linear-gradient(rgba(49,31,19,.72),
-        rgba(49,31,19,.72)),
-        url("{% static 'main/images/f2.jpg' %}");
+        linear-gradient(
+            rgba(49,31,19,0.57),
+            rgba(49,31,19,0.57)
+        ),
+        url("{% static 'main/images/cbg.jpg' %}");
 
     background-size: cover;
-    opacity: .95;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* Center content */
@@ -869,7 +867,7 @@
 
 .cta-script {
     font-family: "Pinyon Script", cursive;
-    font-size: 46px;
+    font-size: 26px;
     line-height: 58px;
     color: #fff;
     margin-bottom: 25px;
@@ -877,7 +875,7 @@
 
 .cta-title {
     font-family: "Cormorant Garamond", serif;
-    font-size: 48px;
+    font-size: 35px;
     font-weight: 300;
     line-height: 49px;
     text-transform: uppercase;
@@ -887,7 +885,7 @@
 }
 
 .cta-body {
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 1px;
     color: rgba(255,255,255,.75);
     text-transform: uppercase;
@@ -915,28 +913,28 @@
 /* Left image */
 .left-image {
     position: absolute;
-    left: 100px;
-    top: 75px;
+    left: 165px;
+    top: 93px;
     z-index: 2;
 }
 
 .left-image img {
-    width: 239px;
-    height: 310px;
+    width: 224px;
+    height: 260px;
     object-fit: cover;
 }
 
 /* Right image */
 .right-image {
     position: absolute;
-    right: 120px;
-    bottom: 55px;
+    right: 165px;
+    bottom: 100px;
     z-index: 2;
 }
 
 .right-image img {
-    width: 369px;
-    height: 249px;
+    width: 295px;
+    height: 190px;
     object-fit: cover;
 }
 
@@ -964,45 +962,17 @@
     .about-thoughtful{
         grid-template-columns:1fr 1fr;
     }
+    .about-thoughtful-content
+ {
+    max-width: 465px;
 }
+.about-quote {
+    font-size: 14px;}
+    .philosophy-inner {
+    position: relative;
+    width: 100%;
+    max-width: 1070px;}
 
-
-@media (max-width:1100px){
-
-    .about-thoughtful{
-        grid-template-columns:1fr;
-
-        gap:70px;
-
-        padding:110px 40px;
-    }
-
-    .about-thoughtful-content{
-        margin:auto;
-        text-align:left;
-    }
-
-    .about-two-imgs{
-        max-width:620px;
-        display: none;
-    }
-        .about-more{
-        grid-template-columns:1fr;
-
-        gap:60px;
-
-        padding:
-            100px
-            40px;
-    }
-
-    .about-more img{
-        margin:auto;
-    }
-
-    .about-more-content{
-        margin:auto;
-    }
 }
 
 @media (max-width:480px){
@@ -1015,12 +985,14 @@
         line-height:1.08;
     }
 
-    .about-body{
-        font-size:11px;
+        .about-body {
+        font-size: 8px;
+            max-width: 337px;
+
     }
 
     .about-quote{
-        font-size:20px;
+        font-size:11px;
     }
         .venues-logos{
         gap:22px;
@@ -1042,34 +1014,93 @@
     .philosophy-sub,
     .philosophy-list,
     .philosophy-footer{
-        font-size:11px;
-        line-height:18px;
+        font-size: 8px;
+        line-height: 12px;
+        margin-top: 21px;
     }
         .trust-title br{
         display:none;
     }
+ .about-more{
+        padding:50px 20px;
+    }
 
-    .trust-body{
+    .about-more img{
+        max-width:260px;
+    }
+
+    .more-eyebrow{
         font-size:11px;
     }
-        .more-title br{
-        display:none;
+
+    .more-title{
+        font-size:24px;
+        line-height:1.1;
     }
 
-    .more-body,
+    .more-body{
+        font-size:8px;
+        line-height:16px;
+        max-width:300px;
+    }
+
+    .more-list{
+        width:fit-content;
+        margin:18px auto 22px;
+    }
+
     .more-list li{
-        font-size:11px;
+        font-size:8px;
+        line-height:4px;
+        margin-bottom:10px;
+    }
+
+    .more-list li::before{
+        font-size:10px;
     }
 
     .more-quote{
-        font-size:20px;
+        font-size:18px;
+        line-height:1.3;
+    }
+    .about-eyebrow {
+    font-size: 12px;}
+        .about-strip{
+        grid-template-columns:repeat(2,1fr);
+        gap:6px;
+    }
+      .about-two-imgs{
+        max-width:300px;
+        height:230px;
+    }
+
+    .about-two-imgs img:nth-child(1){
+        width:105px;
+        height:115px;
+    }
+
+    .about-two-imgs img:nth-child(2){
+        width:200px;
+        height:130px;
+        left:50px;
+        bottom:25px;
+    }
+
+    .about-two-imgs img:nth-child(3){
+        width:95px;
+        height:110px;
+    }
+
+    .about-white-box{
+        width:100px;
+        height:120px;
     }
 }
 
 @media (max-width:768px){
 
     .about-hero{
-        padding:140px 20px 220px;
+        padding:140px 20px 50px;
     }
 
     .about-cinematic{
@@ -1080,8 +1111,9 @@
     }
 
     .about-cinematic-text p{
-        font-size:11px;
-        line-height:18px;
+        font-size: 8px;
+        line-height: 18px;
+        max-width: 300px;
     }
         .about-philosophy-top{
         height:220px;
@@ -1110,10 +1142,11 @@
     }
 
     .venues-body{
-        margin-bottom:50px;
-
-        line-height:18px;
-        letter-spacing:0.5px;
+        margin-bottom: 50px;
+        line-height: 18px;
+        letter-spacing: 0.5px;
+        font-size: 8px;
+        max-width: 305px;
     }
 
     .venues-logos{
@@ -1125,57 +1158,129 @@
         max-height:45px;
     }
         .about-trust{
-        width:92%;
+        width:100%;
 
         padding:
-            60px
+            40px
             20px;
     }
 
     .trust-title{
         line-height:1.08;
+        font-size: 18px;
+        max-width: 300px;
     }
 
     .trust-body{
         line-height:18px;
         letter-spacing:0.5px;
+        font-size: 8px;
+        max-width: 304px;
     }
-        .about-more{
-        padding:
-            80px
-            20px;
+ .about-more{
+        grid-template-columns:1fr;
+        padding:60px 20px;
+        gap:40px;
+        text-align:center;
+        justify-items:center;
+    }
 
-        gap:45px;
+    .about-more img{
+        max-width:320px;
+        margin:0 auto;
+    }
+
+    .about-more-content{
+        max-width:100%;
+        text-align:center;
     }
 
     .more-title{
-        line-height:1.08;
-        margin-bottom:28px;
+        margin-left:auto;
+        margin-right:auto;
     }
 
-    .more-body,
-    .more-list li{
-        line-height:18px;
-        letter-spacing:0.5px;
+    .more-body{
+        margin-left:auto;
+        margin-right:auto;
+        max-width:320px;
     }
 
+    /* BULLETS CENTER */
     .more-list{
-        margin:20px 0 24px;
+        width:fit-content;
+        margin:20px auto 24px;
+        text-align:left;
+    }
+
+    .more-list li{
+        padding-left:18px;
+        margin-bottom:14px;
+        line-height:4px;
+        text-align:left;
+    }
+
+    .more-list li::before{
+        left:0;
+        top:0;
     }
 
     .more-quote{
-        line-height:1.3;
+        text-align:center;
     }
-    
-    .about-cta::before {
-    background-position: center;
-}
-    .about-cta {
-        min-height: auto;
-        padding: 80px 20px 60px;
+     .about-cta{
+        display:flex;
+        flex-direction:column;
+        gap:25px;
+        padding:60px 20px;
+        min-height:auto;
     }
 
-    .about-cta-content {
+    /* LEFT IMAGE FIRST */
+    .left-image{
+        position:relative;
+        left:auto !important;
+        top:auto !important;
+        right:auto;
+        bottom:auto;
+        margin:0 auto;
+        order:1;
+    }
+
+    .left-image img{
+        width:180px;
+        height:220px;
+        object-fit:cover;
+        display:block;
+    }
+
+    /* CONTENT SECOND */
+    .about-cta-content{
+        order:2;
+        max-width:100%;
+        text-align:center;
+        margin:0;
+        padding:0;
+    }
+
+    /* RIGHT IMAGE THIRD */
+    .right-image{
+        position:relative;
+        left:auto;
+        top:auto;
+        right:auto !important;
+        bottom:auto !important;
+        margin:0 auto;
+        order:3;
+    }
+
+    .right-image img{
+        width:220px;
+        height:140px;
+        object-fit:cover;
+        display:block;
+    }
+.about-cta-content {
         max-width: 100%;
         padding: 0 10px;
                 margin-bottom: 25px;
@@ -1183,38 +1288,97 @@
     }
 
     .cta-script {
-        font-size: 28px;
+        font-size: 11px;
         line-height: 1.2;
         margin-bottom: 15px;
     }
 
     .cta-title {
-        font-size: 20px !important;
+        font-size: 15px;
         line-height: 1.3;
         letter-spacing: 0;
         margin-bottom: 20px;
     }
 
     .cta-body {
-        font-size: 12px;
+        font-size: 6px;
         line-height: 1.8;
         padding: 0 10px;
     }
-
-    /* Images ko side se hatao */
-    .left-image,
-    .right-image {
-        display: none;
-    }
+    .btn-outline-light {
+       width: 136px;
+    height: 30px;
+    font-size: 8px;
+    letter-spacing: 1px;
+}
 
     .cta-watermark {
         display: none;
     }
+    .philosophy-title {
+    /* margin-bottom: 42px; */
+    margin: 0;
+}
+    .venues-title {
+        max-width: 230px;
+    }
+        .about-strip{
+        grid-template-columns:repeat(2,1fr);
+        gap:8px;
+    }
+    .about-thoughtful{
+        grid-template-columns:1fr;
+        gap:4px;
+        padding:60px 20px;
+        justify-items:center;
+        text-align:center;
+    }
 
-    .btn-outline-light {
-        width: 220px;
-        height: 44px;
-        font-size: 11px;
+    .about-thoughtful-content{
+        max-width:100%;
+        text-align:center;
+    }
+
+    /* Images visible */
+    .about-two-imgs{
+        width:100%;
+        max-width:360px;
+        height:280px;
+        margin:0 auto;
+        position:relative;
+    }
+
+    /* Image 1 */
+    .about-two-imgs img:nth-child(1){
+        width:130px;
+        height:140px;
+        left:0;
+        top:0;
+    }
+
+    /* Main image */
+    .about-two-imgs img:nth-child(2){
+        width: 204px;
+        height: 161px;
+        left: 78px;
+        bottom: 89px;
+    }
+
+    /* Image 3 */
+    .about-two-imgs img:nth-child(3){
+        width:120px;
+        height:124px;
+        left:auto;
+        right:0;
+        top:15px;
+    }
+
+    .about-white-box{
+        width:125px;
+        height:145px;
+        left:auto;
+        right:0;
+        top:0;
     }
 }
 
@@ -1226,22 +1390,11 @@
     } */
 
     .about-cinematic{
-        width: 78%;
-        height: 469px;
-    }
-    .about-thoughtful{
-        grid-template-columns:1fr;
-        gap:70px;
+                width: 100%;
 
-        padding:120px 40px;
-    }
-
-    .about-two-imgs{
-        margin:auto;
-    }
-
-    .about-thoughtful-content{
-        margin:auto;
+        padding: 0;
+        margin: auto;
+        height: 400px;
     }
 }
 
@@ -1268,49 +1421,27 @@
         max-width: 55px;
         max-height: 37px;
     }
-        .about-trust{
+        /* .about-trust{
         padding:
             70px
             40px;
-    }
-    .about-cta {
-        min-height: auto;
-        padding: 80px 30px;
-    }
-
-    .left-image {
-        left: 20px !important;
-        top: 30px !important;
-    }
-
-    .right-image {
-        right: 20px !important;
-        bottom: 30px !important;
-    }
-
-    .left-image img {
-        width: 180px;
-    }
-
-    .right-image img {
-        width: 250px;
-    }
-
-    .cta-title {
-        font-size: 38px;
-    }
+    } */
+   
 }
 
 
 @media(max-width:960px){
     /* .about-hero,.about-philosophy,.about-trust{padding:60px 24px;} */
-    .about-thoughtful,.about-venues,.about-more,.about-cta{padding:60px 40px 0;grid-template-columns:1fr;}
+    .about-thoughtful,.about-venues,.about-more,.about-cta{padding: 23px 20px 20px 20px;;grid-template-columns:1fr;}
     .about-cinematic-text{padding:30px 24px;}
-    .about-strip{grid-template-columns:repeat(2,1fr); gap: 0;}
     .about-cta{grid-template-columns:1fr;}
     .about-cta-rose{display:none;}
     /* .venues-logos{justify-content:flex-start;} */
     .venue-item{padding:18px 20px;}
+        /* Watermark */
+    .intro-watermark{
+                display: none;
+    }
 }
 </style>
 {% endblock %}
@@ -1330,7 +1461,7 @@
         </span>
 
 <h1 class="about-hero-title"
-    data-en="WE DON’T JUST PLAN EVENTS. WE CREATE EXPERIENCES THAT STAY WITH YOU."
+    data-en="WE DON’T JUST PLAN EVENTS.<br> WE CREATE EXPERIENCES<br> THAT STAY WITH YOU."
     data-ar="نحن لا نقوم فقط بتخطيط الفعاليات. نحن نصنع تجارب تبقى معك.">
 </h1>
 
@@ -1372,7 +1503,7 @@
     <div class="about-thoughtful-content">
 
         <h2 class="about-block-title"
-            data-en="A Thoughtful Approach to Every Detail"
+            data-en="A Thoughtful<br>Approach to Every Detail"
             data-ar="نهج مدروس لكل تفصيلة">
             A Thoughtful<br>Approach to Every Detail
         </h2>
@@ -1510,6 +1641,7 @@
 
 <!-- ===== SECTION 6: TRUST / VALUES ===== -->
 <section class="about-trust reveal">
+    <div class="trust-div">
     <span class="trust-eyebrow"
           data-en="Our Values"
           data-ar="قيمنا">
@@ -1517,9 +1649,9 @@
     </span>
 
     <h2 class="trust-title"
-        data-en="At Meram Events, Trust Isn't Optional —<br>It's the Foundation of Everything We Do."
+        data-en="At Meram Events, Trust Isn't Optional.<br>It's the Foundation of Everything We Do."
         data-ar="في ميرام إيفنتس، الثقة ليست خياراً — بل هي أساس كل ما نقوم به.">
-        At Meram Events, Trust Isn't Optional —<br>It's the Foundation of Everything We Do.
+        At Meram Events, Trust Isn't Optional.<br>It's the Foundation of Everything We Do.
     </h2>
 
     <p class="trust-body"
@@ -1527,6 +1659,7 @@
        data-ar="نعمل بمستوى عالٍ من الاحترافية واهتمام دقيق بالتفاصيل، مع التزام كامل بتنفيذ كل عنصر بشكل صحيح من أول تواصل حتى التنفيذ النهائي. هدفنا واضح: تقديم تجربة سلسة، إدارة كل شيء بدقة، وتمثيل كل حدث بأفضل صورة.">
         We operate with a high level of professionalism, sharp attention to detail, and a commitment to getting every element right from first contact to final execution. Our focus is clear: deliver a smooth experience, handle everything with precision, and represent every event at its best.
     </p>
+    </div>
 </section>
 
 <!-- ===== SECTION 7: MORE THAN PLANNING ===== -->
@@ -1592,8 +1725,13 @@
 
 <!-- ===== SECTION 9: DARK CTA ===== -->
 <section class="about-cta">
-    <div class="overlay"></div>
-
+    <!-- <div class="overlay"></div> -->
+    <div class="intro-watermark"
+     data-en="Effortless detail. Elevated experiences. Thoughtfully designed moments."
+     data-ar="تفاصيل متقنة. تجارب راقية. لحظات صُممت بعناية.">
+    Effortless detail. Elevated experiences.<br>
+    Thoughtfully designed moments.
+</div>
     <!-- Left Image -->
     <div class="left-image">
         <img src="{% static 'main/images/f1.jpg' %}" alt="">

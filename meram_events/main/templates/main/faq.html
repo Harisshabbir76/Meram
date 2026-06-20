@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block title %}FAQ — Meram Events{% endblock %}
-
+{% block navbar_class %}transparent-nav{% endblock %}
 {% block extra_head %}
 <style>
     /* ===== FAQ PAGE ===== */
@@ -18,73 +18,83 @@
 
     /* Ornate label/badge card in center */
     .faq-badge {
-        position: absolute;
-        left: 50%;
-        bottom: -240px;
-        transform: translateX(-50%);
-        width: 360px;
-        z-index: 10;
-    }
+    position: absolute;
+    left: 50%;
+    bottom: -300px;
+    transform: translateX(-50%);
+    width: 480px;
+    z-index: 10;
+}
 
-    .faq-badge img {
-        width: 100%;
-        display: block;
-    }
+.faq-badge img {
+    width: 100%;
+    display: block;
+}
 
-    .faq-badge-content {
-        position: absolute;
-        inset: 0;
-        padding: 90px 45px;
 
-        display: flex;
-        /* ✅ required */
-        flex-direction: column;
-        /* optional but usually needed */
-        justify-content: center;
-        /* vertical centering */
-        align-items: center;
-        /* horizontal centering */
+.faq-badge-content {
+    position: absolute;
+    inset: 0;
+    padding: 110px 70px;
 
-        text-align: center;
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    .faq-badge-eyebrow {
-        display: block;
-        margin-bottom: 7px;
-        font-family: 'Hanken Grotesk', sans-serif;
-        font-size: 5px;
-        line-height: 20px;
-        font-weight: 300;
+    text-align: center;
+}
 
-        letter-spacing: 0.9px;
-        text-transform: uppercase;
 
-        color: #000;
-    }
+.faq-badge-eyebrow {
 
-    .faq-badge-title {
-        font-family: "FreightDisp Pro", serif;
-        font-size: 14px;
-        font-weight: 300;
-        line-height: 1.1;
-        letter-spacing: -0.76px;
-        text-transform: uppercase;
-        color: #000;
+    display: block;
+    margin-bottom: 10px;
 
-        margin-bottom: 18px;
-    }
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 11px;
+    line-height: 20px;
+    font-weight: 300;
 
-    .faq-badge-body {
-        font-family: "Hanken Grotesk", sans-serif;
-        font-size: 10px;
-        line-height: 1.7;
-        letter-spacing: 0.4px;
-        color: #000;
-        max-width: 210px;
-        margin: 0 auto;
-        text-transform: none;
-    }
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
 
+    color:#000;
+}
+
+
+
+.faq-badge-title {
+
+    font-family: "FreightDisp Pro", serif;
+
+    font-size: 28px;
+    font-weight: 300;
+
+    line-height: 1.1;
+    letter-spacing: -0.76px;
+
+    text-transform: uppercase;
+
+    color:#000;
+
+    margin-bottom:18px;
+
+}
+
+
+
+.faq-badge-body {
+    max-width: 299px;
+    font-family: "Hanken Grotesk", sans-serif;
+    font-size: 11px;
+    line-height: 1.7;
+    letter-spacing: 0.4px;
+    /* max-width: 306px; */
+    max-width: 240px;
+    margin: 0 auto;
+    text-transform: uppercase;
+}
     /* =========================
    FAQ SECTION
 ========================= */
@@ -103,8 +113,8 @@
 
     .faq-main-title {
         text-align: center;
-        font-family: var(--font-display);
-        font-size: 56px;
+        font-family: "FreightDisp Pro", serif;
+        font-size: 44px;
         line-height: 1.1;
         font-weight: 300;
         text-transform: uppercase;
@@ -129,7 +139,7 @@
 
     .faq-q-text {
         font-family: "Hanken Grotesk", sans-serif;
-        font-size: 15px;
+        font-size: 12px;
         line-height: 20px;
         font-weight: 300;
         letter-spacing: 0.9px;
@@ -152,7 +162,7 @@
 
     .faq-answer p {
         font-family: "Hanken Grotesk", sans-serif;
-        font-size: 15px;
+        font-size: 12px;
         line-height: 20px;
         font-weight: 300;
         letter-spacing: 0.9px;
@@ -174,7 +184,7 @@
 
     .faq-cta-card {
         width: 100%;
-        max-width: 700px;
+        max-width: 650px;
         background: #F4F1EA;
 
         margin: 0 auto;
@@ -199,8 +209,8 @@
     }
 
     .faq-cta-title {
-        font-family: var(--font-display);
-        font-size: 47px;
+        font-family: "FreightDisp Pro", serif;
+        font-size: 35px;
         line-height: 1;
         font-weight: 300;
         color: #311F13;
@@ -225,28 +235,25 @@
     }
 
     .faq-cta-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+     width: 219px;
+    height: 34px;
 
-        width: 130px;
-        height: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 
-        border: 1px solid #311F13;
+    border: 1px solid #000;
+    color: #000;
+    text-decoration: none;
 
-        text-decoration: none;
-
-        font-size: 10px;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-
-        color: #311F13;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     }
 
     .faq-cta-btn:hover {
-        background: #311F13;
-        color: #fff;
-        border-color: #311F13;
+            background: #000;
+    color: #fff;
     }
 
     .contact-clip {
@@ -319,7 +326,7 @@
 
         .faq-cta-body,
         .faq-cta-desc {
-            font-size: 12px;
+            font-size: 10px;
             line-height: 20px;
         }
 
@@ -339,8 +346,8 @@
         }
 
         .faq-badge-eyebrow {
-            font-size: 3px;
-            letter-spacing: 0.6px;
+            font-size: 4px;
+            letter-spacing: 0.8px;
             margin-bottom: 0;
         }
 
@@ -352,11 +359,15 @@
         }
 
         .faq-badge-body {
-            font-size: 10px;
+            font-size: 9px;
             max-width: 220px;
             line-height: 1.5;
         }
-
+    .faq-cta-btn {
+       width: 136px;
+    height: 30px;
+    font-size: 8px;
+    letter-spacing: 1px;}
         /* FAQ SECTION */
         .faq-list-section {
             padding: 140px 20px 140px;
@@ -374,11 +385,11 @@
         }
 
         .faq-cta-title {
-            font-size: 28px;
+            font-size: 22px;
         }
 
         .faq-cta-desc {
-            font-size: 11px;
+            font-size: 9px;
             line-height: 16px;
         }
 
@@ -387,17 +398,19 @@
     @media (max-width: 480px) {
 
         .faq-badge {
-            width: 220px;
-            bottom: -150px;
+            width: 290px;
+        bottom: -203px;
         }
-
+.faq-inner {
+    margin: 40px auto 0;
+}
         .faq-badge-title {
-            font-size: 8px;
+            font-size: 10px;
         }
 
         .faq-badge-body {
-            font-size: 4px;
-            max-width: 80px;
+            font-size: 6px;
+        max-width: 139px;
         }
 
         .faq-main-title {
@@ -406,6 +419,9 @@
 
         .faq-cta-title {
             font-size: 24px;
+        }
+        .faq-answer p {
+            font-size: 9px;
         }
     }
 
@@ -422,7 +438,7 @@
         }
 
         .faq-badge {
-            padding: 34px 28px;
+            padding: 14px 28px;
         }
 
         .faq-cta-card {
@@ -444,7 +460,7 @@
                 EVERYTHING YOU NEED TO KNOW
             </span>
 
-            <h1 class="faq-badge-title" data-en="BEFORE WE BEGIN SOMETHING UNFORGETTABLE."
+            <h1 class="faq-badge-title" data-en="BEFORE WE BEGIN<br> SOMETHING<br> UNFORGETTABLE."
                 data-ar="قبل أن نبدأ شيئًا لا يُنسى.">
                 BEFORE WE BEGIN<br>
                 SOMETHING<br>
@@ -452,9 +468,9 @@
             </h1>
 
             <p class="faq-badge-body"
-                data-en="Planning a celebration of this scale comes with questions — and it should. We’ve curated the most important details below to guide you through what it’s like to work with Meram Events, what to expect, and how we ensure every experience feels seamless, personal, and beautifully executed."
+                data-en="Planning a celebration of this scale comes with questions — and it should.<br> We’ve curated the most important details below to guide you through what it’s like to work with Meram Events, what to expect, and how we ensure every experience feels seamless, personal, and beautifully executed."
                 data-ar="إن التخطيط لاحتفال بهذا الحجم يثير الكثير من التساؤلات، وهذا أمر طبيعي. لقد جمعنا أهم التفاصيل أدناه لمساعدتك على فهم تجربة العمل مع ميرام إيفنتس، وما يمكنك توقعه، وكيف نضمن أن تكون كل تجربة سلسة وشخصية ومنفذة بأعلى درجات الإتقان.">
-                Planning a celebration of this scale comes with questions — and it should. We’ve curated the most
+                Planning a celebration of this scale comes with questions — and it should.<br> We’ve curated the most
                 important details below to guide you through what it’s like to work with Meram Events, what to expect,
                 and how we ensure every experience feels seamless, personal, and beautifully executed.
             </p>

@@ -1,0 +1,70 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block title %}Messages — Meram Events Admin{% endblock %}
+
+{% block extra_head %}
+<style>
+.ct-message-preview{ max-width:280px; color:var(--db-text-mid); font-size:12.5px; }
+.ct-unread-dot{ width:8px; height:8px; border-radius:50%; background:var(--db-red); display:inline-block; margin-right:8px; }
+</style>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="db-breadcrumb">Meram Events Admin</div>
+<div class="db-header-row">
+    <h1 class="db-page-title">Messages</h1>
+    <div class="db-total-badge">Total &nbsp;<strong>{{ total }}</strong></div>
+</div>
+
+<div class="db-table-wrap">
+    <table class="db-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in contacts %}
+            <tr id="contact-row-{{ c.pk }}">
+                <td>{% if not c.is_read %}<span class="ct-unread-dot"></span>{% endif %}{{ c.name }}</td>
+                <td>{{ c.email }}</td>
+                <td>{{ c.phone|default:"—" }}</td>
+                <td>{{ c.subject|default:"—" }}</td>
+                <td><div class="ct-message-preview">{{ c.message|truncatechars:80 }}</div></td>
+                <td>{{ c.submitted_at|date:"M j, Y" }}</td>
+                <td>
+                    <div class="db-action-icons">
+                        <button class="db-delete-btn" title="Delete" onclick="deleteContact({{ c.pk }})"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7" class="db-empty">No messages yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function deleteContact(pk){
+    if(!confirm('Delete this message?')) return;
+    fetch(`/dashboard/contacts/${pk}/delete/`, {
+        method:'POST',
+        headers:{'X-CSRFToken': getCookie('csrftoken')}
+    }).then(r=>r.json()).then(data=>{
+        if(data.success){ document.getElementById(`contact-row-${pk}`).remove(); }
+    });
+}
+function getCookie(name){
+    const v = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return v ? v.pop() : '';
+}
+</script>
+{% endblock %}

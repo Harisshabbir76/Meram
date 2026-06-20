@@ -25,7 +25,7 @@
         }
         @font-face {
             font-family: "FreightDisp Pro";
-            src: url("/static/main/fonts/FD.ttf") format("truetype");
+            src: url("/static/main/fonts/fdpro.ttf") format("truetype");
             font-weight: normal;
             font-style: normal;
         }
@@ -56,32 +56,31 @@
         /* ======== NAVBAR ======== */
         .navbar{
             position:fixed;top:0;left:0;width:100%;z-index:1000;
-            height:110px;padding:0 50px;
+            height:110px;padding:0 166px;
             display:flex;align-items:center;justify-content:space-between;
             transition:height 0.4s ease, box-shadow 0.4s ease;
-            background:#FFFFFF;
-            box-shadow:0 1px 0 rgba(0,0,0,0.07);
+            background:#F4F1EA;
         }
-        .navbar.scrolled{ height:76px; box-shadow:0 2px 20px rgba(0,0,0,0.10); }
+        .navbar.scrolled{ height:76px;}
 
         .nav-left{ display:flex;gap:32px;align-items:center;flex:1; }
         .nav-left .nav-link,
         .nav-left .nav-dropdown-toggle{
             font-family:'Hanken Grotesk',sans-serif;
-            font-weight:300;font-size:15px;line-height:20px;letter-spacing:0.9px;
-            color:#311F13;text-transform:uppercase;text-decoration:none;
+            font-weight:300;font-size:13px;line-height:20px;letter-spacing:0.9px;
+            color:#FFF;text-transform:uppercase;text-decoration:none;
             transition:opacity 0.3s ease;cursor:pointer;
         }
         .nav-left .nav-link:hover,
         .nav-left .nav-dropdown-toggle:hover{ opacity:0.7; }
         .nav-left .nav-link.active{ color:#311F13; }
 
-        .logo-img{ width:59.46px;height:56px;object-fit:contain;display:block; }
+        .logo-img{ width:55px;height:56px;object-fit:contain;display:block; }
 
         /* Dropdown */
         .nav-dropdown{position:relative;}
         .nav-dropdown-toggle{display:flex;align-items:center;gap:5px;}
-        .nav-dropdown-toggle .caret{font-size:15px;opacity:0.6;transition:transform 0.3s;}
+        .nav-dropdown-toggle .caret{font-size:13px;opacity:0.6;transition:transform 0.3s;}
         .nav-dropdown:hover .caret{transform:rotate(180deg);}
         .nav-dropdown-menu{
             display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);
@@ -109,7 +108,7 @@
         .nav-right{display:flex;gap:16px;align-items:center;justify-content:flex-end;flex:1;}
         .nav-social-icons{display:flex;gap:14px;align-items:center;}
         .nav-social-icons a{
-            color:rgba(44,36,32,0.6);font-size:18px;
+            color:rgba(44,36,32,0.6);font-size:16px;
             text-decoration:none;transition:opacity 0.3s;
         }
         .nav-social-icons a:hover{opacity:0.7;color:rgba(44,36,32,0.6);}
@@ -117,11 +116,235 @@
         .nav-book-link{
             color:#311F13;text-decoration:underline;
             font-family:'Hanken Grotesk',sans-serif;
-            font-weight:300;font-size:15px;line-height:20px;
+            font-weight:300;font-size:13px;line-height:20px;
             letter-spacing:0;text-transform:uppercase;
             transition:opacity 0.3s ease;
         }
         .nav-book-link:hover{opacity:0.7;color:#311F13;}
+        /* DEFAULT */
+.page-navbar{
+    background:#FFFFFF;
+    border-bottom:1px solid rgba(0,0,0,0.12);
+}
+
+
+/* ===== TRANSPARENT WHITE NAV ===== */
+.page-navbar.transparent-nav{
+    background:transparent;
+    border-bottom:1px solid rgba(255,255,255,0.35);
+}
+
+.page-navbar.transparent-nav .nav-link,
+.page-navbar.transparent-nav .nav-dropdown-toggle,
+.page-navbar.transparent-nav .nav-book-link{
+    color:#FAF9F5;
+}
+
+.page-navbar.transparent-nav .nav-social-icons a{
+    color:#FAF9F5;
+}
+
+.page-navbar.transparent-nav .nav-divider{
+    background:rgba(255,255,255,0.35);
+}
+
+.page-navbar.transparent-nav .hamburger span{
+    background:#FAF9F5;
+}
+
+
+/* ===== CREAM / DARK TEXT NAV ===== */
+.page-navbar.cream-nav{
+    background:#F4F1EA;
+    border-bottom:1px solid rgba(0,0,0,0.15);
+}
+
+.page-navbar.cream-nav .nav-link,
+.page-navbar.cream-nav .nav-dropdown-toggle,
+.page-navbar.cream-nav .nav-book-link{
+    color:#311F13;
+}
+
+.page-navbar.cream-nav .nav-social-icons a{
+    color:#311F13;
+}
+
+.page-navbar.cream-nav .nav-divider{
+    background:rgba(0,0,0,0.15);
+}
+
+
+/* cream pages */
+.cream-nav .nav-brand-text{
+    color:#311F13;
+}
+/* HOME */
+.home-nav{
+    background:#FFFFFF;
+    border-bottom:1px solid rgba(255,255,255,.3);
+}
+
+
+/* FAQ CONTACT BOOK */
+.faq-nav,
+.contact-nav,
+.book-nav{
+    background:transparent;
+    border-bottom:1px solid rgba(255,255,255,.3);
+}
+
+
+/* CREAM PAGES */
+.gallery-nav,
+.about-nav,
+.services-nav,
+.corporate-nav,
+.other-nav{
+    background:#F4F1EA;
+    border-bottom:1px solid rgba(0,0,0,.15);
+}
+/* default text logo */
+.nav-brand-text{
+    font-family:"FreightDisp Pro";
+    font-size:30px;
+    font-weight:300;
+}
+.home-nav .nav-link,
+.home-nav .nav-dropdown-toggle,
+.home-nav .nav-book-link,
+.home-nav .nav-social-icons a,
+.home-nav .nav-brand-text{
+    color:#311F13;
+}
+.gallery-nav .nav-link,
+.gallery-nav .nav-dropdown-toggle,
+.gallery-nav .nav-book-link,
+.gallery-nav .nav-social-icons a,
+.gallery-nav .nav-brand-text{
+    color:#311F13;
+}
+.about-nav .nav-link,
+.about-nav .nav-dropdown-toggle,
+.about-nav .nav-book-link,
+.about-nav .nav-social-icons a,
+.about-nav .nav-brand-text{
+    color:#311F13;
+}
+/* dark background pages */
+.gallery-nav .nav-brand-text,
+.about-nav .nav-brand-text,
+.services-nav .nav-brand-text,
+.corporate-nav .nav-brand-text,
+.other-nav .nav-brand-text{
+    color:#311F13;
+}
+
+.navbar.light-nav .nav-link,
+.navbar.light-nav .nav-book-link, .nav-left .nav-dropdown-toggle{
+    color:#311F13;
+}
+
+/* transparent pages */
+.faq-nav .nav-brand-text,
+.contact-nav .nav-brand-text,
+.book-nav .nav-brand-text{
+    color:#FAF9F5;
+}
+        /* ===== BRAND TEXT ===== */
+
+.nav-brand-text{
+    width:270px;
+    height:48px;
+    text-align:center;
+    font-family:"FreightDisp Pro", serif;
+    font-size:39px;
+    line-height:44px;
+    font-weight:300;
+    letter-spacing:-0.47px;
+    text-transform:uppercase;
+    color:#FAF9F5;
+}
+
+
+/* default transparent pages */
+
+.navbar.transparent-nav{
+    background:transparent;
+    box-shadow:none;
+}
+
+.navbar.light-nav{
+    background:#F4F1EA;
+    box-shadow:none;
+}
+
+
+
+.navbar.light-nav .nav-brand-text{
+    color:#311F13;
+}
+
+
+.navbar.transparent-nav .nav-brand-text{
+    color:#FAF9F5;
+}
+.nav-brand-text{
+    width:270px;
+    height:48px;
+    text-align:center;
+    font-family:"FreightDisp Pro", serif;
+    font-size:32px;
+    line-height:44px;
+    font-weight:300;
+    letter-spacing:-0.47px;
+    text-transform:uppercase;
+}
+
+.navbar.transparent-nav .nav-link,
+.navbar.transparent-nav .nav-book-link{
+    color:#FAF9F5;
+}
+
+
+.navbar.transparent-nav .nav-social-icons a{
+    color:#FAF9F5;
+}
+.mobile-dropdown-title{
+    color:rgba(255,255,255,0.85);
+    font-family:var(--font-body);
+    font-size:12px;
+    text-transform:uppercase;
+    display:flex;
+    justify-content:space-between;
+    cursor:pointer;
+}
+
+
+.mobile-services-menu{
+    display:none;
+    flex-direction:column;
+    gap:18px;
+    margin-top:18px;
+    padding-left:15px;
+}
+
+
+.mobile-services-menu a{
+    color:rgba(255,255,255,0.7);
+    text-decoration:none;
+    font-family:var(--font-body);
+    font-size:11px;
+    text-transform:uppercase;
+}
+
+
+.mobile-services-menu.show{
+    display:flex;
+}
+
+.navbar.transparent-nav .nav-divider{
+    background:rgba(255,255,255,.4);
+}
 
         .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
         .hamburger span{display:block;width:22px;height:1.5px;background:var(--text-dark);transition:all 0.3s;}
@@ -129,8 +352,8 @@
         /* ======== BUTTONS ======== */
         .btn-primary{
             display:inline-block;border:1px solid var(--text-dark);
-            color:var(--text-dark);padding:10px 26px;
-            font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;
+            color:var(--text-dark);padding: 5px 23px;
+            font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;
             text-decoration:none;font-family:var(--font-body);font-weight:500;
             transition:all 0.3s;background:transparent;cursor:pointer;
         }
@@ -175,7 +398,7 @@
         .page-header-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.4;}
         .page-header-content{position:relative;z-index:1;}
         .page-header-title{
-            font-family:var(--font-display);font-size:clamp(34px,6vw,70px);
+            font-family:var(--font-display);font-size:clamp(28px,6vw,44px);
             font-weight:300;color:var(--white);letter-spacing:6px;text-transform:uppercase;
         }
         .page-header-subtitle{
@@ -215,18 +438,25 @@
            FOOTER — exact match to your provided design
         ====================================================== */
         .footer{
-            background:#EAE7E1;
+            background:#F4F1EA;
             padding:0;margin:0;width:100%;
         }
-        .footer-top{
-            max-width:1920px;margin:auto;
-            padding:42px 120px;
-            display:grid;
-            grid-template-columns:180px 280px 120px 120px 180px;
-            align-items:start;
-            column-gap:60px;
-            justify-content:center;
-        }
+.footer-top{
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 42px 164px; /* same as celebration section */
+
+    display: grid;
+    grid-template-columns:
+        minmax(130px, 190px)
+        minmax(280px, 375px)
+        minmax(100px, 130px)
+        minmax(100px, 130px)
+        minmax(150px, 200px);
+
+    align-items: start;
+    column-gap: 60px;
+}
         .footer-brand img{
             width:130px;height:auto;display:block;
             filter:invert(1) brightness(0);
@@ -313,19 +543,52 @@
         html[dir="rtl"] .footer-lang-menu button{ text-align:right; }
 
         /* Footer bottom */
-        .footer-bottom{
-            border-top:1px solid #BEB8B1;
-            text-align:center;padding:12px 0;
-            font-family:'Hanken Grotesk',sans-serif;
-            font-size:13px;font-weight:300;
-            color:#423f3f;text-transform:uppercase;
-        }
+        .footer-bottom {
+    border-top: 1px solid #BEB8B1;
+    text-align: center;
+    padding: 12px 0;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: #423f3f;
+    text-transform: uppercase;
+}
 
         /* RTL footer adjustments */
         html[dir="rtl"] .footer-top{ direction:rtl; }
         html[dir="rtl"] .footer-social{ align-items:flex-end; }
 
         /* Mobile */
+@media (max-width: 1300px){
+    .footer-top{
+        padding: 42px 80px;
+        column-gap: 40px;
+    }
+}
+
+@media (max-width: 1024px){
+    .footer-top{
+        padding: 40px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+}
+
+@media (max-width: 992px){
+    .footer-top{
+        grid-template-columns: 1fr;
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    .footer-brand img{
+        margin: 0 auto;
+    }
+
+    .footer-social{
+        align-items: center;
+    }
+}
         @media(max-width:960px){
             .navbar{height:70px;padding:0 20px;}
             .nav-left,.nav-social-icons,.nav-divider,.nav-book-link{display:none;}
@@ -333,12 +596,15 @@
         }
         @media(max-width:992px){
             .footer-top{
-                grid-template-columns:1fr;gap:25px;
+                grid-template-columns:1fr;gap:10px;
                 padding:40px 25px;text-align:center;
             }
             .footer-brand img{margin:auto;}
             .footer-social{align-items:center;}
             html[dir="rtl"] .footer-social{align-items:center;}
+            .nav-brand-text {
+    font-size: 28px;}
+
         }
     </style>
     {% block extra_head %}{% endblock %}
@@ -346,7 +612,7 @@
 <body>
 
 <!-- ===== NAVBAR ===== -->
-<nav class="navbar {% block navbar_class %}{% endblock %}" id="navbar">
+<nav class="navbar page-navbar {% block navbar_class %}{% endblock %}" id="navbar">
     <div class="nav-left">
         <a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" data-en="About" data-ar="حول">About</a>
         <div class="nav-dropdown">
@@ -355,7 +621,7 @@
                 <span class="caret">▾</span>
             </span>
             <div class="nav-dropdown-menu">
-                <a href="{% url 'services' %}" data-en="All Services" data-ar="جميع الخدمات">All Services</a>
+                <a href="{% url 'services' %}" data-en="Main Services" data-ar="جميع الخدمات">Main Services</a>
                 <a href="{% url 'corporate_events' %}" data-en="Corporate Events" data-ar="فعاليات الشركات">Corporate Events</a>
                 <a href="{% url 'other_services' %}" data-en="Other Services" data-ar="خدمات أخرى">Other Services</a>
             </div>
@@ -365,11 +631,23 @@
 
     <!-- CENTER LOGO -->
 <a href="{% url 'home' %}" class="nav-center" id="nav-logo">
-    <div class="nav-monogram">
-        <img src="{% static 'main/images/logo.png' %}"
-             alt="Meram Events Logo"
-             class="logo-img">
-    </div>
+
+    {% if request.resolver_match.url_name == 'home' %}
+
+        <div class="nav-monogram">
+            <img src="{% static 'main/images/Asset3.png' %}"
+                 alt="Meram Events Logo"
+                 class="logo-img">
+        </div>
+
+    {% else %}
+
+        <div class="nav-brand-text">
+            MERAM EVENTS
+        </div>
+
+    {% endif %}
+
 </a>
 
     <div class="nav-right">
@@ -388,12 +666,41 @@
 
 <!-- MOBILE MENU -->
 <div id="mobile-menu" style="display:none;position:fixed;inset:0;background:rgba(22,18,14,0.98);z-index:998;padding:90px 36px 40px;flex-direction:column;gap:28px;">
-    <a href="{% url 'home' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:16px;letter-spacing:3px;text-transform:uppercase;" data-en="Home" data-ar="الرئيسية">Home</a>
-    <a href="{% url 'about' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:16px;letter-spacing:3px;text-transform:uppercase;" data-en="About" data-ar="حول">About</a>
-    <a href="{% url 'services' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:16px;letter-spacing:3px;text-transform:uppercase;" data-en="Services" data-ar="الخدمات">Services</a>
-    <a href="{% url 'gallery' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:16px;letter-spacing:3px;text-transform:uppercase;" data-en="Gallery" data-ar="المعرض">Gallery</a>
-    <a href="{% url 'faq' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:16px;letter-spacing:3px;text-transform:uppercase;" data-en="FAQ" data-ar="أسئلة شائعة">FAQ</a>
-    <a href="{% url 'contact' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:16px;letter-spacing:3px;text-transform:uppercase;" data-en="Contact" data-ar="اتصل بنا">Contact</a>
+    <a href="{% url 'home' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:12px;text-transform:uppercase;" data-en="Home" data-ar="الرئيسية">Home</a>
+    <a href="{% url 'about' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:12px;text-transform:uppercase;" data-en="About" data-ar="حول">About</a>
+<div class="mobile-dropdown">
+
+    <div class="mobile-dropdown-title" onclick="toggleMobileServices()">
+        <span data-en="Services" data-ar="الخدمات">Services</span>
+        <span>▾</span>
+    </div>
+
+    <div id="mobile-services-menu" class="mobile-services-menu">
+
+        <a href="{% url 'services' %}"
+           data-en="Main Services"
+           data-ar="جميع الخدمات">
+           Main Services
+        </a>
+
+        <a href="{% url 'corporate_events' %}"
+           data-en="Corporate Events"
+           data-ar="فعاليات الشركات">
+           Corporate Events
+        </a>
+
+        <a href="{% url 'other_services' %}"
+           data-en="Other Services"
+           data-ar="خدمات أخرى">
+           Other Services
+        </a>
+
+    </div>
+
+</div>
+    <a href="{% url 'gallery' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:12px;text-transform:uppercase;" data-en="Gallery" data-ar="المعرض">Gallery</a>
+    <a href="{% url 'faq' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:12px;text-transform:uppercase;" data-en="FAQ" data-ar="أسئلة شائعة">FAQ</a>
+    <a href="{% url 'contact' %}" style="color:rgba(255,255,255,0.85);text-decoration:none;font-family:var(--font-body);font-size:12px;text-transform:uppercase;" data-en="Contact" data-ar="اتصل بنا">Contact</a>
     <a href="{% url 'book_now' %}" class="btn-gold" style="text-align:center;margin-top:16px;" data-en="Book Now" data-ar="احجز الآن">Book Now</a>
     <button onclick="toggleMobileMenu()" style="position:absolute;top:28px;right:28px;background:none;border:none;color:white;font-size:22px;cursor:pointer;">✕</button>
 </div>
@@ -415,7 +722,7 @@
 
         <!-- Logo -->
         <div class="footer-brand">
-            <img src="{% static 'main/images/logo2.png' %}" alt="Meram Events">
+            <img src="{% static 'main/images/Asset4.png' %}" alt="Meram Events">
         </div>
 
         <!-- Description -->
@@ -481,6 +788,14 @@ window.addEventListener('scroll', () => {
 function toggleMobileMenu(){
     const m = document.getElementById('mobile-menu');
     m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+}
+
+function toggleMobileServices(){
+
+    const menu = document.getElementById("mobile-services-menu");
+
+    menu.classList.toggle("show");
+
 }
 
 /* =============================================
