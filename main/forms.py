@@ -9,6 +9,7 @@ class GalleryImageForm(forms.ModelForm):
             'title',
             'image',
             'is_featured',
+            'category',
         ]
 
         widgets = {
