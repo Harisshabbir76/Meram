@@ -781,7 +781,7 @@
                      alt="{{ img.title }}"
                      onclick="openLb(this)">
             {% endfor %}
-        {% endif %}
+        {% else %}
 
         <!-- fallback/static images -->
         <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=700&q=85&sig=1" alt="" onclick="openLb(this)">
@@ -799,7 +799,7 @@
         <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=700&q=85&sig=3" alt="" onclick="openLb(this)">
         <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=700&q=85&sig=2" alt="" onclick="openLb(this)">
         <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&q=85&sig=3" alt="" onclick="openLb(this)">
-
+        {% endif %}
     </div>
 </div>
 
