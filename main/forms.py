@@ -49,6 +49,7 @@ class BookingForm(forms.ModelForm):
     class Meta:
         model = BookingRequest
         fields = '__all__'
+        exclude = ['status']
 
         widgets = {
 
@@ -59,17 +60,6 @@ class BookingForm(forms.ModelForm):
                 }
             ),
 
-            'start_time': forms.TimeInput(
-                attrs={
-                    'type': 'time',
-                    'class': 'form-control'
-                }
-            ),
-
-            'end_time': forms.TimeInput(
-                attrs={
-                    'type': 'time',
-                    'class': 'form-control'
-                }
-            ),
+            'start_time': forms.Select(),
+            'end_time': forms.Select(),
         }
