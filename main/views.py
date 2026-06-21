@@ -88,17 +88,19 @@ def other_services(request):
 
 def gallery(request):
     celebration_images = CelebrationImage.objects.filter(is_active=True)[:8]
-    category = request.GET.get('category', 'all')
-    if category == 'all':
-        images = GalleryImage.objects.all()
-    else:
-        images = GalleryImage.objects.filter(category=category)
-    categories = GalleryImage.CATEGORY_CHOICES
+
+    top_images = GalleryImage.objects.filter(
+        category='section1'
+    ).order_by('order', '-created_at')
+
+    main_images = GalleryImage.objects.filter(
+        category='section2'
+    ).order_by('order', '-created_at')
+
     return render(request, 'main/gallery.html', {
-        'images': images,
-        'categories': categories,
-        'active_category': category,
-        
+        'top_images': top_images,
+        'main_images': main_images,
+        'celebration_images': celebration_images,
     })
 
 
@@ -281,18 +283,11 @@ def gallery_manage(request):
     )
 @login_required(login_url='dashboard_login')
 def gallery_create(request):
-
     if request.method == "POST":
         form = GalleryImageForm(request.POST, request.FILES)
 
         if form.is_valid():
-            obj = form.save(commit=False)
-
-            obj.category = "wedding"
-            obj.order = 0
-
-            obj.save()
-
+            form.save()
             return redirect('dashboard_gallery')
 
     else:
@@ -351,6 +346,7 @@ def gallery_delete(request, pk):
     return JsonResponse({
         'success': True
     })
+
 def celebration_images(request):
 
     images = CelebrationImage.objects.all()
