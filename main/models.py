@@ -3,15 +3,17 @@ from django.db import models
 
 class GalleryImage(models.Model):
     CATEGORY_CHOICES = [
-        ('wedding', 'Wedding'),
-        ('engagement', 'Engagement'),
-        ('corporate', 'Corporate'),
-        ('private', 'Private Event'),
-        ('floral', 'Floral & Decor'),
+        ('section1', '1st Section'),
+        ('section2', '2nd Section'),
     ]
+
     title = models.CharField(max_length=200)
     image = models.ImageField(upload_to='gallery/')
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='wedding')
+    category = models.CharField(
+        max_length=50,
+        choices=CATEGORY_CHOICES,
+        default='section1'
+    )
     is_featured = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
