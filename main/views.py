@@ -134,24 +134,25 @@ def contact(request):
 # ======================================================================
 
 def dashboard_login(request):
-    """Custom styled login page for the admin dashboard."""
     if request.user.is_authenticated:
         return redirect('dashboard_bookings')
 
     error = None
+
     if request.method == 'POST':
         email = request.POST.get('email', '').strip()
         password = request.POST.get('password', '')
-        # Allow login via username OR email
+
         from django.contrib.auth.models import User
+
         username = email
-        try:
-            user_obj = User.objects.get(email__iexact=email)
+
+        user_obj = User.objects.filter(email__iexact=email).first()
+        if user_obj:
             username = user_obj.username
-        except User.DoesNotExist:
-            pass
 
         user = authenticate(request, username=username, password=password)
+
         if user is not None and user.is_staff:
             auth_login(request, user)
             return redirect('dashboard_bookings')
