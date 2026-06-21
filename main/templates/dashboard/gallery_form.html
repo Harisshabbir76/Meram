@@ -122,19 +122,24 @@
 
     {% csrf_token %}
 
-    <div class="gallery-grid">
+<div class="gallery-grid">
 
-        <div class="gallery-group">
-            <label>Title</label>
-            {{ form.title }}
-        </div>
-
-        <div class="gallery-group">
-            <label>Upload Image</label>
-            {{ form.image }}
-        </div>
-
+    <div class="gallery-group">
+        <label>Title</label>
+        {{ form.title }}
     </div>
+
+    <div class="gallery-group">
+        <label>Upload Image</label>
+        {{ form.image }}
+    </div>
+
+    <div class="gallery-group">
+        <label>Section</label>
+        {{ form.category }}
+    </div>
+
+</div>
 
     <div class="switch-wrap">
         {{ form.is_featured }}
