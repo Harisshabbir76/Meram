@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import GalleryImage, CelebrationImage, ContactSubmission, BookingRequest, FAQ, Testimonial
-
+from .models import ServiceHero, MainService
 
 @admin.register(GalleryImage)
 class GalleryImageAdmin(admin.ModelAdmin):
@@ -19,8 +19,8 @@ class GalleryImageAdmin(admin.ModelAdmin):
 
 @admin.register(CelebrationImage)
 class CelebrationImageAdmin(admin.ModelAdmin):
-    list_display = ['title', 'order', 'is_active', 'image_preview']
-    list_editable = ['order', 'is_active']
+    list_display = ['title', 'is_active', 'image_preview']
+    list_editable = [ 'is_active']
 
     def image_preview(self, obj):
         if obj.image:
@@ -79,3 +79,5 @@ class TestimonialAdmin(admin.ModelAdmin):
 admin.site.site_header = "Meram Events Administration"
 admin.site.site_title = "Meram Events Admin"
 admin.site.index_title = "Welcome to Meram Events Dashboard"
+admin.site.register(ServiceHero)
+admin.site.register(MainService)

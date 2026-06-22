@@ -1,6 +1,33 @@
 from django import forms
-from .models import ContactSubmission, BookingRequest, CelebrationImage, GalleryImage
+from .models import ContactSubmission, BookingRequest, CelebrationImage, GalleryImage, CorporateEvent
+from PIL import Image
+from pillow_heif import register_heif_opener
 
+register_heif_opener()
+
+from .models import ServiceSection
+
+from .models import ServiceHero, MainService
+
+
+class ServiceHeroForm(forms.ModelForm):
+    class Meta:
+        model = ServiceHero
+        fields = '__all__'
+
+
+class MainServiceForm(forms.ModelForm):
+    class Meta:
+        model = MainService
+        fields = '__all__'
+class CorporateEventForm(forms.ModelForm):
+    class Meta:
+        model = CorporateEvent
+        fields = '__all__'
+class ServiceSectionForm(forms.ModelForm):
+    class Meta:
+        model = ServiceSection
+        fields = '__all__'
 
 class GalleryImageForm(forms.ModelForm):
     class Meta:
@@ -9,6 +36,7 @@ class GalleryImageForm(forms.ModelForm):
             'title',
             'image',
             'is_featured',
+            'category',
         ]
 
         widgets = {
@@ -27,7 +55,6 @@ class CelebrationImageForm(forms.ModelForm):
         fields = [
             'title',
             'image',
-            'order',
             'is_active',
         ]
 class ContactForm(forms.ModelForm):
@@ -48,6 +75,7 @@ class BookingForm(forms.ModelForm):
     class Meta:
         model = BookingRequest
         fields = '__all__'
+        exclude = ['status']
 
         widgets = {
 
@@ -58,17 +86,6 @@ class BookingForm(forms.ModelForm):
                 }
             ),
 
-            'start_time': forms.TimeInput(
-                attrs={
-                    'type': 'time',
-                    'class': 'form-control'
-                }
-            ),
-
-            'end_time': forms.TimeInput(
-                attrs={
-                    'type': 'time',
-                    'class': 'form-control'
-                }
-            ),
+            'start_time': forms.Select(),
+            'end_time': forms.Select(),
         }

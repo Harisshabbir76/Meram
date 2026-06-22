@@ -20,16 +20,19 @@
     position:absolute;
     inset:0;
 
-background:
-linear-gradient(
-    to bottom,
-    rgba(20,16,12,0.08) 0%,
-    rgba(20,16,12,0.25) 60%,
-    rgba(20,16,12,0.45) 100%
-),
-url('/static/main/images/Homebanner.jpg') center / cover no-repeat;
+    background:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80')
+               center center / cover no-repeat;
 
     animation:heroKen 14s ease-in-out infinite alternate;
+}
+
+
+/* Overlay */
+.hero-bg::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.75); /* yahan opacity change karo */
 }
 @keyframes heroKen{from{transform:scale(1);}to{transform:scale(1.06);}}
 
@@ -40,8 +43,26 @@ url('/static/main/images/Homebanner.jpg') center / cover no-repeat;
     display:flex;
     justify-content:center;
     align-items:center;
-}
+        margin-bottom: 27px;
 
+}
+.about-hero-script{
+    font-family:'Pinyon Script', cursive;
+    font-size:clamp(9px,3vw,28px);
+    line-height:40px;
+    color:#311F13;
+}
+.about-hero-title{
+    font-family: 'FreightDisp Pro', serif;
+    font-size: clamp(16px, 4vw, 33px);
+    line-height: 0.95;
+    font-weight: 300;
+    letter-spacing: -0.95px;
+    /* text-transform: uppercase; */
+    color: #fff;
+    max-width: 1100px;
+    margin: 0 auto 42px;
+}
 .hero-logo{
     max-width: 265px; /* size adjust kar sakti ho */
     height:auto;
@@ -806,6 +827,9 @@ position: absolute;
         line-height:20px;
         letter-spacing:0.5px;
     }
+    .hero-monogram {
+    margin-bottom: 11px;
+}
 }
 
 /* Small Mobile */
@@ -1109,10 +1133,15 @@ position: absolute;
         <div class="hero-monogram">
             <div class="hero-monogram">
                 <img src="{% static 'main/images/Asset2.png' %}"
+                
                     alt="Meram Events Logo"
                     class="hero-logo">
             </div>
         </div>
+ <h1 class="about-hero-title"
+    data-en="Let’s Talk Meram Events"
+    data-ar="لنتحدث عن Meram Events">
+</h1>
         <!-- <div class="hero-brand">Meram Events</div> -->
     </div>
 </section>
@@ -1348,39 +1377,39 @@ position: absolute;
         OUR SERVICES
     </div>
 
-    <div class="services-grid">
+<div class="services-grid">
 
-        <a href="{% url 'services' %}" class="service-card">
-            <img src="{% static 'main/images/os2.jpeg' %}" alt="Wedding & Event Planning">
+    <div class="service-card">
+        <img src="{% static 'main/images/os2.jpeg' %}" alt="Wedding & Event Planning">
 
-            <p class="service-label"
-               data-en="Wedding & Event Planning"
-               data-ar="تخطيط حفلات الزفاف والفعاليات">
-                Wedding &amp; Event Planning
-            </p>
-        </a>
-
-        <a href="{% url 'other_services' %}" class="service-card">
-            <img src="{% static 'main/images/os1.jpg' %}" alt="Floral & Decor Design">
-
-            <p class="service-label"
-               data-en="Floral & Decor Design"
-               data-ar="تصميم الزهور والديكور">
-                Floral &amp; Decor Design
-            </p>
-        </a>
-
-        <a href="{% url 'other_services' %}" class="service-card">
-            <img src="{% static 'main/images/os3.jpeg' %}" alt="VIP Hospitality">
-
-            <p class="service-label"
-               data-en="VIP Hospitality"
-               data-ar="خدمات الضيافة لكبار الشخصيات">
-                VIP Hospitality
-            </p>
-        </a>
-
+        <p class="service-label"
+           data-en="Wedding & Event Planning"
+           data-ar="تخطيط حفلات الزفاف والفعاليات">
+            Wedding &amp; Event Planning
+        </p>
     </div>
+
+    <div class="service-card">
+        <img src="{% static 'main/images/os1.jpg' %}" alt="Floral & Decor Design">
+
+        <p class="service-label"
+           data-en="Floral & Decor Design"
+           data-ar="تصميم الزهور والديكور">
+            Floral &amp; Decor Design
+        </p>
+    </div>
+
+    <div class="service-card">
+        <img src="{% static 'main/images/os3.jpeg' %}" alt="VIP Hospitality">
+
+        <p class="service-label"
+           data-en="VIP Hospitality"
+           data-ar="خدمات الضيافة لكبار الشخصيات">
+            VIP Hospitality
+        </p>
+    </div>
+
+</div>
 
     <hr>
 

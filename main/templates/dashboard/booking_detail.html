@@ -50,6 +50,15 @@
             <h3>Event Details</h3>
             <div class="bd-row"><span class="bd-row-label">Event Type</span><span class="bd-row-value">{{ booking.get_event_type_display }}</span></div>
             <div class="bd-row"><span class="bd-row-label">Event Date</span><span class="bd-row-value">{{ booking.event_date|date:"F j, Y" }}</span></div>
+            <div class="bd-row">
+                <span class="bd-row-label">Start Time</span>
+                <span class="bd-row-value">{{ booking.get_start_time_display }}</span>
+            </div>
+
+            <div class="bd-row">
+                <span class="bd-row-label">End Time</span>
+                <span class="bd-row-value">{{ booking.get_end_time_display }}</span>
+            </div>
             <div class="bd-row"><span class="bd-row-label">Guest Count</span><span class="bd-row-value">{{ booking.guest_count|default:"—" }}</span></div>
             <div class="bd-row"><span class="bd-row-label">Venue</span><span class="bd-row-value">{{ booking.venue|default:"—" }}</span></div>
             <div class="bd-row"><span class="bd-row-label">Budget</span><span class="bd-row-value">{{ booking.budget|default:"—" }}</span></div>

@@ -1,0 +1,865 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+
+{% block title %}Services Management{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="db-header-row mb-4">
+    <div>
+        <div class="db-breadcrumb">
+            CONTENT MANAGEMENT
+        </div>
+        <h1 class="db-page-title">
+            Services Page
+        </h1>
+    </div>
+    <div class="lang-switch">
+    <button type="button" onclick="setLang('en')" class="lang-btn active">EN</button>
+    <button type="button" onclick="setLang('ar')" class="lang-btn">AR</button>
+</div>
+    <button
+    class="add-service-btn"
+    onclick="openDrawer('addDrawer')"
+>
+    + Add Service
+</button>
+
+</div>
+
+{% for service in services %}
+
+<div class="service-preview">
+    <div class="service-actions">
+
+    <button
+        type="button"
+        class="action-btn edit-btn"
+        onclick="openDrawer('drawer{{ service.id }}')"
+    >
+        <i class="fas fa-pen"></i>
+    </button>
+
+    <form
+        method="POST"
+        action="{% url 'dashboard_service_delete' service.id %}"
+    >
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="action-btn delete-btn"
+        >
+            <i class="fas fa-trash"></i>
+        </button>
+    </form>
+
+</div>
+
+    <div class="row g-0 align-items-stretch">
+
+        <div class="col-lg-3">
+            {% if service.left_image %}
+            <img src="{{ service.left_image.url }}" class="preview-img">
+            {% endif %}
+        </div>
+
+        <div class="col-lg-6 service-content">
+
+    <h2 class="lang-text"
+        data-en="{{ service.title }}"
+        data-ar="{{ service.title_ar }}">
+        {{ service.title }}
+    </h2>
+
+    <p class="tagline lang-text"
+        data-en="{{ service.tagline }}"
+        data-ar="{{ service.tagline_ar }}">
+        {{ service.tagline }}
+    </p>
+
+    <p class="lang-text"
+        data-en="{{ service.description }}"
+        data-ar="{{ service.description_ar }}">
+        {{ service.description }}
+    </p>
+    
+    <p class="lang-text"
+        data-en="{{ service.card_title }}"
+        data-ar="{{ service.card_title_ar }}">
+        {{ service.card_title }}
+    </p>
+
+    <ul>
+        <li class="lang-text" data-en="{{ service.bullet1 }}" data-ar="{{ service.bullet1_ar }}">{{ service.bullet1 }}</li>
+        <li class="lang-text" data-en="{{ service.bullet2 }}" data-ar="{{ service.bullet2_ar }}">{{ service.bullet2 }}</li>
+        <li class="lang-text" data-en="{{ service.bullet3 }}" data-ar="{{ service.bullet3_ar }}">{{ service.bullet3 }}</li>
+        <li class="lang-text" data-en="{{ service.bullet4 }}" data-ar="{{ service.bullet4_ar }}">{{ service.bullet4 }}</li>
+        <li class="lang-text" data-en="{{ service.bullet5 }}" data-ar="{{ service.bullet5_ar }}">{{ service.bullet5 }}</li>
+    </ul>
+
+    <blockquote class="lang-text"
+        data-en="{{ service.quote }}"
+        data-ar="{{ service.quote_ar }}">
+        {{ service.quote }}
+    </blockquote>
+
+</div>
+
+        <div class="col-lg-3">
+            {% if service.right_image %}
+            <img src="{{ service.right_image.url }}" class="preview-img">
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+<!-- EDIT DRAWER -->
+
+<div class="drawer" id="drawer{{ service.id }}">
+
+    <form method="POST" enctype="multipart/form-data" action="{% url 'dashboard_service_update' service.id %}">
+
+        {% csrf_token %}
+
+        <div class="drawer-header">
+            <h4>Edit Service</h4>
+
+            <button type="button" onclick="closeDrawer('drawer{{ service.id }}')">
+                ✕
+            </button>
+
+        </div>
+
+        <div class="drawer-body">
+
+    <div class="form-section">
+    <h5 class="section-title">English Content</h5>
+
+    <div class="grid-2">
+
+        <div class="form-group">
+            <label>Card Title</label>
+            <input type="text" name="card_title" class="form-input" value="{{ service.card_title }}">
+        </div>
+
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" name="title" class="form-input" value="{{ service.title }}">
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label>Tagline</label>
+        <input type="text" name="tagline" class="form-input" value="{{ service.tagline }}">
+    </div>
+
+    <div class="form-group">
+        <label>Description</label>
+        <textarea name="description" class="form-textarea">{{ service.description }}</textarea>
+    </div>
+
+    <div class="grid-2">
+
+        <div class="form-group">
+            <label>Bullet 1</label>
+            <input type="text" name="bullet1" class="form-input" value="{{ service.bullet1 }}">
+        </div>
+
+        <div class="form-group">
+            <label>Bullet 2</label>
+            <input type="text" name="bullet2" class="form-input" value="{{ service.bullet2 }}">
+        </div>
+
+        <div class="form-group">
+            <label>Bullet 3</label>
+            <input type="text" name="bullet3" class="form-input" value="{{ service.bullet3 }}">
+        </div>
+
+        <div class="form-group">
+            <label>Bullet 4</label>
+            <input type="text" name="bullet4" class="form-input" value="{{ service.bullet4 }}">
+        </div>
+
+        <div class="form-group">
+            <label>Bullet 5</label>
+            <input type="text" name="bullet5" class="form-input" value="{{ service.bullet5 }}">
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label>Quote</label>
+        <textarea name="quote" class="form-textarea">{{ service.quote }}</textarea>
+    </div>
+</div>
+
+    <hr>
+
+    <div class="form-section">
+    <h5 class="section-title">Arabic Content</h5>
+
+    <div class="form-group">
+        <label>Title</label>
+        <input dir="rtl" type="text" name="title_ar" class="form-input" value="{{ service.title_ar }}">
+    </div>
+
+    <div class="form-group">
+        <label>Tagline</label>
+        <input dir="rtl" type="text" name="tagline_ar" class="form-input" value="{{ service.tagline_ar }}">
+    </div>
+
+    <div class="form-group">
+        <label>Description</label>
+        <textarea dir="rtl" name="description_ar" class="form-textarea">{{ service.description_ar }}</textarea>
+    </div>
+        <div class="form-group">
+        <label>Card Title</label>
+        <input dir="rtl" type="text" name="card_title_ar" class="form-input" value="{{ service.card_title_ar }}">
+    </div>
+
+    <div class="grid-2">
+
+        <div class="form-group">
+            <label>Bullet 1</label>
+            <input dir="rtl" type="text" name="bullet1_ar" class="form-input" value="{{ service.bullet1_ar }}">
+        </div>
+
+        <div class="form-group">
+            <label>Bullet 2</label>
+            <input dir="rtl" type="text" name="bullet2_ar" class="form-input" value="{{ service.bullet2_ar }}">
+        </div>
+
+        <div class="form-group">
+            <label>Bullet 3</label>
+            <input dir="rtl" type="text" name="bullet3_ar" class="form-input" value="{{ service.bullet3_ar }}">
+        </div>
+
+        <div class="form-group">
+            <label>Bullet 4</label>
+            <input dir="rtl" type="text" name="bullet4_ar" class="form-input" value="{{ service.bullet4_ar }}">
+        </div>
+
+        <div class="form-group">
+            <label>Bullet 5</label>
+            <input dir="rtl" type="text" name="bullet5_ar" class="form-input" value="{{ service.bullet5_ar }}">
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label>Quote</label>
+        <textarea dir="rtl" name="quote_ar" class="form-textarea">{{ service.quote_ar }}</textarea>
+    </div>
+</div>
+
+    <hr>
+
+<div class="form-section">
+    <h5 class="section-title">Images</h5>
+
+    <!-- CARD IMAGE -->
+    <div class="form-group">
+        <label>Card Image</label>
+
+        {% if service.card_image %}
+        <div class="img-preview">
+            <img src="{{ service.card_image.url }}" alt="Card Image">
+        </div>
+        {% endif %}
+
+        <input type="file" name="card_image" class="form-input">
+    </div>
+
+    <!-- LEFT IMAGE -->
+    <div class="form-group">
+        <label>Left Image</label>
+
+        {% if service.left_image %}
+        <div class="img-preview">
+            <img src="{{ service.left_image.url }}" alt="Left Image">
+        </div>
+        {% endif %}
+
+        <input type="file" name="left_image" class="form-input">
+    </div>
+
+    <!-- RIGHT IMAGE -->
+    <div class="form-group">
+        <label>Right Image</label>
+
+        {% if service.right_image %}
+        <div class="img-preview">
+            <img src="{{ service.right_image.url }}" alt="Right Image">
+        </div>
+        {% endif %}
+
+        <input type="file" name="right_image" class="form-input">
+    </div>
+</div>
+
+    <button class="btn-save">
+        Save Service
+    </button>
+
+</div>
+
+    </form>
+
+</div>
+
+{% endfor %}
+
+<!-- ADD DRAWER -->
+
+<div class="drawer" id="addDrawer">
+
+    <form method="POST" enctype="multipart/form-data" action="{% url 'dashboard_service_create' %}">
+
+        {% csrf_token %}
+
+        <div class="drawer-header">
+            <h4>Add Service</h4>
+
+            <button type="button" onclick="closeDrawer('addDrawer')">
+                ✕
+            </button>
+        </div>
+
+        <div class="drawer-body">
+
+            <!-- ENGLISH -->
+            <div class="form-section">
+                <h5 class="section-title">English Content</h5>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Card Title</label>
+                        <input type="text" name="card_title" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" name="title" class="form-input">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Tagline</label>
+                    <input type="text" name="tagline" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" class="form-textarea"></textarea>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group"><label>Bullet 1</label><input type="text" name="bullet1" class="form-input"></div>
+                    <div class="form-group"><label>Bullet 2</label><input type="text" name="bullet2" class="form-input"></div>
+                    <div class="form-group"><label>Bullet 3</label><input type="text" name="bullet3" class="form-input"></div>
+                    <div class="form-group"><label>Bullet 4</label><input type="text" name="bullet4" class="form-input"></div>
+                    <div class="form-group"><label>Bullet 5</label><input type="text" name="bullet5" class="form-input"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Quote</label>
+                    <textarea name="quote" class="form-textarea"></textarea>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- ARABIC -->
+            <div class="form-section">
+                <h5 class="section-title">Arabic Content</h5>
+
+                <div class="form-group">
+                    <label>Card Title</label>
+                    <input dir="rtl" type="text" name="card_title_ar" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label>Title</label>
+                    <input dir="rtl" type="text" name="title_ar" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label>Tagline</label>
+                    <input dir="rtl" type="text" name="tagline_ar" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea dir="rtl" name="description_ar" class="form-textarea"></textarea>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group"><label>Bullet 1</label><input dir="rtl" type="text" name="bullet1_ar" class="form-input"></div>
+                    <div class="form-group"><label>Bullet 2</label><input dir="rtl" type="text" name="bullet2_ar" class="form-input"></div>
+                    <div class="form-group"><label>Bullet 3</label><input dir="rtl" type="text" name="bullet3_ar" class="form-input"></div>
+                    <div class="form-group"><label>Bullet 4</label><input dir="rtl" type="text" name="bullet4_ar" class="form-input"></div>
+                    <div class="form-group"><label>Bullet 5</label><input dir="rtl" type="text" name="bullet5_ar" class="form-input"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Quote</label>
+                    <textarea dir="rtl" name="quote_ar" class="form-textarea"></textarea>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- IMAGES -->
+            <div class="form-section">
+                <h5 class="section-title">Images</h5>
+
+                <div class="form-group">
+                    <label>Card Image</label>
+                    <input type="file" name="card_image" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label>Left Image</label>
+                    <input type="file" name="left_image" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label>Right Image</label>
+                    <input type="file" name="right_image" class="form-input">
+                </div>
+            </div>
+
+            <button class="btn-save">
+                Save Service
+            </button>
+
+        </div>
+    </form>
+
+</div>
+
+<style>
+    .db-header-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+}
+
+.db-page-title{
+    margin:0;
+}
+
+.add-service-btn{
+    height:48px;
+    padding:0 24px;
+    border:2px solid #111;
+    background:#fff;
+    color:#111;
+    border-radius:12px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.add-service-btn:hover{
+    background:#111;
+    color:#fff;
+}
+.service-preview{
+    /* background:#fff;
+    border-radius:28px;
+    overflow:hidden;
+    margin-bottom:50px;
+    box-shadow:0 10px 40px rgba(0,0,0,.08); */
+    position:relative;
+}
+
+.service-preview .row{
+    min-height:680px;
+    margin:0;
+    display: flex;
+    flex-wrap: nowrap; /* important */
+}
+
+
+.preview-img{
+    width:100%;
+    height:680px;
+    object-fit:cover;
+    display:block;
+}
+
+   .service-content{
+    min-height:680px;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    padding:0 70px;
+}
+
+.service-content h2{
+    font-size:44px;
+    font-weight:700;
+    margin-bottom:20px;
+    line-height:1.2;
+}
+
+.service-content .tagline{
+    margin-bottom:28px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    font-size:13px;
+    color:#a6804c;
+}
+
+.service-content p{
+    max-width:580px;
+    margin-bottom:20px;
+    line-height:1.9;
+}
+.service-content ul{
+    width:100%;
+    max-width:500px;
+
+    list-style:none;
+    padding:0;
+    margin:25px 0;
+}
+
+.service-content ul li{
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+}
+
+    .service-content blockquote{
+    margin-top:25px;
+
+    font-size:18px;
+    font-style:italic;
+
+    color:#8d6b3e;
+
+    max-width:500px;
+}
+    .service-actions{
+    position:absolute;
+    top:20px;
+    right:20px;
+    z-index:50;
+    display:flex;
+    gap:10px;
+}
+.service-preview .col-lg-3{
+    flex:0 0 25%;
+    max-width:25%;
+}
+
+.service-preview .col-lg-6{
+    flex:0 0 50%;
+    max-width:50%;
+}
+
+.service-actions{
+    position:absolute;
+    top:25px;
+    right:25px;
+    z-index:100;
+
+    display:flex;
+    gap:12px;
+}
+
+.action-btn{
+    width:48px;
+    height:48px;
+
+    border:none;
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.edit-btn{
+    background:#111827;
+    color:#fff;
+}
+
+.edit-btn:hover{
+    transform:translateY(-4px);
+}
+
+.delete-btn{
+    background:#dc2626;
+    color:#fff;
+}
+
+.delete-btn:hover{
+    transform:translateY(-4px);
+}
+.drawer{
+
+    position:fixed;
+    top:0;
+    right:-850px;
+
+    width:850px;
+    max-width:95%;
+
+    height:100vh;
+
+    background:#fff;
+
+    z-index:99999;
+
+    transition:.4s ease;
+
+    overflow-y:auto;
+
+    box-shadow:
+    -15px 0 50px rgba(0,0,0,.15);
+}
+
+.drawer.active{
+    right:0;
+}
+
+.drawer-header{
+
+    position:sticky;
+    top:0;
+
+    background:#fff;
+
+    z-index:10;
+
+    padding:22px 30px;
+
+    border-bottom:1px solid #eee;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.drawer-header h4{
+    margin:0;
+    font-size:24px;
+    font-weight:700;
+}
+
+.drawer-header button{
+    border:none;
+    background:#f3f4f6;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+.drawer-body{
+    padding: 30px;
+    background: #fafafa;
+}
+
+/* section title */
+.section-title{
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* input fields */
+.form-input{
+    width: 100%;
+    height: 46px;
+    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    transition: 0.25s;
+    background: #fff;
+    margin-bottom: 12px;
+}
+
+.form-input:focus{
+    border-color: #111827;
+    box-shadow: 0 0 0 3px rgba(17,24,39,0.1);
+}
+.img-preview{
+    margin-bottom: 10px;
+}
+
+.img-preview img{
+    width: 100%;
+    max-width: 180px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+/* textarea */
+.form-textarea{
+    width: 100%;
+    min-height: 120px;
+    padding: 12px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    transition: 0.25s;
+    background: #fff;
+    margin-bottom: 12px;
+    resize: vertical;
+}
+
+.form-textarea:focus{
+    border-color: #111827;
+    box-shadow: 0 0 0 3px rgba(17,24,39,0.1);
+}
+
+/* 2 column layout */
+.grid-2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.form-group{
+    margin-bottom: 14px;
+}
+
+.form-group label{
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+}
+/* file label */
+.file-label{
+    display: block;
+    font-size: 13px;
+    margin: 10px 0 5px;
+    color: #444;
+    font-weight: 600;
+}
+
+/* save button */
+.btn-save{
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #111827, #374151);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.btn-save:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+@media(max-width:991px){
+
+    .service-preview .col-lg-3,
+    .service-preview .col-lg-6{
+        max-width:100%;
+        flex:0 0 100%;
+    }
+
+    .preview-img{
+        height:400px;
+    }
+
+    .service-content{
+        min-height:auto;
+        padding:50px 30px;
+    }
+}
+</style>
+
+<script>
+
+    function openDrawer(id){
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+
+    document
+        .getElementById("drawerOverlay")
+        .classList.add("active");
+}
+
+function closeDrawer(id){
+
+    document
+        .getElementById(id)
+        .classList.remove("active");
+
+    document
+        .getElementById("drawerOverlay")
+        .classList.remove("active");
+}
+
+function closeAllDrawers(){
+
+    document
+        .querySelectorAll(".drawer")
+        .forEach(function(el){
+
+            el.classList.remove("active");
+
+        });
+
+    document
+        .getElementById("drawerOverlay")
+        .classList.remove("active");
+}
+
+</script>
+<script>
+function setLang(lang){
+
+    document.querySelectorAll('.lang-text').forEach(el => {
+        el.innerText = el.getAttribute('data-' + lang);
+    });
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    event.target.classList.add('active');
+}
+</script>
+<div
+    class="drawer-overlay"
+    id="drawerOverlay"
+    onclick="closeAllDrawers()"
+></div>
+
+{% endblock %}

@@ -727,18 +727,22 @@
 <!-- ===== TOP 6-IMAGE GRID (3×2) ===== -->
 <div class="gallery-grid-top">
     <div class="gallery-grid-3col" id="top-grid">
-        {% if images %}
-            {% for img in images|slice:":6" %}
-            <img src="{{ img.image.url }}" alt="{{ img.title }}" onclick="openLb(this)">
+
+        {% if top_images %}
+            {% for img in top_images|slice:":6" %}
+                <img src="{{ img.image.url }}"
+                     alt="{{ img.title }}"
+                     onclick="openLb(this)">
             {% endfor %}
         {% else %}
-        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=700&q=85" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=700&q=85" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=700&q=85" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=700&q=85" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&q=85" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=700&q=85" alt="" onclick="openLb(this)">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=700&q=85" alt="" onclick="openLb(this)">
+            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=700&q=85" alt="" onclick="openLb(this)">
+            <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=700&q=85" alt="" onclick="openLb(this)">
+            <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=700&q=85" alt="" onclick="openLb(this)">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&q=85" alt="" onclick="openLb(this)">
+            <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=700&q=85" alt="" onclick="openLb(this)">
         {% endif %}
+
     </div>
 </div>
 
@@ -767,15 +771,19 @@
 </section>
 
 <!-- ===== MAIN GALLERY GRID (3-col, 15 images) ===== -->
+
 <div class="gallery-main-section">
     <div class="gallery-main-grid" id="main-grid">
-        {% if images %}
-        {% for img in images %}
-            <img src="{{ img.image.url }}"
-                 alt="{{ img.title }}"
-                 onclick="openLb(this)">
-        {% endfor %}
-        {% else %}
+
+        {% if main_images %}
+            {% for img in main_images %}
+                <img src="{{ img.image.url }}"
+                     alt="{{ img.title }}"
+                     onclick="openLb(this)">
+            {% endfor %}
+        {% endif %}
+
+        <!-- fallback/static images -->
         <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=700&q=85&sig=1" alt="" onclick="openLb(this)">
         <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=700&q=85" alt="" onclick="openLb(this)">
         <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=700&q=85" alt="" onclick="openLb(this)">
@@ -791,9 +799,10 @@
         <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=700&q=85&sig=3" alt="" onclick="openLb(this)">
         <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=700&q=85&sig=2" alt="" onclick="openLb(this)">
         <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&q=85&sig=3" alt="" onclick="openLb(this)">
-        {% endif %}
+
     </div>
 </div>
+
 
 <!-- Instagram follow text -->
 <div class="gallery-insta reveal">

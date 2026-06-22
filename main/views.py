@@ -11,50 +11,151 @@ from django.db.models import Q
 from .models import BookingRequest, ContactSubmission
 from django.utils import timezone
 from datetime import timedelta
-from .forms import ContactForm, BookingForm, CelebrationImageForm, GalleryImageForm
+from .models import ServiceSection
+from .forms import ServiceSectionForm
+from .forms import ContactForm, BookingForm, CelebrationImageForm, GalleryImageForm, CorporateEventForm
+from .models import ServiceHero, MainService, CorporateEvent
+from .models import MainService, ServiceHero, OtherService
+from .forms import MainServiceForm
+from django.db.models import Q
+
 def is_slot_available(date, start_time, end_time):
     return not BookingRequest.objects.filter(
-        event_date=date,
-        status='confirmed'
+        event_date=date
     ).filter(
         Q(start_time__lt=end_time) &
         Q(end_time__gt=start_time)
     ).exists()
 
 
+def services(request):
+
+    services = MainService.objects.all()
+
+    celebration_images = GalleryImage.objects.filter(
+        category='cts'
+    )[:8]
+
+    return render(
+        request,
+        'main/services.html',
+        {
+            'services': services,
+            'celebration_images': celebration_images,
+        }
+    )
+
+
+def corporate_events(request):
+
+    celebration_images = GalleryImage.objects.filter(
+        category='cts'
+    )[:8]
+
+    gallery = GalleryImage.objects.filter(
+        category='corporate'
+    )[:9]
+
+    corporate = CorporateEvent.objects.all()
+    print(corporate.count())
+
+    return render(request, 'main/corporate_events.html', {
+        'corporate': corporate,
+        'gallery': gallery,
+        'celebration_images': celebration_images,
+    })
+def other_services(request):
+    celebration_images = GalleryImage.objects.filter(
+        category='cts'
+    )[:8]
+    services = OtherService.objects.all().order_by('-created_at')
+
+    return render(request, 'main/other_services.html', {
+        'celebration_images': celebration_images,
+        'services': services,
+    })
+
+
+def gallery(request):
+    celebration_images = GalleryImage.objects.filter(
+        category='cts'
+    )[:8]
+
+    top_images = GalleryImage.objects.filter(
+        category='section1'
+    ).order_by('order', '-created_at')
+
+    main_images = GalleryImage.objects.filter(
+        category='section2'
+    ).order_by('order', '-created_at')
+
+    return render(request, 'main/gallery.html', {
+        'top_images': top_images,
+        'main_images': main_images,
+        'celebration_images': celebration_images,
+    })
+
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
 def book_now(request):
+    celebration_images = GalleryImage.objects.filter(category='cts')[:8]
 
     if request.method == 'POST':
         form = BookingForm(request.POST)
 
         if form.is_valid():
-
             booking = form.save(commit=False)
 
-            # 🔥 SLOT CHECK HERE
+            # ✅ CHECK SLOT FIRST
             if not is_slot_available(
                 booking.event_date,
                 booking.start_time,
                 booking.end_time
             ):
-                messages.error(request, "This time slot is already booked. Please choose another time.")
-                return render(request, 'main/book_now.html', {'form': form})
+                # ❌ DO NOT SAVE
+                messages.error(
+                    request,
+                    "⚠️ This time slot is already booked. Please choose another time."
+                )
 
-            # save if available
+                return render(request, 'main/book_now.html', {
+                    'form': form,
+                    'celebration_images': celebration_images
+                })
+
+            # ✅ ONLY SAVE IF AVAILABLE
             booking.save()
 
-            messages.success(request, 'Your booking request has been submitted! We will contact you within 24 hours.')
+            messages.success(
+                request,
+                "Your booking request has been submitted!"
+            )
+
             return redirect('book_now')
 
     else:
         form = BookingForm()
 
-    return render(request, 'main/book_now.html', {'form': form})
+    return render(request, 'main/book_now.html', {
+        'form': form,
+        'celebration_images': celebration_images
+    })
 
 def home(request):
-    celebration_images = CelebrationImage.objects.filter(is_active=True)[:8]
-    featured_gallery = GalleryImage.objects.filter(is_featured=True)[:6]
-    testimonials = Testimonial.objects.filter(is_active=True)[:3]
+    celebration_images = GalleryImage.objects.filter(
+        category='cts'
+    )[:8]
+
+    featured_gallery = GalleryImage.objects.filter(
+        is_featured=True
+    )[:6]
+
+    testimonials = Testimonial.objects.filter(
+        is_active=True
+    )[:3]
+
     return render(request, 'main/home.html', {
         'celebration_images': celebration_images,
         'featured_gallery': featured_gallery,
@@ -64,43 +165,6 @@ def home(request):
 
 def about(request):
     return render(request, 'main/about.html')
-
-
-def services(request):
-    celebration_images = CelebrationImage.objects.filter(is_active=True)[:8]
-    return render(request, 'main/services.html', {
-        'celebration_images': celebration_images
-    })
-
-
-def corporate_events(request):
-    celebration_images = CelebrationImage.objects.filter(is_active=True)[:8]
-    gallery = GalleryImage.objects.filter(category='corporate')[:9]
-    return render(request, 'main/corporate_events.html', {'gallery': gallery, 'celebration_images': celebration_images,})
-
-
-def other_services(request):
-    celebration_images = CelebrationImage.objects.filter(is_active=True)[:8]
-    return render(request, 'main/other_services.html', {
-        'celebration_images': celebration_images,
-    })
-
-
-def gallery(request):
-    celebration_images = CelebrationImage.objects.filter(is_active=True)[:8]
-    category = request.GET.get('category', 'all')
-    if category == 'all':
-        images = GalleryImage.objects.all()
-    else:
-        images = GalleryImage.objects.filter(category=category)
-    categories = GalleryImage.CATEGORY_CHOICES
-    return render(request, 'main/gallery.html', {
-        'images': images,
-        'categories': categories,
-        'active_category': category,
-        
-    })
-
 
 def faq(request):
     faqs = FAQ.objects.filter(is_active=True)
@@ -132,24 +196,25 @@ def contact(request):
 # ======================================================================
 
 def dashboard_login(request):
-    """Custom styled login page for the admin dashboard."""
     if request.user.is_authenticated:
         return redirect('dashboard_bookings')
 
     error = None
+
     if request.method == 'POST':
         email = request.POST.get('email', '').strip()
         password = request.POST.get('password', '')
-        # Allow login via username OR email
+
         from django.contrib.auth.models import User
+
         username = email
-        try:
-            user_obj = User.objects.get(email__iexact=email)
+
+        user_obj = User.objects.filter(email__iexact=email).first()
+        if user_obj:
             username = user_obj.username
-        except User.DoesNotExist:
-            pass
 
         user = authenticate(request, username=username, password=password)
+
         if user is not None and user.is_staff:
             auth_login(request, user)
             return redirect('dashboard_bookings')
@@ -281,18 +346,11 @@ def gallery_manage(request):
     )
 @login_required(login_url='dashboard_login')
 def gallery_create(request):
-
     if request.method == "POST":
         form = GalleryImageForm(request.POST, request.FILES)
 
         if form.is_valid():
-            obj = form.save(commit=False)
-
-            obj.category = "wedding"
-            obj.order = 0
-
-            obj.save()
-
+            form.save()
             return redirect('dashboard_gallery')
 
     else:
@@ -351,6 +409,7 @@ def gallery_delete(request, pk):
     return JsonResponse({
         'success': True
     })
+
 def celebration_images(request):
 
     images = CelebrationImage.objects.all()
@@ -374,12 +433,27 @@ def celebration_images(request):
     )
 @login_required(login_url='dashboard_login')
 def celebration_create(request):
+
     if request.method == "POST":
-        form = CelebrationImageForm(request.POST, request.FILES)
+
+        form = CelebrationImageForm(
+            request.POST,
+            request.FILES
+        )
+
+        print("POST DATA:", request.POST)
+        print("FILES:", request.FILES)
 
         if form.is_valid():
+
+            print("FORM VALID")
             form.save()
+
             return redirect('dashboard_celebration_images')
+
+        else:
+            print("FORM ERROR:", form.errors)
+
     else:
         form = CelebrationImageForm()
 
@@ -388,31 +462,60 @@ def celebration_create(request):
         'dashboard/celebration_form.html',
         {'form': form}
     )
+
 @login_required(login_url='dashboard_login')
 def celebration_update(request, pk):
-    image = get_object_or_404(CelebrationImage, pk=pk)
+
+    image = get_object_or_404(
+        CelebrationImage,
+        pk=pk
+    )
 
     if request.method == "POST":
+
         form = CelebrationImageForm(
             request.POST,
             request.FILES,
             instance=image
         )
 
+        print("UPDATE POST:", request.POST)
+        print("UPDATE FILES:", request.FILES)
+
         if form.is_valid():
+
+            print("UPDATE VALID")
+
             form.save()
-            return redirect('dashboard_celebration_images')
+
+            return redirect(
+                'dashboard_celebration_images'
+            )
+
+        else:
+            print(
+                "UPDATE ERROR:",
+                form.errors
+            )
+
     else:
-        form = CelebrationImageForm(instance=image)
+
+        form = CelebrationImageForm(
+            instance=image
+        )
+
 
     return render(
         request,
         'dashboard/celebration_form.html',
         {
             'form': form,
-            'object': image
+            'object': image,
+            'active_page': 'celebration'
         }
     )
+
+
 @login_required(login_url='dashboard_login')
 @require_POST
 def celebration_delete(request, pk):
@@ -504,3 +607,279 @@ def dashboard_faq_delete(request,pk):
     return JsonResponse({
         "success":True
     })
+@login_required
+def dashboard_services(request):
+
+    hero = ServiceHero.objects.first()
+    services = MainService.objects.all()
+
+    return render(
+        request,
+        "dashboard/services.html",
+        {
+            "hero": hero,
+            "services": services,
+            "form": MainServiceForm(),
+            "active_page": "services"
+        }
+    )
+
+@login_required(login_url='dashboard_login')
+def dashboard_service_create(request):
+
+    if request.method == "POST":
+
+        form = MainServiceForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return redirect("dashboard_services")
+
+    else:
+        form = MainServiceForm()
+
+    return render(
+        request,
+        "dashboard/service_form.html",
+        {
+            "form": form,
+            "title": "Add Service"
+        }
+    )
+
+@login_required(login_url='dashboard_login')
+@login_required
+def dashboard_service_update(request, pk):
+    service = get_object_or_404(MainService, pk=pk)
+
+    if request.method == "POST":
+        form = MainServiceForm(request.POST, request.FILES, instance=service)
+
+        # if form.is_valid():
+        #     form.save()
+        #     messages.success(request, "Updated successfully")
+        #     return redirect("dashboard_services")
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Service updated successfully!")
+            return redirect("dashboard_services")
+
+        else:
+            print(form.errors)   # 🔥 VERY IMPORTANT
+            messages.error(request, form.errors)  # show real error
+
+        messages.error(request, "Fix errors")
+
+    return redirect("dashboard_services") 
+
+@login_required(login_url='dashboard_login')
+@require_POST
+def dashboard_service_delete(request, pk):
+
+    service = get_object_or_404(MainService, pk=pk)
+
+    service.delete()
+
+    return redirect("dashboard_services")
+
+@login_required
+def edit_service_hero(request):
+
+    hero = ServiceHero.objects.first()
+
+    if request.method == "POST":
+
+        hero.eyebrow = request.POST.get("eyebrow")
+        hero.title = request.POST.get("title")
+        hero.subtitle = request.POST.get("subtitle")
+        hero.script = request.POST.get("script")
+
+        hero.save()
+
+        messages.success(request, "Hero updated")
+        return redirect("dashboard_services")
+
+    return redirect("dashboard_services")
+
+@login_required
+def edit_service(request, pk):
+
+    service = get_object_or_404(MainService, pk=pk)
+
+    if request.method == "POST":
+
+        service.card_title = request.POST.get("card_title")
+        service.title = request.POST.get("title")
+        service.tagline = request.POST.get("tagline")
+
+        service.description = request.POST.get("description")
+
+        service.bullet1 = request.POST.get("bullet1")
+        service.bullet2 = request.POST.get("bullet2")
+        service.bullet3 = request.POST.get("bullet3")
+        service.bullet4 = request.POST.get("bullet4")
+        service.bullet5 = request.POST.get("bullet5")
+
+        service.quote = request.POST.get("quote")
+        service.card_title_ar = request.POST.get("card_title_ar")
+
+        service.title_ar = request.POST.get("title_ar")
+        service.tagline_ar = request.POST.get("tagline_ar")
+
+        service.description_ar = request.POST.get("description_ar")
+
+        service.bullet1_ar = request.POST.get("bullet1_ar")
+        service.bullet2_ar = request.POST.get("bullet2_ar")
+        service.bullet3_ar = request.POST.get("bullet3_ar")
+        service.bullet4_ar = request.POST.get("bullet4_ar")
+        service.bullet5_ar = request.POST.get("bullet5_ar")
+
+        service.quote_ar = request.POST.get("quote_ar")
+
+        if request.FILES.get("card_image"):
+            service.card_image = request.FILES["card_image"]
+
+        if request.FILES.get("left_image"):
+            service.left_image = request.FILES["left_image"]
+
+        if request.FILES.get("right_image"):
+            service.right_image = request.FILES["right_image"]
+
+        service.save()
+
+        messages.success(request, "Service updated")
+
+    return redirect("dashboard_services")
+def add_service(request):
+
+    if request.method == "POST":
+
+        form = MainServiceForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return redirect("dashboard_services")
+
+    else:
+        form = MainServiceForm()
+
+    return render(
+        request,
+        "dashboard/service_form.html",
+        {
+            "form": form,
+            "title": "Add Service"
+        }
+    )
+
+@login_required
+def corporate_event_list(request):
+    events = CorporateEvent.objects.all()
+    form = CorporateEventForm()
+
+    return render(request, "dashboard/corporate_events.html", {
+        "events": events,
+        "form": form,
+        "active_page": "corporate"
+    })
+@login_required
+def corporate_event_create(request):
+
+    if request.method == "POST":
+
+        form = CorporateEventForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Event added successfully.")
+        else:
+            messages.error(request, "Fix errors.")
+
+        return redirect("corporate_event_list")
+
+    return redirect("corporate_event_list")
+
+@login_required
+def corporate_event_update(request, pk):
+
+    event = get_object_or_404(CorporateEvent, pk=pk)
+
+    if request.method == "POST":
+
+        form = CorporateEventForm(
+            request.POST,
+            request.FILES,
+            instance=event
+        )
+
+        if form.is_valid():
+            obj = form.save(commit=False)
+
+            if not request.FILES.get("main_image"):
+                obj.main_image = event.main_image
+
+            if not request.FILES.get("side_image"):
+                obj.side_image = event.side_image
+
+            obj.save()
+        else:
+            messages.error(request, "Fix errors.")
+
+    return redirect("corporate_event_list")
+
+@login_required
+@require_POST
+def corporate_event_delete(request, pk):
+
+    event = get_object_or_404(CorporateEvent, pk=pk)
+
+    event.delete()
+
+    messages.success(request, "Deleted successfully.")
+
+    return redirect("corporate_event_list")
+
+@login_required(login_url='dashboard_login')
+def other_services_dashboard(request):
+    services = OtherService.objects.all()
+
+    return render(request, 'dashboard/other_services.html', {
+        'services': services,
+    })
+@login_required(login_url='dashboard_login')
+def other_service_create(request):
+    if request.method == "POST":
+        OtherService.objects.create(
+            title=request.POST['title'],
+            title_ar=request.POST.get('title_ar', ''),
+            description=request.POST['description'],
+            description_ar=request.POST.get('description_ar', ''),
+            image=request.FILES.get('image')
+        )
+    return redirect('other_services_dashboard')
+@login_required(login_url='dashboard_login')
+def other_service_update(request, id):
+    service = get_object_or_404(OtherService, id=id)
+
+    if request.method == "POST":
+        service.title = request.POST['title']
+        service.title_ar = request.POST.get('title_ar', '')
+        service.description = request.POST['description']
+        service.description_ar = request.POST.get('description_ar', '')
+
+        if request.FILES.get('image'):
+            service.image = request.FILES['image']
+
+        service.save()
+
+    return redirect('other_services_dashboard')
+
+@login_required(login_url='dashboard_login')
+@require_POST
+def other_service_delete(request, id):
+    service = get_object_or_404(OtherService, id=id)
+
+    if request.method == "POST":
+        service.delete()
+
+    return redirect('other_services_dashboard')

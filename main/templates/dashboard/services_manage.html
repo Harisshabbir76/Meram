@@ -1,0 +1,136 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% block title %}Services — Meram Events Admin{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="db-breadcrumb">
+    Meram Events Admin
+</div>
+
+<div class="db-header-row">
+
+    <h1 class="db-page-title">
+        Services
+    </h1>
+
+    <div style="display:flex;gap:12px;">
+        <div class="db-total-badge">
+            Total <strong>{{ total }}</strong>
+        </div>
+
+        <a href="{% url 'dashboard_service_create' %}"
+           class="db-filter-go">
+            Add Service
+        </a>
+    </div>
+
+</div>
+
+<div class="gm-grid">
+
+{% for service in services %}
+
+<div class="gm-card"
+     id="service-card-{{ service.pk }}">
+
+    <img src="{{ service.image_left.url }}"
+         alt="{{ service.title_en }}">
+
+    <div class="gm-card-body">
+
+        <div class="gm-card-title">
+            {{ service.title_en }}
+        </div>
+
+        <div class="gm-card-meta">
+            {{ service.get_service_type_display }}
+        </div>
+
+        {% if service.is_active %}
+            <span class="cm-status cm-active">
+                Active
+            </span>
+        {% else %}
+            <span class="cm-status cm-inactive">
+                Inactive
+            </span>
+        {% endif %}
+
+        <div class="gm-actions">
+
+            <div style="display:flex;gap:12px;">
+
+                <a href="{% url 'dashboard_service_update' service.pk %}">
+                    <i class="fa-solid fa-pen"></i>
+                </a>
+
+                <button type="button"
+                        onclick="deleteService({{ service.pk }})">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="db-empty">
+    No services found.
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+
+function deleteService(pk){
+
+    if(!confirm("Delete service?")){
+        return;
+    }
+
+    fetch(`/dashboard/services/${pk}/delete/`,{
+        method:"POST",
+        headers:{
+            "X-CSRFToken":getCookie("csrftoken")
+        }
+    })
+    .then(r=>r.json())
+    .then(data=>{
+
+        if(data.success){
+
+            document
+            .getElementById(
+                `service-card-${pk}`
+            )
+            .remove();
+
+        }
+
+    });
+
+}
+
+function getCookie(name){
+
+    const value =
+    document.cookie.match(
+    '(^|;)\\s*'+name+'\\s*=\\s*([^;]+)'
+    );
+
+    return value ? value.pop() : '';
+
+}
+
+</script>
+{% endblock %}

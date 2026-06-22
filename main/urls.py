@@ -90,4 +90,80 @@ path(
     views.dashboard_faq_delete,
     name='dashboard_faq_delete'
 ),
+
+
+path(
+    "dashboard/services/hero/edit/",
+    views.edit_service_hero,
+    name="edit_service_hero"
+),
+
+path('dashboard/services/', views.dashboard_services, name='dashboard_services'),
+path(
+    'dashboard/services/add/',
+    views.dashboard_service_create,
+    name='dashboard_service_create'
+),
+
+path(
+    'dashboard/services/<int:pk>/edit/',
+    views.dashboard_service_update,
+    name='dashboard_service_update'
+),
+
+path(
+    'dashboard/services/<int:pk>/delete/',
+    views.dashboard_service_delete,
+    name='dashboard_service_delete'
+),
+
+    path(
+        "dashboard/corporate-events/",
+        views.corporate_event_list,
+        name="corporate_event_list",
+    ),
+
+    path(
+        "dashboard/corporate-events/create/",
+        views.corporate_event_create,
+        name="corporate_event_create",
+    ),
+
+    path(
+        "dashboard/corporate-events/<int:pk>/edit/",
+        views.corporate_event_update,
+        name="corporate_event_update",
+    ),
+
+    path(
+        "dashboard/corporate-events/<int:pk>/delete/",
+        views.corporate_event_delete,
+        name="corporate_event_delete",
+    ),
+# ===== OTHER SERVICES DASHBOARD =====
+
+path(
+    "dashboard/other-services/",
+    views.other_services_dashboard,
+    name="other_services_dashboard"
+),
+
+path(
+    "dashboard/other-services/add/",
+    views.other_service_create,
+    name="other_service_create"
+),
+
+path(
+    "dashboard/other-services/<int:id>/edit/",
+    views.other_service_update,
+    name="other_service_update"
+),
+
+path(
+    "dashboard/other-services/<int:id>/delete/",
+    views.other_service_delete,
+    name="other_service_delete"
+),
+
 ]

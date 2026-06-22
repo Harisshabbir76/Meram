@@ -3,7 +3,8 @@
 
 {% block extra_head %}
 <style>
-.ct-message-preview{ max-width:280px; color:var(--db-text-mid); font-size:12.5px; }
+.ct-message-preview{ max-width:300px; color:var(--db-text-mid); font-size:12.5px; }
+
 .ct-unread-dot{ width:8px; height:8px; border-radius:50%; background:var(--db-red); display:inline-block; margin-right:8px; }
 </style>
 {% endblock %}
@@ -35,7 +36,12 @@
                 <td>{{ c.email }}</td>
                 <td>{{ c.phone|default:"—" }}</td>
                 <td>{{ c.subject|default:"—" }}</td>
-                <td><div class="ct-message-preview">{{ c.message|truncatechars:80 }}</div></td>
+                <td>
+                    <div class="ct-message-preview">
+                        {{ c.message }}
+                    </div>
+                </td>
+                <!-- <td><div class="ct-message-preview">{{ c.message|truncatechars:80 }}</div></td> -->
                 <td>{{ c.submitted_at|date:"M j, Y" }}</td>
                 <td>
                     <div class="db-action-icons">

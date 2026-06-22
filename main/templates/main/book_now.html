@@ -149,7 +149,20 @@
 
         max-width: 666px;
     }
+.page-header-bg{
+    position:absolute;
+    inset:0;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+}
 
+.page-header-bg::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.45); /* overlay opacity */
+}
     .why-watermark {
         position: absolute;
         left: 200px;
@@ -670,7 +683,8 @@
 {% block content %}
 <div class="page-header">
     <div class="page-header-bg"
-        style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80');"></div>
+         style="background-image: url('/static/main/images/mainimg.jpeg');">
+    </div>
 
     <div class="page-header-content">
 
@@ -956,4 +970,28 @@
     </div>
 
 </section>
+{% if messages %}
+{% if messages %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    {% for message in messages %}
+
+        {% if message.tags == "error" %}
+
+            Swal.fire({
+                icon: "error",
+                title: "Slot Not Available",
+                text: "{{ message }}",
+                confirmButtonColor: "#111827"
+            });
+
+        {% endif %}
+
+    {% endfor %}
+
+});
+</script>
+{% endif %}
+{% endif %}
 {% endblock %}

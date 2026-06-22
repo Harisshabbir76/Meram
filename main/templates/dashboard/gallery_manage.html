@@ -197,6 +197,9 @@
             <div class="gm-card-title">
                 {{ img.title }}
             </div>
+                <div class="gm-card-meta">
+        {{ img.get_category_display }}
+    </div>
 
             {% if img.is_featured %}
     <span class="cm-status cm-active">
