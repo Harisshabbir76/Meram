@@ -1,0 +1,164 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+
+{% block title %}Services Management{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="db-header-row">
+    <div>
+        <div class="db-breadcrumb">CONTENT MANAGEMENT</div>
+        <h1 class="db-page-title">Services Page</h1>
+    </div>
+</div>
+
+<div class="container py-4">
+
+    <div class="card shadow">
+
+        <div class="card-header">
+
+            <h3>{{ title }}</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                {{ form.non_field_errors }}
+
+                <div class="row">
+
+                    <div class="col-md-9 mb-3">
+
+                        <label>Card Title</label>
+
+                        {{ form.card_title }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Title</label>
+
+                        {{ form.title }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Tagline</label>
+
+                        {{ form.tagline }}
+
+                    </div>
+
+                    <div class="col-12 mb-3">
+
+                        <label>Description</label>
+
+                        {{ form.description }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Bullet 1</label>
+
+                        {{ form.bullet1 }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Bullet 2</label>
+
+                        {{ form.bullet2 }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Bullet 3</label>
+
+                        {{ form.bullet3 }}
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label>Bullet 4</label>
+
+                        {{ form.bullet4 }}
+
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+
+                        <label>Bullet 5</label>
+
+                        {{ form.bullet5 }}
+
+                    </div>
+
+                    <div class="col-12 mb-3">
+
+                        <label>Quote</label>
+
+                        {{ form.quote }}
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label>Card Image</label>
+
+                        {{ form.card_image }}
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label>Left Image</label>
+
+                        {{ form.left_image }}
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label>Right Image</label>
+
+                        {{ form.right_image }}
+
+                    </div>
+
+                </div>
+
+                <button class="btn btn-success">
+
+                    Save Service
+
+                </button>
+
+                <a
+                    href="{% url 'dashboard_services' %}"
+                    class="btn btn-secondary"
+                >
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
