@@ -33,6 +33,7 @@ urlpatterns = [
       # ===== ADMIN DASHBOARD =====
     path('dashboard/login/', views.dashboard_login, name='dashboard_login'),
     path('dashboard/logout/', views.dashboard_logout, name='dashboard_logout'),
+    path('dashboard/account/', views.dashboard_account, name='dashboard_account'),
     path('admin/', views.dashboard_bookings, name='dashboard_bookings'),
     path('dashboard/bookings/<int:pk>/', views.dashboard_booking_detail, name='dashboard_booking_detail'),
     path('dashboard/bookings/<int:pk>/delete/', views.dashboard_booking_delete, name='dashboard_booking_delete'),

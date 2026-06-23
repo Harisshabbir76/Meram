@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Admin Dashboard — Meram Events{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'main/images/Favicon-04.png' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -40,7 +41,11 @@
             display:flex; flex-direction:column;
             padding:28px 0 24px;
             position:fixed; top:0; left:0; bottom:0;
+            overflow-y:auto;            /* scroll when items exceed the screen height */
         }
+        /* slim scrollbar for the sidebar */
+        .db-sidebar::-webkit-scrollbar{ width:7px; }
+        .db-sidebar::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.18); border-radius:4px; }
         .db-sidebar-brand{
             padding:0 24px 24px;
             border-bottom:1px solid rgba(255,255,255,0.08);
@@ -143,6 +148,13 @@
             font-weight:600; border-radius:3px; cursor:pointer; transition:opacity 0.2s;
         }
         .db-filter-go:hover{ opacity:0.85; }
+        .db-filter-reset{
+            border:1px solid var(--db-border); background:#fff; color:var(--db-text-mid);
+            padding:9px 20px; font-size:11.5px; letter-spacing:1px; text-transform:uppercase;
+            font-weight:600; border-radius:3px; cursor:pointer; transition:all 0.2s;
+            display:inline-flex; align-items:center;
+        }
+        .db-filter-reset:hover{ background:#F3EFE8; color:var(--db-text); }
 
         /* ===== TABLE ===== */
         .db-table-wrap{
@@ -212,48 +224,53 @@
         </div>
 
         <nav class="db-nav">
+            <a href="{% url 'dashboard_bookings' %}" class="{% if active_page == 'booking' %}active{% endif %}">
+                <i class="fa-solid fa-calendar-check"></i> Bookings
+            </a>
+            <a href="{% url 'dashboard_contacts' %}" class="{% if active_page == 'contacts' %}active{% endif %}">
+                <i class="fa-solid fa-envelope"></i> Messages
+                {% if unread_contacts %}<span class="db-nav-badge">{{ unread_contacts }}</span>{% endif %}
+            </a>
+            <a href="{% url 'dashboard_calendar' %}" class="{% if active_page == 'calendar' %}active{% endif %}">
+                <i class="fa-solid fa-calendar-days"></i> Calendar
+            </a>
             <a href="{% url 'dashboard_home_editor' %}" class="{% if active_page == 'home_editor' %}active{% endif %}">
                 <i class="fa-solid fa-house"></i> Home
             </a>
             <a href="{% url 'dashboard_about_editor' %}" class="{% if active_page == 'about_editor' %}active{% endif %}">
                 <i class="fa-solid fa-circle-info"></i> About
             </a>
-            <a href="{% url 'dashboard_bookings' %}" class="{% if active_page == 'booking' %}active{% endif %}">
-                <i class="fa-solid fa-calendar-check"></i> Bookings
-            </a>
-            <a href="{% url 'dashboard_calendar' %}" class="{% if active_page == 'calendar' %}active{% endif %}">
-                <i class="fa-solid fa-calendar-days"></i> Calendar
-            </a>
-            <a href="{% url 'dashboard_contacts' %}" class="{% if active_page == 'contacts' %}active{% endif %}">
-                <i class="fa-solid fa-envelope"></i> Messages
-                {% if unread_contacts %}<span class="db-nav-badge">{{ unread_contacts }}</span>{% endif %}
-            </a>
-            <a href="{% url 'dashboard_faqs' %}" 
-   class="{% if active_page == 'faq' %}active{% endif %}">
-    <i class="fa-solid fa-circle-question"></i> FAQ
-</a>
-            <a href="{% url 'dashboard_gallery_editor' %}" class="{% if active_page == 'gallery_editor' %}active{% endif %}">
-                <i class="fa-solid fa-images"></i> Gallery
-            </a>
+            
             <li>
-    <a href="{% url 'dashboard_services_editor' %}"
-       class="{% if active_page == 'services_editor' %}active{% endif %}">
-        <i class="fas fa-concierge-bell"></i>
-        <span>Main Services</span>
-    </a>
+            <a href="{% url 'dashboard_services_editor' %}"
+            class="{% if active_page == 'services_editor' %}active{% endif %}">
+                <i class="fas fa-concierge-bell"></i>
+                <span>Main Services</span>
+            </a>
         <a href="{% url 'dashboard_corporate_services_editor' %}"
            class="{% if active_page == 'corporate_services_editor' %}active{% endif %}">
         <i class="fas fa-concierge-bell"></i>
         <span>Corporate Services</span>
+        </a>
+        <a href="{% url 'dashboard_other_services_editor' %}"
+    class="{% if active_page == 'other_services_editor' %}active{% endif %}">
+        <i class="fas fa-layer-group"></i>
+        <span>Other Services</span>
     </a>
-    <a href="{% url 'dashboard_other_services_editor' %}"
-   class="{% if active_page == 'other_services_editor' %}active{% endif %}">
-    <i class="fas fa-layer-group"></i>
-    <span>Other Services</span>
-</a>
-</li>
+    </li>
+    <a href="{% url 'dashboard_gallery_editor' %}" class="{% if active_page == 'gallery_editor' %}active{% endif %}">
+                <i class="fa-solid fa-images"></i> Gallery
+    </a>
+        <a href="{% url 'dashboard_faqs' %}" 
+                class="{% if active_page == 'faq' %}active{% endif %}">
+                    <i class="fa-solid fa-circle-question"></i> FAQ
+                </a>
+            
      <a href="/" target="_blank">
                 <i class="fa-solid fa-globe"></i> View Website
+            </a>
+            <a href="{% url 'dashboard_account' %}" class="{% if active_page == 'account' %}active{% endif %}">
+                <i class="fa-solid fa-user-gear"></i> Account Settings
             </a>
         </nav>
 

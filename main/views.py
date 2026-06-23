@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
@@ -235,6 +235,83 @@ def dashboard_logout(request):
 
 
 @login_required(login_url='dashboard_login')
+def dashboard_account(request):
+    """
+    Admin account settings:
+      * update_credentials — set a new email + new password (old ones stop working)
+      * change_password    — verify email + current password, then set a new password
+    """
+    from django.core.validators import validate_email
+    from django.core.exceptions import ValidationError
+    from django.contrib.auth.models import User
+
+    user = request.user
+
+    if request.method == 'POST':
+        action = request.POST.get('action')
+
+        if action == 'update_credentials':
+            new_email = request.POST.get('email', '').strip()
+            new_password = request.POST.get('new_password', '')
+            confirm = request.POST.get('confirm_password', '')
+
+            error = None
+            try:
+                validate_email(new_email)
+            except ValidationError:
+                error = 'Please enter a valid email address.'
+            if not error and User.objects.filter(email__iexact=new_email).exclude(pk=user.pk).exists():
+                error = 'That email is already used by another account.'
+            if not error and not new_password:
+                error = 'Please enter a new password.'
+            if not error and len(new_password) < 6:
+                error = 'Password must be at least 6 characters long.'
+            if not error and new_password != confirm:
+                error = 'New password and confirmation do not match.'
+
+            if error:
+                messages.error(request, error)
+            else:
+                user.email = new_email
+                user.set_password(new_password)
+                user.save()
+                update_session_auth_hash(request, user)   # keep this session logged in
+                messages.success(request, 'Email and password updated. The old ones no longer work.')
+            return redirect('dashboard_account')
+
+        elif action == 'change_password':
+            email = request.POST.get('email', '').strip()
+            old_password = request.POST.get('old_password', '')
+            new_password = request.POST.get('new_password', '')
+            confirm = request.POST.get('confirm_password', '')
+
+            error = None
+            if email.lower() != (user.email or '').lower():
+                error = 'That email does not match this account.'
+            if not error and not user.check_password(old_password):
+                error = 'The current password is incorrect.'
+            if not error and len(new_password) < 6:
+                error = 'New password must be at least 6 characters long.'
+            if not error and new_password != confirm:
+                error = 'New password and confirmation do not match.'
+
+            if error:
+                messages.error(request, error)
+            else:
+                user.set_password(new_password)
+                user.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, 'Password changed successfully.')
+            return redirect('dashboard_account')
+
+    return render(request, 'dashboard/account.html', {
+        'active_page': 'account',
+        'current_email': user.email,
+        'unread_contacts': ContactSubmission.objects.filter(is_read=False).count(),
+    })
+
+
+@login_required(login_url='dashboard_login')
 def dashboard_bookings(request):
     """Main bookings dashboard — filterable list with date range + quick filters."""
     bookings = BookingRequest.objects.all().order_by('-submitted_at')
@@ -246,19 +323,22 @@ def dashboard_bookings(request):
 
     today = timezone.localdate()
 
+    # Quick filters apply to when the booking was RECEIVED (submitted_at).
     if quick_filter == 'today':
-        bookings = bookings.filter(event_date=today)
+        bookings = bookings.filter(submitted_at__date=today)
     elif quick_filter == 'yesterday':
-        bookings = bookings.filter(event_date=today - timedelta(days=1))
+        bookings = bookings.filter(submitted_at__date=today - timedelta(days=1))
     elif quick_filter == 'last3':
-        bookings = bookings.filter(event_date__gte=today - timedelta(days=3), event_date__lte=today)
+        bookings = bookings.filter(submitted_at__date__gte=today - timedelta(days=2),
+                                   submitted_at__date__lte=today)
 
+    # Date pickers apply to when the booking was CREATED (submitted_at).
     if on_date:
-        bookings = bookings.filter(event_date=on_date)
+        bookings = bookings.filter(submitted_at__date=on_date)
     if date_from:
-        bookings = bookings.filter(event_date__gte=date_from)
+        bookings = bookings.filter(submitted_at__date__gte=date_from)
     if date_to:
-        bookings = bookings.filter(event_date__lte=date_to)
+        bookings = bookings.filter(submitted_at__date__lte=date_to)
 
     context = {
         'bookings': bookings,

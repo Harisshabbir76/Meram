@@ -611,12 +611,18 @@
     }
 
     /* ---------------------------------------------- page interaction */
-    // Resolve a click/hover to the editable element: a text/image element, or a
-    // hero background layer when the empty hero area (data-cms-hero) is clicked.
     function resolveTarget(t) {
         if (!t || isEditorUI(t)) return null;
         var ed = t.closest(EDITABLE);
-        if (ed && !ed.hasAttribute("data-cms-bg") && !isEditorUI(ed)) return ed;
+        if (ed && !ed.hasAttribute("data-cms-bg") && !isEditorUI(ed)) {
+            // Find the outermost editable element if nested
+            var parentEd = ed.parentElement ? ed.parentElement.closest(EDITABLE) : null;
+            while (parentEd && !isEditorUI(parentEd)) {
+                ed = parentEd;
+                parentEd = ed.parentElement ? ed.parentElement.closest(EDITABLE) : null;
+            }
+            return ed;
+        }
         var bg = t.closest("[data-cms-bg]");
         if (bg) return bg;
         var host = t.closest("[data-cms-hero]");

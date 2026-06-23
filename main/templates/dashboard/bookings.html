@@ -18,18 +18,19 @@
     </div>
 
     <div class="db-date-field">
-        <label>On Date</label>
+        <label>Booked On</label>
         <input type="date" name="on_date" value="{{ on_date }}">
     </div>
     <div class="db-date-field">
-        <label>From</label>
+        <label>Booked From</label>
         <input type="date" name="from" value="{{ date_from }}">
     </div>
     <div class="db-date-field">
-        <label>To</label>
+        <label>Booked To</label>
         <input type="date" name="to" value="{{ date_to }}">
     </div>
     <button type="submit" class="db-filter-go">Filter</button>
+    <a href="{% url 'dashboard_bookings' %}" class="db-filter-reset">Reset</a>
 </form>
 
 <!-- TABLE -->

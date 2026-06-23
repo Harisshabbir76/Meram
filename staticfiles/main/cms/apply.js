@@ -47,6 +47,32 @@
         }
     }
 
+    function applyContentForLang(item, lang) {
+        var html = lang === "ar" ? item.arContent : item.enContent;
+        if ((html === null || html === undefined || html === "") && lang === "ar")
+            html = item.enContent;
+        if (html === null || html === undefined || html === "") return;
+
+        var holder = document.createElement("div");
+        holder.innerHTML = html.trim();
+        var only = holder.children.length === 1 && holder.childNodes.length === 1 ? holder.children[0] : null;
+        var blockTags = { P: 1, H1: 1, H2: 1, H3: 1, H4: 1, H5: 1, H6: 1, BLOCKQUOTE: 1 };
+
+        if (only && blockTags[only.tagName] && item.el.tagName !== only.tagName) {
+            var next = document.createElement(only.tagName.toLowerCase());
+            [].slice.call(item.el.attributes).forEach(function (attr) {
+                next.setAttribute(attr.name, attr.value);
+            });
+            next.innerHTML = only.innerHTML;
+            item.el.parentNode.replaceChild(next, item.el);
+            item.el = next;
+        } else if (only && blockTags[only.tagName] && item.el.tagName === only.tagName) {
+            item.el.innerHTML = only.innerHTML;
+        } else {
+            item.el.innerHTML = html;
+        }
+    }
+
     function applyBlockToEl(el, b, registry) {
         if (!el) return;
         Object.keys(b.styles || {}).forEach(function (p) { setStyle(el, p, b.styles[p]); });
@@ -55,12 +81,17 @@
         if (b.content_en != null) el.setAttribute("data-en", b.content_en);
         if (b.content_ar != null) el.setAttribute("data-ar", b.content_ar);
         var se = b.styles_en || {}, sa = b.styles_ar || {};
-        if (Object.keys(se).length || Object.keys(sa).length) {
-            var all = {};
-            Object.keys(se).forEach(function (p) { all[p] = 1; });
-            Object.keys(sa).forEach(function (p) { all[p] = 1; });
-            registry.push({ el: el, en: se, ar: sa, allProps: Object.keys(all) });
-        }
+        var all = {};
+        Object.keys(se).forEach(function (p) { all[p] = 1; });
+        Object.keys(sa).forEach(function (p) { all[p] = 1; });
+        registry.push({
+            el: el,
+            en: se,
+            ar: sa,
+            enContent: b.content_en,
+            arContent: b.content_ar,
+            allProps: Object.keys(all)
+        });
     }
 
     // A shared key resolves to (possibly many) elements across the page.
@@ -114,6 +145,7 @@
             function applyLangStyles(lang) {
                 registry.forEach(function (item) {
                     var set = lang === "ar" ? item.ar : item.en;
+                    applyContentForLang(item, lang);
                     item.allProps.forEach(function (p) { item.el.style.removeProperty(p); });
                     Object.keys(set).forEach(function (p) { setStyle(item.el, p, set[p]); });
                 });

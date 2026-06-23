@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Meram Events - Luxury Event Planning{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'main/images/Favicon-04.png' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -614,6 +615,13 @@
 
         }
 
+        @media (max-width:966px){
+            .footer-brand img{
+                margin-bottom:20px;
+                width:100px;
+            }
+        }
+
         /* ===================================================================
            CELEBRATION STRIP — centered, equal gaps on all responsive sizes
            =================================================================== */
@@ -1035,7 +1043,7 @@ setTimeout(() => {
         {% if cms_page_name %}window.CMS_DATA_URL = "{% url 'cms_data' cms_page_name %}";{% endif %}
         window.CMS_SHARED_DATA_URL = "{% url 'cms_data' '__shared__' %}";
     </script>
-    <script src="{% static 'main/cms/apply.js' %}?v=5" defer></script>
+    <script src="{% static 'main/cms/apply.js' %}?v=7" defer></script>
 {% endif %}
 </body>
 </html>
