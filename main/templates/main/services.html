@@ -1205,7 +1205,7 @@ padding: 0 20px;}
 <div class="srv-cards-row">
 
     <div class="srv-card">
-        <img src="{% static 'main/images/sr1.jpg' %}" alt="Wedding & Event Planning">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/sr1.webp' %}" alt="Wedding & Event Planning">
 
         <div class="srv-card-label">
             <span
@@ -1217,7 +1217,7 @@ padding: 0 20px;}
     </div>
 
     <div class="srv-card">
-        <img src="{% static 'main/images/sr2.jpg' %}" alt="Floral & Décor Design">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/sr2.webp' %}" alt="Floral & Décor Design">
 
         <div class="srv-card-label">
             <span
@@ -1229,7 +1229,7 @@ padding: 0 20px;}
     </div>
 
     <div class="srv-card">
-        <img src="{% static 'main/images/sr3.jpg' %}" alt="VIP Hospitality">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/sr3.webp' %}" alt="VIP Hospitality">
 
         <div class="srv-card-label">
             <span
@@ -1252,7 +1252,7 @@ padding: 0 20px;}
     <div class="srv-row">
 
         <div class="srv-side-image">
-            <img src="{% static 'main/images/ser4.jpg' %}" alt="">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/ser4.webp' %}" alt="">
         </div>
 
         <div class="srv-block reveal">
@@ -1304,7 +1304,7 @@ padding: 0 20px;}
         </div>
 
         <div class="srv-side-image">
-            <img src="{% static 'main/images/sers.jpeg' %}" alt="">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/sers.webp' %}" alt="">
         </div>
 
     </div>
@@ -1314,7 +1314,7 @@ padding: 0 20px;}
     <div class="srv-row">
 
         <div class="srv-side-image">
-            <img src="{% static 'main/images/ser3.jpeg' %}" alt="">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/ser3.webp' %}" alt="">
         </div>
 
         <div class="srv-block reveal">
@@ -1367,7 +1367,7 @@ padding: 0 20px;}
         </div>
 
         <div class="srv-side-image">
-            <img src="{% static 'main/images/ser1.jpeg' %}" alt="">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/ser1.webp' %}" alt="">
         </div>
 
     </div>
@@ -1377,7 +1377,7 @@ padding: 0 20px;}
     <div class="srv-row">
 
         <div class="srv-side-image">
-            <img src="{% static 'main/images/sere.jpg' %}" alt="">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/sere.webp' %}" alt="">
         </div>
 
         <div class="srv-block reveal">
@@ -1430,7 +1430,7 @@ padding: 0 20px;}
         </div>
 
         <div class="srv-side-image">
-            <img src="{% static 'main/images/ser2.JPG' %}" alt="">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/ser2.webp' %}" alt="">
         </div>
 
     </div>
@@ -1546,8 +1546,8 @@ padding: 0 20px;}
     </h2>
 
     <div class="srv-process-intro">
-        <img class="srv-process-intro-img"
-             src="{% static 'main/images/serr.JPG' %}"
+        <img loading="lazy" decoding="async" class="srv-process-intro-img"
+             src="{% static 'main/images/serr.webp' %}"
              alt="Our process">
 
         <p class="srv-process-intro-text"
@@ -1638,15 +1638,15 @@ padding: 0 20px;}
     </div>
 
     <div class="srv-process-bottom">
-        <img src="{% static 'main/images/sere.jpg' %}" alt="">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/sere.webp' %}" alt="">
     </div>
 
 </section>
 
 <!-- ===== WHY CHOOSE MERAM EVENTS ===== -->
 <section class="why-section reveal">
-    <img class="why-img-left"
-         src="{% static 'main/images/os4.jpeg' %}"
+    <img loading="lazy" decoding="async" class="why-img-left"
+         src="{% static 'main/images/os4.webp' %}"
          alt="Luxury event">
     
     <div class="why-center">
@@ -1705,8 +1705,8 @@ padding: 0 20px;}
         </a>
 
     </div>
-    <img class="why-img-right"
-         src="{% static 'main/images/osb1.JPG' %}"
+    <img loading="lazy" decoding="async" class="why-img-right"
+         src="{% static 'main/images/osb1.webp' %}"
          alt="Event detail">
     <!-- Script watermark -->
     <div class="why-watermark">Meram Events</div>
@@ -1753,18 +1753,18 @@ padding: 0 20px;}
 
 
     <!-- Images from admin panel -->
-    <div class="celebration-grid">
+    <div class="celebration-grid" data-cms-shared-scope="celebration">
         {% if celebration_images %}
             {% for img in celebration_images %}
-            <img src="{{ img.image.url }}" alt="{{ img.title }}" loading="lazy">
+            <img src="{{ img.image.url }}" alt="{{ img.title }}" loading="lazy" data-cms-gallery="{{ img.id }}">
             {% endfor %}
         {% else %}
-            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1478146059778-26028b07395a?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1478146059778-26028b07395a?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&q=80" alt="">
         {% endif %}
     </div>
 

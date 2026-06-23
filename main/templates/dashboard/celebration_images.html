@@ -143,7 +143,7 @@
     <div class="cm-card"
          id="image-row-{{ image.pk }}">
 
-        <img src="{{ image.image.url }}"
+        <img loading="lazy" decoding="async" src="{{ image.image.url }}"
              alt="{{ image.title }}">
 
         <div class="cm-card-body">

@@ -127,7 +127,7 @@
 
             {% if object and object.image %}
             <div class="db-image-preview">
-                <img src="{{ object.image.url }}" alt="">
+                <img loading="lazy" decoding="async" src="{{ object.image.url }}" alt="">
             </div>
             {% endif %}
         </div>

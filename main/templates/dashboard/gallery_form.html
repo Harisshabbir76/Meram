@@ -154,7 +154,7 @@
             Current Image
         </label>
 
-        <img src="{{ object.image.url }}"
+        <img loading="lazy" decoding="async" src="{{ object.image.url }}"
              alt="{{ object.title }}">
     </div>
     {% endif %}

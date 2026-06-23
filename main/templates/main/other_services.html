@@ -14,7 +14,15 @@
     background:#F4F1EA;
     padding: 220px 20px 350px;
     text-align:center;
+    position: relative;
+    overflow: hidden;
 }
+/* hero background layer (image/video set from the dashboard) */
+.srv-hero-bg{
+    position:absolute; inset:0; z-index:0;
+    background-size:cover; background-position:center; background-repeat:no-repeat;
+}
+.srv-hero > *:not(.srv-hero-bg){ position:relative; z-index:1; }
 
 .srv-eyebrow{
     display:block;
@@ -1299,7 +1307,8 @@ padding: 0 20px;}
 <!-- ══════════════════════════════════════════
      SECTION 1 — HERO INTRO
 ══════════════════════════════════════════ -->
-<section class="srv-hero reveal">
+<section class="srv-hero reveal" data-cms-hero>
+    <div class="srv-hero-bg" data-cms-bg></div>
 
     <span class="srv-eyebrow"
           data-en="OTHER SERVICES"
@@ -1332,8 +1341,8 @@ padding: 0 20px;}
     <!-- CARD 1: ABAYA SERVICE -->
     <div class="os-card reveal">
 
-        <img class="os-card-img"
-             src="{% static 'main/images/abaya.jpg' %}"
+        <img loading="lazy" decoding="async" class="os-card-img"
+             src="{% static 'main/images/abaya.webp' %}"
              alt="Abaya Service">
 
         <div class="os-card-content">
@@ -1363,8 +1372,8 @@ padding: 0 20px;}
     <!-- CARD 2: VALET PARKING -->
     <div class="os-card reveal">
 
-        <img class="os-card-img"
-             src="{% static 'main/images/oser1.png' %}"
+        <img loading="lazy" decoding="async" class="os-card-img"
+             src="{% static 'main/images/oser1.webp' %}"
              alt="Valet Parking">
 
         <div class="os-card-content">
@@ -1392,8 +1401,8 @@ padding: 0 20px;}
     <!-- CARD 3 -->
     <div class="os-card reveal">
 
-        <img class="os-card-img"
-             src="{% static 'main/images/king.jpg' %}"
+        <img loading="lazy" decoding="async" class="os-card-img"
+             src="{% static 'main/images/king.webp' %}"
              alt="Phone Service & Privacy Control">
 
         <div class="os-card-content">
@@ -1423,8 +1432,8 @@ padding: 0 20px;}
     <!-- CARD 4 -->
     <div class="os-card reveal">
 
-        <img class="os-card-img"
-             src="{% static 'main/images/oser2.png' %}"
+        <img loading="lazy" decoding="async" class="os-card-img"
+             src="{% static 'main/images/oser2.webp' %}"
              alt="Coffee Corners">
 
         <div class="os-card-content">
@@ -1561,8 +1570,8 @@ padding: 0 20px;}
     </h2>
 
     <div class="srv-process-intro">
-        <img class="srv-process-intro-img"
-             src="{% static 'main/images/serr.JPG' %}"
+        <img loading="lazy" decoding="async" class="srv-process-intro-img"
+             src="{% static 'main/images/serr.webp' %}"
              alt="Our process">
 
         <p class="srv-process-intro-text"
@@ -1653,14 +1662,14 @@ padding: 0 20px;}
     </div>
 
     <div class="srv-process-bottom">
-        <img src="{% static 'main/images/sere.jpg' %}" alt="">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/sere.webp' %}" alt="">
     </div>
 
 </section>
 <!-- ===== WHY CHOOSE MERAM EVENTS ===== -->
 <section class="why-section reveal">
-    <img class="why-img-left"
-         src="{% static 'main/images/os4.jpeg' %}"
+    <img loading="lazy" decoding="async" class="why-img-left"
+         src="{% static 'main/images/os4.webp' %}"
          alt="Luxury event">
     
     <div class="why-center">
@@ -1719,8 +1728,8 @@ padding: 0 20px;}
         </a>
 
     </div>
-    <img class="why-img-right"
-         src="{% static 'main/images/osb1.JPG' %}"
+    <img loading="lazy" decoding="async" class="why-img-right"
+         src="{% static 'main/images/osb1.webp' %}"
          alt="Event detail">
     <!-- Script watermark -->
     <div class="why-watermark">Meram Events</div>
@@ -1767,18 +1776,18 @@ padding: 0 20px;}
 
 
     <!-- Images from admin panel -->
-    <div class="celebration-grid">
+    <div class="celebration-grid" data-cms-shared-scope="celebration">
         {% if celebration_images %}
             {% for img in celebration_images %}
-            <img src="{{ img.image.url }}" alt="{{ img.title }}" loading="lazy">
+            <img src="{{ img.image.url }}" alt="{{ img.title }}" loading="lazy" data-cms-gallery="{{ img.id }}">
             {% endfor %}
         {% else %}
-            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1478146059778-26028b07395a?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1478146059778-26028b07395a?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&q=80" alt="">
         {% endif %}
     </div>
 

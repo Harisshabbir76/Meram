@@ -683,7 +683,7 @@
 {% block content %}
 <div class="page-header">
     <div class="page-header-bg"
-         style="background-image: url('/static/main/images/mainimg.jpeg');">
+         style="background-image: url('/static/main/images/mainimg.webp');">
     </div>
 
     <div class="page-header-content">
@@ -702,10 +702,30 @@
     </div>
 </div>
 
+    <!-- Conflict / Unavailable Modal -->
+    <div id="overlapModal" class="booking-modal" style="display:none;" onclick="if(event.target===this)closeOverlapModal()">
+        <div class="booking-modal-content">
+            <div class="modal-icon" id="modalIcon">⚠</div>
+            <h3 id="modalTitle">Unavailable</h3>
+            <div class="modal-date-badge" id="modalDateBadge"></div>
+            <div class="modal-time-row" id="modalTimeRow"></div>
+            <p id="overlapMessage"></p>
+            <button type="button" class="btn-primary" onclick="closeOverlapModal()" style="margin-top:20px; letter-spacing:2px;">Okay, Got It</button>
+        </div>
+    </div>
 
-<section class="booking-section">
+    <!-- Success Modal -->
+    <div id="successModal" class="booking-modal" style="display:none;" onclick="if(event.target===this)document.getElementById('successModal').style.display='none'">
+        <div class="booking-modal-content" style="border-top-color: #311F13;">
+            <h3 style="color: #311F13; margin-top: 10px;">Booking Submitted!</h3>
+            <p id="successMessage" style="font-size: 15px; color: #555; line-height: 1.6; margin-top: 15px; padding: 0 10px;"></p>
+            <button type="button" class="btn-primary" onclick="document.getElementById('successModal').style.display='none'" style="margin-top:25px; letter-spacing:2px; background: #311F13; color: #F4F1EA; border: none; padding: 14px 30px;">Wonderful</button>
+        </div>
+    </div>
 
-    <div class="reveal">
+    <section class="booking-section">
+
+        <div class="booking-info reveal">
 
         <span class="section-eyebrow" data-en="Start Planning" data-ar="ابدأ التخطيط">
             Start Planning
@@ -762,8 +782,16 @@
             </div>
         </div>
 
-    </div>
-
+        <!-- OFF DAYS PANEL -->
+        <div id="offDaysPanel" class="off-days-panel" style="display:none; margin-top: 50px;">
+            <h3 data-en="Unavailable Days" data-ar="التواريخ غير المتاحة">Unavailable Days</h3>
+            <p style="font-size: 13px; color: #555; margin-bottom: 20px;">We are closed on the dates and times listed below.</p>
+            <hr style="border:none; border-top: 1px solid #e0dcd3; margin-bottom: 20px;">
+            <div id="offDaysListPublic">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+        </div> <!-- End booking-info -->
 
     <div class="booking-form-wrap reveal">
 
@@ -823,12 +851,24 @@
 
                 <div class="form-group">
                     <label class="form-label" data-en="Start Time *" data-ar="وقت البداية *">Start Time *</label>
-                    {{ form.start_time }}
+                    <div class="time-selector-group">
+                        <select id="start_hour" class="form-control time-sel"><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10" selected>10</option><option value="11">11</option><option value="12">12</option></select>
+                        <span>:</span>
+                        <select id="start_minute" class="form-control time-sel"><option value="00">00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option></select>
+                        <select id="start_ampm" class="form-control time-sel"><option value="AM">AM</option><option value="PM">PM</option></select>
+                    </div>
+                    {{ form.start_time }} <!-- Hidden -->
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" data-en="End Time *" data-ar="وقت النهاية *">End Time *</label>
-                    {{ form.end_time }}
+                    <div class="time-selector-group">
+                        <select id="end_hour" class="form-control time-sel"><option value="01">01</option><option value="02">02</option><option value="03">03</option><option value="04">04</option><option value="05">05</option><option value="06">06</option><option value="07">07</option><option value="08">08</option><option value="09">09</option><option value="10">10</option><option value="11">11</option><option value="12" selected>12</option></select>
+                        <span>:</span>
+                        <select id="end_minute" class="form-control time-sel"><option value="00">00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option></select>
+                        <select id="end_ampm" class="form-control time-sel"><option value="AM">AM</option><option value="PM">PM</option></select>
+                    </div>
+                    {{ form.end_time }} <!-- Hidden -->
                 </div>
 
             </div>
@@ -869,13 +909,13 @@
                 Submit Booking Request
             </button>
 
-        </form>
-    </div>
+            </form>
+        </div> <!-- End booking-form-wrap -->
 
-</section>
+    </section>
 <!-- ===== WHY CHOOSE MERAM EVENTS ===== -->
 <section class="why-section reveal">
-    <img class="why-img-left" src="{% static 'main/images/os4.jpeg' %}" alt="Luxury event">
+    <img loading="lazy" decoding="async" class="why-img-left" src="{% static 'main/images/os4.webp' %}" alt="Luxury event">
 
     <div class="why-center">
 
@@ -918,7 +958,7 @@
         </a>
 
     </div>
-    <img class="why-img-right" src="{% static 'main/images/osb1.JPG' %}" alt="Event detail">
+    <img loading="lazy" decoding="async" class="why-img-right" src="{% static 'main/images/osb1.webp' %}" alt="Event detail">
     <!-- Script watermark -->
     <div class="why-watermark">Meram Events</div>
 </section>
@@ -954,44 +994,335 @@
 
 
     <!-- Images from admin panel -->
-    <div class="celebration-grid">
+    <div class="celebration-grid" data-cms-shared-scope="celebration">
         {% if celebration_images %}
         {% for img in celebration_images %}
-        <img src="{{ img.image.url }}" alt="{{ img.title }}" loading="lazy">
+        <img src="{{ img.image.url }}" alt="{{ img.title }}" loading="lazy" data-cms-gallery="{{ img.id }}">
         {% endfor %}
         {% else %}
-        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80" alt="">
-        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="">
-        <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&q=80" alt="">
-        <img src="https://images.unsplash.com/photo-1478146059778-26028b07395a?w=400&q=80" alt="">
-        <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&q=80" alt="">
-        <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&q=80" alt="">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80" alt="">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&q=80" alt="">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1478146059778-26028b07395a?w=400&q=80" alt="">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&q=80" alt="">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&q=80" alt="">
         {% endif %}
     </div>
 
 </section>
-{% if messages %}
+{% block messages_display %}
 {% if messages %}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-
     {% for message in messages %}
-
         {% if message.tags == "error" %}
-
-            Swal.fire({
-                icon: "error",
-                title: "Slot Not Available",
-                text: "{{ message }}",
-                confirmButtonColor: "#111827"
-            });
-
+            document.getElementById('modalIcon').innerText = '⚠';
+            document.getElementById('modalTitle').innerText = 'Something went wrong';
+            document.getElementById('modalDateBadge').style.display = 'none';
+            document.getElementById('modalTimeRow').style.display = 'none';
+            document.getElementById('overlapMessage').innerText = "{{ message|escapejs }}";
+            document.getElementById('overlapModal').style.display = 'flex';
+        {% elif message.tags == "success" %}
+            document.getElementById('successMessage').innerText = "{{ message|escapejs }}";
+            document.getElementById('successModal').style.display = 'flex';
         {% endif %}
-
     {% endfor %}
-
 });
 </script>
 {% endif %}
-{% endif %}
+{% endblock %}
+<style>
+.off-days-panel {
+    max-width: 400px;
+    background: #FFFFFF;
+    padding: 30px;
+    border: 1px solid #e0dcd3;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+}
+.off-days-panel h3 {
+    font-family: "FreightDisp Pro", serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: #311F13;
+    margin-bottom: 15px;
+}
+.public-offday-item {
+    background: #fdfbf7;
+    padding: 15px;
+    border: 1px solid #e0dcd3;
+    margin-bottom: 10px;
+}
+.public-offday-date {
+    font-weight: 500;
+    color: #311F13;
+    margin-bottom: 5px;
+}
+.public-offday-time {
+    font-size: 13px;
+    color: #555;
+}
+.time-selector-group {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.time-sel {
+    width: auto !important;
+    display: inline-block !important;
+    padding: 5px 10px;
+}
+.booking-modal {
+    position: fixed; top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.55); z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(3px);
+}
+.booking-modal-content {
+    background: #FFFDF9;
+    padding: 50px 40px;
+    text-align: center;
+    max-width: 460px;
+    width: 90%;
+    border-top: 5px solid #c62828;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    animation: modalIn .25s ease;
+}
+@keyframes modalIn {
+    from { transform: scale(.93); opacity:0; }
+    to   { transform: scale(1);   opacity:1; }
+}
+.booking-modal-content .modal-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+    line-height: 1;
+}
+.booking-modal-content h3 {
+    font-family: "FreightDisp Pro", Georgia, serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: #311F13;
+    margin-bottom: 14px;
+}
+.modal-date-badge {
+    display: inline-block;
+    background: #f4f1ea;
+    color: #311F13;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 6px 18px;
+    border: 1px solid #e0dcd3;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+}
+.modal-time-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #fff4f4;
+    border: 1px solid #f5c6c6;
+    padding: 12px 20px;
+    margin-bottom: 16px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #c62828;
+    letter-spacing: 0.5px;
+}
+.modal-time-row .time-sep { color: #888; font-weight: 400; }
+#overlapMessage {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.7;
+    margin: 0;
+}
+</style>
+
+<script>
+    let monthOffDays = [];
+
+    const dateInput = document.getElementById('booking_event_date');
+    const offDaysPanel = document.getElementById('offDaysPanel');
+    const offDaysList = document.getElementById('offDaysListPublic');
+
+    // Prevent past dates - set min to today
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+
+    // Time selectors
+    const sh = document.getElementById('start_hour');
+    const sm = document.getElementById('start_minute');
+    const sa = document.getElementById('start_ampm');
+    const idStart = document.getElementById('id_start_time');
+
+    const eh = document.getElementById('end_hour');
+    const em = document.getElementById('end_minute');
+    const ea = document.getElementById('end_ampm');
+    const idEnd = document.getElementById('id_end_time');
+
+    function syncTimes() {
+        idStart.value = `${sh.value}:${sm.value} ${sa.value}`;
+        idEnd.value = `${eh.value}:${em.value} ${ea.value}`;
+    }
+
+    // Populate minutes 00-59
+    let minuteOptions = '';
+    for (let m = 0; m < 60; m++) {
+        minuteOptions += `<option value="${String(m).padStart(2, '0')}">${String(m).padStart(2, '0')}</option>`;
+    }
+    sm.innerHTML = minuteOptions;
+    em.innerHTML = minuteOptions;
+
+    [sh, sm, sa, eh, em, ea].forEach(el => el.addEventListener('change', syncTimes));
+    syncTimes(); // initial sync
+
+    // Convert "10:30 AM" to minutes from midnight for easy comparison
+    function timeToMinutes(timeStr) {
+        if(!timeStr) return 0;
+        const [time, modifier] = timeStr.split(' ');
+        let [hours, minutes] = time.split(':');
+        hours = parseInt(hours, 10);
+        minutes = parseInt(minutes, 10);
+        if (hours === 12) hours = 0;
+        if (modifier === 'PM') hours += 12;
+        return (hours * 60) + minutes;
+    }
+
+    dateInput.addEventListener('change', async (e) => {
+        const val = e.target.value;
+        if (!val) {
+            offDaysPanel.style.display = 'none';
+            return;
+        }
+
+        const [y, m, d] = val.split('-');
+        
+        // Fetch offdays for the selected month for validation
+        const res = await fetch(`/api/offdays/?year=${y}&month=${parseInt(m, 10)}`);
+        const data = await res.json();
+        
+        if (data.status === 'ok') {
+            monthOffDays = data.off_days;
+            
+            // Show panel
+            offDaysPanel.style.display = 'block';
+            
+            if (monthOffDays.length === 0) {
+                offDaysList.innerHTML = '<p>No unavailable dates this month.</p>';
+            } else {
+                let html = '';
+                monthOffDays.forEach(od => {
+                    const timeText = od.is_full_day ? 'Full Day' : `${od.start_time} - ${od.end_time}`;
+                    html += `
+                        <div class="public-offday-item">
+                            <div class="public-offday-date">${new Date(od.date).toDateString()}</div>
+                            <div class="public-offday-time"><i class="fa-regular fa-clock"></i> ${timeText}</div>
+                        </div>
+                    `;
+                });
+                offDaysList.innerHTML = html;
+            }
+        }
+    });
+
+    function closeOverlapModal() {
+        document.getElementById('overlapModal').style.display = 'none';
+    }
+
+    function showModal(icon, title, dateBadge, timeRow, message) {
+        document.getElementById('modalIcon').innerText = icon;
+        document.getElementById('modalTitle').innerText = title;
+
+        const badge = document.getElementById('modalDateBadge');
+        badge.style.display = dateBadge ? 'inline-block' : 'none';
+        badge.innerText = dateBadge || '';
+
+        const tr = document.getElementById('modalTimeRow');
+        tr.style.display = timeRow ? 'flex' : 'none';
+        tr.innerHTML = timeRow || '';
+
+        document.getElementById('overlapMessage').innerText = message;
+        document.getElementById('overlapModal').style.display = 'flex';
+    }
+
+    function formatDate(dateStr) {
+        const d = new Date(dateStr + 'T00:00:00');
+        return d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    // Async form submission: check conflicts before allowing submit
+    document.querySelector('.booking-form-wrap form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const selDate = dateInput.value;
+        const selStart = idStart.value;
+        const selEnd   = idEnd.value;
+
+        if (!selDate || !selStart || !selEnd) {
+            this.submit();
+            return;
+        }
+
+        try {
+            const res = await fetch(`/api/check-conflict/?date=${selDate}&start_time=${encodeURIComponent(selStart)}&end_time=${encodeURIComponent(selEnd)}`);
+            const data = await res.json();
+
+            if (data.status === 'off_day') {
+                if (data.message === 'full_day') {
+                    showModal(
+                        '🚫',
+                        'We Are Unavailable',
+                        formatDate(data.date),
+                        `<i class="fa-regular fa-clock"></i>&nbsp; Full Day &nbsp;<span class="time-sep">—</span>&nbsp; We are closed all day`,
+                        'This date has been marked as a full day off. Please select a different date.'
+                    );
+                } else {
+                    showModal(
+                        '🚫',
+                        'We Are Unavailable',
+                        formatDate(data.date),
+                        `<i class="fa-regular fa-clock"></i>&nbsp; ${data.off_start} &nbsp;<span class="time-sep">to</span>&nbsp; ${data.off_end}`,
+                        'Your selected time overlaps with our unavailable hours on this date. Please choose a different time.'
+                    );
+                }
+                return;
+            }
+
+            if (data.status === 'booking_conflict') {
+                showModal(
+                    '📅',
+                    'Time Slot Already Booked',
+                    formatDate(data.date),
+                    `<i class="fa-regular fa-clock"></i>&nbsp; ${data.booked_start} &nbsp;<span class="time-sep">to</span>&nbsp; ${data.booked_end}`,
+                    'This time slot is already reserved for another event. Please select a different time or date.'
+                );
+                return;
+            }
+
+            // No conflict — submit via AJAX
+            const formData = new FormData(this);
+            const submitRes = await fetch(this.action || window.location.href, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+
+            if (submitRes.ok) {
+                document.getElementById('successMessage').innerText = "Your booking request has been submitted!";
+                document.getElementById('successModal').style.display = 'flex';
+                this.reset();
+                offDaysPanel.style.display = 'none';
+            } else {
+                this.submit();
+            }
+
+        } catch(err) {
+            // If API fails, just let the form submit
+            this.submit();
+        }
+    });
+
+</script>
 {% endblock %}

@@ -53,13 +53,13 @@
 
             {% if event.main_image %}
             <div class="img-big">
-                <img src="{{ event.main_image.url }}">
+                <img loading="lazy" decoding="async" src="{{ event.main_image.url }}">
             </div>
             {% endif %}
 
             {% if event.side_image %}
             <div class="img-small">
-                <img src="{{ event.side_image.url }}">
+                <img loading="lazy" decoding="async" src="{{ event.side_image.url }}">
             </div>
             {% endif %}
 
@@ -203,7 +203,7 @@
                         <label>Main Image</label>
 
                         {% if event.main_image %}
-                            <img src="{{ event.main_image.url }}" class="img-preview" alt="Main Image">
+                            <img loading="lazy" decoding="async" src="{{ event.main_image.url }}" class="img-preview" alt="Main Image">
                         {% endif %}
 
                         <input type="file" name="main_image" class="form-input">
@@ -213,7 +213,7 @@
                         <label>Side Image</label>
 
                         {% if event.side_image %}
-                            <img src="{{ event.side_image.url }}" class="img-preview" alt="Side Image">
+                            <img loading="lazy" decoding="async" src="{{ event.side_image.url }}" class="img-preview" alt="Side Image">
                         {% endif %}
 
                         <input type="file" name="side_image" class="form-input">

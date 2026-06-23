@@ -1,0 +1,442 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load static %}
+{% block title %}Calendar Management — Admin Dashboard{% endblock %}
+
+{% block extra_head %}
+<style>
+    .cal-container {
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+    }
+    /* Left side: Calendar */
+    .cal-left {
+        flex: 1;
+        background: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .cal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .cal-header h2 {
+        font-family: "FreightDisp Pro", serif;
+        margin: 0;
+        font-size: 24px;
+        color: #311F13;
+    }
+    .cal-header button {
+        background: none;
+        border: 1px solid #ccc;
+        padding: 5px 15px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    .cal-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+    }
+    .cal-day-name {
+        text-align: center;
+        font-weight: bold;
+        font-size: 12px;
+        color: #666;
+        padding-bottom: 10px;
+    }
+    .cal-day {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+    .cal-day:hover {
+        background: #f4f1ea;
+    }
+    .cal-day.empty {
+        background: transparent;
+        border: none;
+        cursor: default;
+    }
+    .cal-day.has-offday {
+        background: #ffebee;
+        border-color: #ffcdd2;
+        color: #c62828;
+        font-weight: bold;
+    }
+    .cal-day.selected {
+        border: 2px solid #311F13;
+    }
+
+    /* Right side: Off Days Panel */
+    .cal-right {
+        width: 350px;
+        background: #fdfbf7;
+        border-radius: 8px;
+        padding: 20px;
+        border: 1px solid #e0dcd3;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    }
+    .cal-right h3 {
+        font-family: "FreightDisp Pro", serif;
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 20px;
+        color: #311F13;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+    }
+    .offday-item {
+        background: #fff;
+        border: 1px solid #eee;
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .offday-date {
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #311F13;
+    }
+    .offday-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .time-inputs {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .time-inputs select {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .full-day-wrap {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 13px;
+    }
+    .offday-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .offday-actions button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .btn-save { color: #2e7d32; }
+    .btn-delete { color: #c62828; }
+    .btn-discard { color: #757575; }
+</style>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="db-header">
+    <h1 class="db-page-title">Calendar Management</h1>
+</div>
+
+<div class="cal-container">
+    <div class="cal-left">
+        <div class="cal-header">
+            <button id="prevMonth"><i class="fa-solid fa-chevron-left"></i></button>
+            <h2 id="monthYearLabel">Month Year</h2>
+            <button id="nextMonth"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+        <div class="cal-grid" id="calGrid">
+            <!-- Days rendered via JS -->
+        </div>
+    </div>
+    
+    <div class="cal-right">
+        <h3>Off Days</h3>
+        <div id="offDaysList">
+            <!-- Selected days rendered via JS -->
+            <p style="color: #888; font-size: 13px;">Select dates on the calendar to manage off days.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentDate = new Date();
+    let currentMonth = currentDate.getMonth(); // 0-11
+    let currentYear = currentDate.getFullYear();
+    
+    let offDaysData = {}; // { 'YYYY-MM-DD': { is_full_day: true, start_time: '10:00 AM', ... } }
+    let selectedDates = new Set(); // set of 'YYYY-MM-DD' currently selected
+
+    const calGrid = document.getElementById('calGrid');
+    const monthYearLabel = document.getElementById('monthYearLabel');
+    const offDaysList = document.getElementById('offDaysList');
+    
+    function getCsrfToken() {
+        return document.cookie.split('; ')
+            .find(row => row.startsWith('csrftoken='))
+            ?.split('=')[1];
+    }
+
+    async function fetchOffDays(year, month) {
+        // month is 0-indexed in JS, but 1-indexed in API
+        const response = await fetch(`/dashboard/api/offdays/?year=${year}&month=${month + 1}`);
+        const data = await response.json();
+        offDaysData = {};
+        selectedDates.clear(); // Clear previous selections when changing month
+        if (data.status === 'ok') {
+            data.off_days.forEach(od => {
+                offDaysData[od.date] = od;
+                selectedDates.add(od.date); // Auto-select saved days
+            });
+        }
+        renderCalendar();
+        renderOffDaysPanel();
+    }
+
+    function renderCalendar() {
+        calGrid.innerHTML = '';
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        days.forEach(d => {
+            calGrid.innerHTML += `<div class="cal-day-name">${d}</div>`;
+        });
+
+        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        monthYearLabel.innerText = `${monthNames[currentMonth]} ${currentYear}`;
+
+        for (let i = 0; i < firstDay; i++) {
+            calGrid.innerHTML += `<div class="cal-day empty"></div>`;
+        }
+
+        for (let i = 1; i <= daysInMonth; i++) {
+            const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+            const isOff = offDaysData[dateStr] ? 'has-offday' : '';
+            const isSelected = selectedDates.has(dateStr) ? 'selected' : '';
+            
+            calGrid.innerHTML += `<div class="cal-day ${isOff} ${isSelected}" data-date="${dateStr}">${i}</div>`;
+        }
+
+        document.querySelectorAll('.cal-day:not(.empty)').forEach(el => {
+            el.addEventListener('click', () => {
+                const d = el.getAttribute('data-date');
+                if (selectedDates.has(d)) {
+                    selectedDates.delete(d);
+                } else {
+                    selectedDates.add(d);
+                }
+                renderCalendar();
+                renderOffDaysPanel();
+            });
+        });
+    }
+
+    function generateTimeSelectors(prefix, selectedTime) {
+        let selH = '10', selM = '00', selA = 'AM';
+        if (selectedTime) {
+            const parts = selectedTime.split(/[: ]/);
+            if (parts.length === 3) {
+                selH = parts[0];
+                selM = parts[1];
+                selA = parts[2];
+            }
+        }
+        
+        let hHtml = `<select class="inp-${prefix}-h" style="width: auto; display: inline-block; padding: 5px; border-radius: 4px; border: 1px solid #ccc;">`;
+        for(let h=1; h<=12; h++) {
+            let val = String(h).padStart(2, '0');
+            hHtml += `<option value="${val}" ${val===selH ? 'selected' : ''}>${val}</option>`;
+        }
+        hHtml += `</select>`;
+
+        let mHtml = `<select class="inp-${prefix}-m" style="width: auto; display: inline-block; padding: 5px; border-radius: 4px; border: 1px solid #ccc;">`;
+        for(let m=0; m<60; m++) {
+            let val = String(m).padStart(2, '0');
+            mHtml += `<option value="${val}" ${val===selM ? 'selected' : ''}>${val}</option>`;
+        }
+        mHtml += `</select>`;
+
+        let aHtml = `<select class="inp-${prefix}-a" style="width: auto; display: inline-block; padding: 5px; border-radius: 4px; border: 1px solid #ccc;">`;
+        ['AM', 'PM'].forEach(a => {
+            aHtml += `<option value="${a}" ${a===selA ? 'selected' : ''}>${a}</option>`;
+        });
+        aHtml += `</select>`;
+
+        return `<div style="display:flex; gap:5px; align-items:center;">${hHtml}<span>:</span>${mHtml}${aHtml}</div>`;
+    }
+
+    function renderOffDaysPanel() {
+        if (selectedDates.size === 0) {
+            offDaysList.innerHTML = '<p style="color: #888; font-size: 13px;">Select dates on the calendar to manage off days.</p>';
+            return;
+        }
+
+        let html = '';
+        // Sort dates
+        const sortedDates = Array.from(selectedDates).sort();
+        
+        sortedDates.forEach(dateStr => {
+            const od = offDaysData[dateStr] || { is_full_day: false, start_time: '', end_time: '' };
+            const isSaved = !!offDaysData[dateStr];
+
+            html += `
+            <div class="offday-item" data-date="${dateStr}">
+                <div class="offday-date">${new Date(dateStr).toDateString()}</div>
+                <div class="offday-controls">
+                    <div class="full-day-wrap">
+                        <input type="checkbox" class="inp-full-day" id="fd-${dateStr}" ${od.is_full_day ? 'checked' : ''}>
+                        <label for="fd-${dateStr}">Full Day Off</label>
+                    </div>
+                    <div class="time-inputs" style="display: ${od.is_full_day ? 'none' : 'flex'}; align-items: center; gap: 10px; margin-top: 5px; flex-wrap: wrap;">
+                        ${generateTimeSelectors('start', od.start_time)}
+                        <span style="font-size: 12px; color: #666;">to</span>
+                        ${generateTimeSelectors('end', od.end_time)}
+                    </div>
+                </div>
+                <div class="offday-actions">
+                    ${isSaved ? `<button class="btn-delete" title="Delete"><i class="fa-solid fa-trash"></i></button>` : ''}
+                    <button class="btn-discard" title="Discard" style="display: ${isSaved ? 'none' : 'inline-block'};"><i class="fa-solid fa-xmark"></i></button>
+                    <button class="btn-save" title="Save" style="display: ${isSaved ? 'none' : 'inline-block'};"><i class="fa-solid fa-check"></i></button>
+                </div>
+            </div>`;
+        });
+        offDaysList.innerHTML = html;
+
+        // Attach events
+        document.querySelectorAll('.offday-item').forEach(item => {
+            const dateStr = item.getAttribute('data-date');
+            const fdCheck = item.querySelector('.inp-full-day');
+            const timeWrap = item.querySelector('.time-inputs');
+            
+            const btnDiscard = item.querySelector('.btn-discard');
+            const btnSave = item.querySelector('.btn-save');
+
+            const showActionButtons = () => {
+                btnDiscard.style.display = 'inline-block';
+                btnSave.style.display = 'inline-block';
+            };
+
+            fdCheck.addEventListener('change', (e) => {
+                timeWrap.style.display = e.target.checked ? 'none' : 'flex';
+                showActionButtons();
+            });
+
+            item.querySelectorAll('select').forEach(sel => {
+                sel.addEventListener('change', showActionButtons);
+            });
+
+            btnDiscard.addEventListener('click', () => {
+                if (!offDaysData[dateStr]) {
+                    selectedDates.delete(dateStr);
+                }
+                renderCalendar();
+                renderOffDaysPanel();
+            });
+
+            btnSave.addEventListener('click', () => {
+                const isFull = fdCheck.checked;
+                
+                const sh = item.querySelector('.inp-start-h')?.value || '10';
+                const sm = item.querySelector('.inp-start-m')?.value || '00';
+                const sa = item.querySelector('.inp-start-a')?.value || 'AM';
+                
+                const eh = item.querySelector('.inp-end-h')?.value || '12';
+                const em = item.querySelector('.inp-end-m')?.value || '00';
+                const ea = item.querySelector('.inp-end-a')?.value || 'PM';
+
+                const start = `${sh}:${sm} ${sa}`;
+                const end = `${eh}:${em} ${ea}`;
+                
+                if (!isFull && (!sh || !eh)) {
+                    alert('Please provide start and end times or select Full Day.');
+                    return;
+                }
+
+                saveOffDay(dateStr, isFull, start, end);
+            });
+
+            const delBtn = item.querySelector('.btn-delete');
+            if (delBtn) {
+                delBtn.addEventListener('click', () => {
+                    if (confirm('Delete off day?')) {
+                        deleteOffDay(dateStr);
+                    }
+                });
+            }
+        });
+    }
+
+    async function saveOffDay(dateStr, isFullDay, startTime, endTime) {
+        const res = await fetch('/dashboard/api/offdays/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken()
+            },
+            body: JSON.stringify({
+                date: dateStr,
+                is_full_day: isFullDay,
+                start_time: startTime,
+                end_time: endTime
+            })
+        });
+        const data = await res.json();
+        if (data.status === 'ok') {
+            fetchOffDays(currentYear, currentMonth);
+        } else {
+            alert('Error: ' + data.message);
+        }
+    }
+
+    async function deleteOffDay(dateStr) {
+        const res = await fetch('/dashboard/api/offdays/', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken()
+            },
+            body: JSON.stringify({ date: dateStr })
+        });
+        const data = await res.json();
+        if (data.status === 'ok') {
+            selectedDates.delete(dateStr);
+            fetchOffDays(currentYear, currentMonth);
+        } else {
+            alert('Error: ' + data.message);
+        }
+    }
+
+    document.getElementById('prevMonth').addEventListener('click', () => {
+        currentMonth--;
+        if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+        selectedDates.clear();
+        fetchOffDays(currentYear, currentMonth);
+    });
+
+    document.getElementById('nextMonth').addEventListener('click', () => {
+        currentMonth++;
+        if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+        selectedDates.clear();
+        fetchOffDays(currentYear, currentMonth);
+    });
+
+    // Init
+    fetchOffDays(currentYear, currentMonth);
+</script>
+{% endblock %}

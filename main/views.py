@@ -42,6 +42,7 @@ def services(request):
         {
             'services': services,
             'celebration_images': celebration_images,
+            'cms_page_name': 'services',
         }
     )
 
@@ -63,6 +64,7 @@ def corporate_events(request):
         'corporate': corporate,
         'gallery': gallery,
         'celebration_images': celebration_images,
+        'cms_page_name': 'corporate_events',
     })
 def other_services(request):
     celebration_images = GalleryImage.objects.filter(
@@ -73,6 +75,7 @@ def other_services(request):
     return render(request, 'main/other_services.html', {
         'celebration_images': celebration_images,
         'services': services,
+        'cms_page_name': 'other_services',
     })
 
 
@@ -93,6 +96,7 @@ def gallery(request):
         'top_images': top_images,
         'main_images': main_images,
         'celebration_images': celebration_images,
+        'cms_page_name': 'gallery',
     })
 
 
@@ -160,11 +164,12 @@ def home(request):
         'celebration_images': celebration_images,
         'featured_gallery': featured_gallery,
         'testimonials': testimonials,
+        'cms_page_name': 'home',
     })
 
 
 def about(request):
-    return render(request, 'main/about.html')
+    return render(request, 'main/about.html', {'cms_page_name': 'about'})
 
 def faq(request):
     faqs = FAQ.objects.filter(is_active=True)
@@ -883,3 +888,83 @@ def other_service_delete(request, id):
         service.delete()
 
     return redirect('other_services_dashboard')
+
+
+def public_api_offdays(request):
+    import json
+    from django.http import JsonResponse
+    from .models import OffDay
+
+    if request.method == 'GET':
+        year = request.GET.get('year')
+        month = request.GET.get('month')
+        if year and month:
+            off_days = OffDay.objects.filter(date__year=year, date__month=month)
+            data = []
+            for od in off_days:
+                data.append({
+                    'date': od.date.strftime('%Y-%m-%d'),
+                    'is_full_day': od.is_full_day,
+                    'start_time': od.start_time,
+                    'end_time': od.end_time
+                })
+            return JsonResponse({'status': 'ok', 'off_days': data})
+        return JsonResponse({'status': 'error', 'message': 'Missing year/month'}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Invalid method'}, status=405)
+
+
+def public_api_check_conflict(request):
+    from .models import OffDay, BookingRequest
+    if request.method != 'GET':
+        return JsonResponse({'status': 'error', 'message': 'Invalid method'}, status=405)
+    date_str = request.GET.get('date')
+    start_str = request.GET.get('start_time')
+    end_str = request.GET.get('end_time')
+    if not (date_str and start_str and end_str):
+        return JsonResponse({'status': 'error', 'message': 'Missing parameters'}, status=400)
+
+    def ttm(t):
+        try:
+            parts = t.strip().split(' ')
+            hm = parts[0].split(':')
+            h, m = int(hm[0]), int(hm[1])
+            ampm = parts[1].upper()
+            if ampm == 'PM' and h != 12:
+                h += 12
+            if ampm == 'AM' and h == 12:
+                h = 0
+            return h * 60 + m
+        except Exception:
+            return 0
+
+    sel_start = ttm(start_str)
+    sel_end = ttm(end_str)
+
+    try:
+        from datetime import date as date_type
+        check_date = date_type.fromisoformat(date_str)
+        off_day = OffDay.objects.filter(date=check_date).first()
+        if off_day:
+            if off_day.is_full_day:
+                return JsonResponse({'status': 'off_day', 'message': 'full_day', 'date': date_str})
+            if sel_start < ttm(off_day.end_time) and sel_end > ttm(off_day.start_time):
+                return JsonResponse({
+                    'status': 'off_day', 'message': 'partial', 'date': date_str,
+                    'off_start': off_day.start_time, 'off_end': off_day.end_time
+                })
+    except Exception:
+        pass
+
+    try:
+        for booking in BookingRequest.objects.filter(
+            event_date=date_str, status__in=['pending', 'confirmed']
+        ):
+            if sel_start < ttm(booking.end_time) and sel_end > ttm(booking.start_time):
+                return JsonResponse({
+                    'status': 'booking_conflict', 'date': date_str,
+                    'booked_start': booking.start_time, 'booked_end': booking.end_time
+                })
+    except Exception:
+        pass
+
+    return JsonResponse({'status': 'ok'})

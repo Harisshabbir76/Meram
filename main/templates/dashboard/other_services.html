@@ -49,7 +49,7 @@
 
             {% if service.image %}
             <div class="img-big">
-                <img src="{{ service.image.url }}">
+                <img loading="lazy" decoding="async" src="{{ service.image.url }}">
             </div>
             {% endif %}
 
@@ -121,7 +121,7 @@
                 <label>Image</label>
 
                 {% if service.image %}
-                    <img src="{{ service.image.url }}" class="img-preview">
+                    <img loading="lazy" decoding="async" src="{{ service.image.url }}" class="img-preview">
                 {% endif %}
 
                 <input type="file" name="image" class="form-input">

@@ -82,10 +82,11 @@ class BookingForm(forms.ModelForm):
             'event_date': forms.DateInput(
                 attrs={
                     'type': 'date',
-                    'class': 'form-control'
+                    'class': 'form-control',
+                    'id': 'booking_event_date'
                 }
             ),
 
-            'start_time': forms.Select(),
-            'end_time': forms.Select(),
+            'start_time': forms.HiddenInput(attrs={'id': 'id_start_time'}),
+            'end_time': forms.HiddenInput(attrs={'id': 'id_end_time'}),
         }

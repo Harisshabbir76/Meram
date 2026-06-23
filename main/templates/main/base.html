@@ -53,6 +53,7 @@
             --font-arabic: 'Noto Sans Arabic', sans-serif;
         }
         *{margin:0;padding:0;box-sizing:border-box;}
+        html,body{max-width:100%;overflow-x:hidden;}
         body{font-family:var(--font-body);background:var(--white);color:var(--text-dark);font-size:14px;line-height:1.7;}
 
         /* Arabic body font switch */
@@ -612,10 +613,38 @@
     font-size: 28px;}
 
         }
+
+        /* ===================================================================
+           CELEBRATION STRIP — centered, equal gaps on all responsive sizes
+           =================================================================== */
+        @media (max-width:1400px){
+            .celebration-grid{
+                grid-template-columns:repeat(3, 220px) !important;
+                justify-content:center !important;
+                gap:18px !important;
+                width:100% !important;
+                margin:0 auto !important;
+            }
+            .celebration-grid img{
+                width:100% !important;
+                max-width:100% !important;
+                height:auto !important;
+                aspect-ratio:1/1 !important;
+                object-fit:cover !important;
+            }
+        }
+        @media (max-width:760px){
+            .celebration-grid{
+                grid-template-columns:repeat(3, minmax(0,1fr)) !important;
+                gap:10px !important;
+            }
+        }
+
     </style>
     {% block extra_head %}{% endblock %}
+    {% if cms_edit %}<link rel="stylesheet" href="{% static 'main/cms/editor.css' %}?v={% now 'U' %}">{% endif %}
 </head>
-<body>
+<body data-cms-page="{{ cms_page_name|default:'' }}" class="{% if cms_edit %}cms-editing{% endif %}">
 
 <!-- ===== NAVBAR ===== -->
 <nav class="navbar page-navbar {% block navbar_class %}{% endblock %}" id="navbar">
@@ -641,7 +670,7 @@
     {% if request.resolver_match.url_name == 'home' %}
 
         <div class="nav-monogram">
-            <img src="{% static 'main/images/Asset3.png' %}"
+            <img loading="lazy" decoding="async" src="{% static 'main/images/Asset3.webp' %}"
                  alt="Meram Events Logo"
                  class="logo-img">
         </div>
@@ -658,9 +687,14 @@
 
     <div class="nav-right">
         <div class="nav-social-icons">
-            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="mailto:info@meramevents.com" title="Email"><i class="fa-regular fa-envelope"></i></a>
+            <a href="https://www.instagram.com/meram_events" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/971501406994?text=Hello%20Meram%20Events,%20I%20would%20like%20to%20know%20more." target="_blank" rel="noopener noreferrer" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=meram.events@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Email">
+                <i class="fa-regular fa-envelope"></i>
+            </a>
         </div>
         <div class="nav-divider"></div>
         <a href="{% url 'book_now' %}" class="nav-book-link" data-en="Book Now" data-ar="احجز الآن">Book Now</a>
@@ -712,6 +746,7 @@
 </div>
 
 <!-- MESSAGES -->
+{% block messages_display %}
 {% if messages %}
 <div class="messages-container">
     {% for message in messages %}
@@ -719,16 +754,17 @@
     {% endfor %}
 </div>
 {% endif %}
+{% endblock %}
 
 {% block content %}{% endblock %}
 
 <!-- ===== FOOTER ===== -->
-<footer class="footer">
+<footer class="footer" data-cms-shared="footer">
     <div class="footer-top">
 
         <!-- Logo -->
         <div class="footer-brand">
-            <img src="{% static 'main/images/Asset4.png' %}" alt="Meram Events">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/Asset4.webp' %}" alt="Meram Events">
         </div>
 
         <!-- Description -->
@@ -756,8 +792,7 @@
         <div class="footer-social">
             <div class="footer-icons">
                 <span class="footer-social-label" data-en="FOLLOW US ON:" data-ar="تابعنا على:">FOLLOW US ON:</span>
-                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" title="Facebook"><i class="fab fa-facebook-square"></i></a>
+                <a href="https://www.instagram.com/meram_events" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
 
             <!-- ===== LANGUAGE DROPDOWN ===== -->
@@ -978,5 +1013,29 @@ setTimeout(() => {
 
 
 {% block extra_scripts %}{% endblock %}
+
+{% if cms_edit %}
+    {# ===== VISUAL EDITOR (dashboard only) ===== #}
+    <script>
+        window.CMS_PAGE = "{{ cms_page_name|default:'' }}";
+        window.CMS_CSRF = "{{ csrf_token }}";
+        window.CMS_SAVE_URL = "{% url 'cms_save' %}";
+        window.CMS_IMAGE_URL = "{% url 'cms_image_upload' %}";
+        window.CMS_BG_URL = "{% url 'cms_bg_upload' %}";
+        window.CMS_GALLERY_URL = "{% url 'cms_gallery_image' %}";
+        window.CMS_RESET_URL = "{% url 'cms_reset' %}";
+        window.CMS_DATA_URL = "{% url 'cms_data' cms_page_name|default:'home' %}";
+        window.CMS_SHARED_DATA_URL = "{% url 'cms_data' '__shared__' %}";
+    </script>
+    {% include 'cms/editor_ui.html' %}
+    <script src="{% static 'main/cms/editor.js' %}?v={% now 'U' %}" defer></script>
+{% else %}
+    {% comment %}Live site: apply saved CMS overrides on every public page so shared sections (footer, celebration strip) update everywhere.{% endcomment %}
+    <script>
+        {% if cms_page_name %}window.CMS_DATA_URL = "{% url 'cms_data' cms_page_name %}";{% endif %}
+        window.CMS_SHARED_DATA_URL = "{% url 'cms_data' '__shared__' %}";
+    </script>
+    <script src="{% static 'main/cms/apply.js' %}?v=5" defer></script>
+{% endif %}
 </body>
 </html>

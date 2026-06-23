@@ -1,7 +1,26 @@
 from django.urls import path
 from . import views
+from . import cms_views
 
 urlpatterns = [
+    # ===== VISUAL PAGE EDITORS (CMS) =====
+    path('dashboard/home-editor/', cms_views.home_editor, name='dashboard_home_editor'),
+    path('dashboard/about-editor/', cms_views.about_editor, name='dashboard_about_editor'),
+    path('dashboard/services-editor/', cms_views.services_editor, name='dashboard_services_editor'),
+    path('dashboard/corporate-services-editor/', cms_views.corporate_services_editor, name='dashboard_corporate_services_editor'),
+    path('dashboard/other-services-editor/', cms_views.other_services_editor, name='dashboard_other_services_editor'),
+    path('dashboard/gallery-editor/', cms_views.gallery_editor, name='dashboard_gallery_editor'),
+    path('cms/data/<str:page>/', cms_views.cms_data, name='cms_data'),
+    path('cms/save/', cms_views.cms_save, name='cms_save'),
+    path('cms/image/', cms_views.cms_image_upload, name='cms_image_upload'),
+    path('cms/bg/', cms_views.cms_bg_upload, name='cms_bg_upload'),
+    path('cms/gallery-image/', cms_views.cms_gallery_image, name='cms_gallery_image'),
+    path('cms/reset/', cms_views.cms_reset, name='cms_reset'),
+
+    # ===== PUBLIC APIS =====
+    path('api/offdays/', views.public_api_offdays, name='public_api_offdays'),
+    path('api/check-conflict/', views.public_api_check_conflict, name='public_api_check_conflict'),
+
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('services/', views.services, name='services'),
@@ -19,6 +38,11 @@ urlpatterns = [
     path('dashboard/bookings/<int:pk>/delete/', views.dashboard_booking_delete, name='dashboard_booking_delete'),
     path('dashboard/contacts/', views.dashboard_contacts, name='dashboard_contacts'),
     path('dashboard/contacts/<int:pk>/delete/', views.dashboard_contact_delete, name='dashboard_contact_delete'),
+    
+    # ===== DASHBOARD CALENDAR =====
+    path('dashboard/calendar/', cms_views.calendar_dashboard, name='dashboard_calendar'),
+    path('dashboard/api/offdays/', cms_views.dashboard_api_offdays, name='dashboard_api_offdays'),
+
 path(
     'dashboard/celebration-images/',
     views.celebration_images,

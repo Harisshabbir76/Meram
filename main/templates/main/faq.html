@@ -11,7 +11,7 @@
         height: 460px;
         position: relative;
         background: linear-gradient(rgba(49, 31, 19, .35), rgba(49, 31, 19, .35)),
-        url("{% static 'main/images/banner1.jpg' %}");
+        url("{% static 'main/images/banner1.webp' %}");
         background-size: cover;
         background-position: center;
     }
@@ -453,7 +453,7 @@
 <!-- ===== HERO WITH ORNATE BADGE ===== -->
 <section class="faq-hero">
     <div class="faq-badge">
-        <img src="{% static 'main/images/section1.png' %}" alt="Frame">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/section1.webp' %}" alt="Frame">
 
         <div class="faq-badge-content">
             <span class="faq-badge-eyebrow" data-en="EVERYTHING YOU NEED TO KNOW" data-ar="كل ما تحتاج إلى معرفته">
@@ -625,7 +625,7 @@
         <!-- Paper Clip -->
         <div class="faq-cta-clip">
             <div class="contact-clip">
-                <img src="{% static 'main/images/pin.png' %}" alt="Paper Clip">
+                <img loading="lazy" decoding="async" src="{% static 'main/images/pin.webp' %}" alt="Paper Clip">
             </div>
         </div>
 

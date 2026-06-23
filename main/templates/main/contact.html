@@ -23,7 +23,7 @@
         position: absolute;
         inset: 0;
 
-        background: url('{% static "main/images/bg1.png" %}') center center / cover no-repeat;
+        background: url('{% static "main/images/bg1.webp" %}') center center / cover no-repeat;
 
         filter: brightness(0.28);
         z-index: 0;
@@ -266,7 +266,7 @@
     <div class="contact-card">
         <!-- Paper clip -->
         <div class="contact-clip">
-            <img src="{% static 'main/images/pin.png' %}" alt="Paper Clip">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/pin.webp' %}" alt="Paper Clip">
         </div>
 
         <span class="contact-card-eyebrow" data-en="Contact Us" data-ar="اتصل بنا">

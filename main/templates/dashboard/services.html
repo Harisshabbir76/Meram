@@ -60,7 +60,7 @@
 
         <div class="col-lg-3">
             {% if service.left_image %}
-            <img src="{{ service.left_image.url }}" class="preview-img">
+            <img loading="lazy" decoding="async" src="{{ service.left_image.url }}" class="preview-img">
             {% endif %}
         </div>
 
@@ -108,7 +108,7 @@
 
         <div class="col-lg-3">
             {% if service.right_image %}
-            <img src="{{ service.right_image.url }}" class="preview-img">
+            <img loading="lazy" decoding="async" src="{{ service.right_image.url }}" class="preview-img">
             {% endif %}
         </div>
 
@@ -267,7 +267,7 @@
 
         {% if service.card_image %}
         <div class="img-preview">
-            <img src="{{ service.card_image.url }}" alt="Card Image">
+            <img loading="lazy" decoding="async" src="{{ service.card_image.url }}" alt="Card Image">
         </div>
         {% endif %}
 
@@ -280,7 +280,7 @@
 
         {% if service.left_image %}
         <div class="img-preview">
-            <img src="{{ service.left_image.url }}" alt="Left Image">
+            <img loading="lazy" decoding="async" src="{{ service.left_image.url }}" alt="Left Image">
         </div>
         {% endif %}
 
@@ -293,7 +293,7 @@
 
         {% if service.right_image %}
         <div class="img-preview">
-            <img src="{{ service.right_image.url }}" alt="Right Image">
+            <img loading="lazy" decoding="async" src="{{ service.right_image.url }}" alt="Right Image">
         </div>
         {% endif %}
 

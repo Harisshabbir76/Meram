@@ -1,0 +1,200 @@
+{% load static %}
+{# ===== TOP BAR ===== #}
+<div id="cms-topbar">
+    <div class="cms-topbar-left">
+        <span class="cms-topbar-eyebrow">Website Page Editor</span>
+        <span class="cms-topbar-title">
+            {% if cms_page_name == 'home' %}Home
+            {% elif cms_page_name == 'about' %}About Us
+            {% elif cms_page_name == 'services' %}Main Services
+            {% elif cms_page_name == 'corporate_events' %}Corporate Services
+            {% elif cms_page_name == 'other_services' %}Other Services
+            {% elif cms_page_name == 'gallery' %}Gallery
+            {% else %}{{ cms_page_name|title }}
+            {% endif %}
+        </span>
+    </div>
+    <div class="cms-lang-switch" id="cms-lang-switch" title="Preview language">
+        <button type="button" data-prev="en" class="active">EN</button>
+        <button type="button" data-prev="ar">عربى</button>
+    </div>
+    <div class="cms-topbar-right">
+        <span id="cms-status" class="cms-status"></span>
+        <a href="{% url 'dashboard_bookings' %}" class="cms-btn cms-btn-ghost">Exit</a>
+        <button id="cms-topbar-save" class="cms-btn cms-btn-primary" disabled>
+            <i class="fa-solid fa-floppy-disk"></i> Save Changes
+        </button>
+    </div>
+</div>
+
+<div id="cms-hint">Click any heading, text or image to edit it</div>
+
+{# ===== EDIT PANEL ===== #}
+<aside id="cms-editor-root" aria-hidden="true">
+    <div class="cms-panel-head">
+        <span id="cms-key-label">—</span>
+        <span id="cms-shared-badge" title="This element repeats on other pages — your change applies everywhere" style="display:none;">
+            <i class="fa-solid fa-link"></i> SHARED · ALL PAGES</span>
+        <button id="cms-close-btn" title="Close">&times;</button>
+    </div>
+
+    <div class="cms-panel-body">
+
+        {# ---- TEXT (only for non-image elements) ---- #}
+        <div id="cms-text-section">
+            <div class="cms-toolbar" data-target="cms-en"></div>
+            <div id="cms-en" class="cms-richbox" contenteditable="true"></div>
+
+            <div class="cms-sub">Content (Arabic) &nbsp;·&nbsp; المحتوى بالعربية</div>
+            <div class="cms-toolbar" data-target="cms-ar"></div>
+            <div id="cms-ar" class="cms-richbox" dir="rtl" contenteditable="true"></div>
+            <p class="cms-note">Add the Arabic translation here. It shows on the site
+                when the visitor selects عربي. Leave empty to fall back to the English text.</p>
+        </div>
+
+        {# ---- IMAGE (only for <img>) ---- #}
+        <div id="cms-image-section" style="display:none;">
+            <div class="cms-section-title">Image</div>
+            <p id="cms-image-shared-note" class="cms-note cms-note-tight" style="display:none;">
+                <i class="fa-solid fa-link"></i> <b>Shared image.</b> Replacing it here updates
+                this picture on <b>every page</b> that shows it.</p>
+            <img id="cms-image-preview" alt="" />
+            <label class="cms-file-btn">
+                <i class="fa-solid fa-upload"></i> Replace image
+                <input type="file" id="cms-image-file" accept="image/*" hidden>
+            </label>
+            <div class="cms-field">
+                <label>Object fit</label>
+                <select id="cms-object-fit" data-style="object-fit">
+                    <option value="">Default</option>
+                    <option value="cover">cover</option>
+                    <option value="contain">contain</option>
+                    <option value="fill">fill</option>
+                    <option value="none">none</option>
+                </select>
+            </div>
+        </div>
+
+        {# ---- HERO / BACKGROUND (image or video) ---- #}
+        <div id="cms-bg-section" style="display:none;">
+            <div class="cms-section-title">Hero Background</div>
+            <div class="cms-bg-type" id="cms-bg-type">
+                <button type="button" data-bgtype="image" class="active">
+                    <i class="fa-solid fa-image"></i> Image
+                </button>
+                <button type="button" data-bgtype="video">
+                    <i class="fa-solid fa-film"></i> Video
+                </button>
+            </div>
+            <div id="cms-bg-preview-wrap">
+                <img id="cms-bg-preview-img" alt="">
+                <video id="cms-bg-preview-video" style="display:none;" muted loop autoplay playsinline></video>
+            </div>
+            <label class="cms-file-btn">
+                <i class="fa-solid fa-upload"></i> <span id="cms-bg-upload-label">Upload image</span>
+                <input type="file" id="cms-bg-file" accept="image/*" hidden>
+            </label>
+            <p class="cms-note cms-note-tight">Pick <b>Image</b> or <b>Video</b>, then upload.
+                Use wide images (≥1600px) or a short MP4 loop. Video plays muted &amp; looped
+                behind the hero. Use <b>Reset element</b> to restore the original.</p>
+        </div>
+
+        {# ---- STYLE SECTIONS (hidden for hero backgrounds) ---- #}
+        <div id="cms-style-sections">
+
+        {# ---- TYPOGRAPHY (applies to the SELECTED text in the active box) ---- #}
+        <div class="cms-section-title">Typography <span id="cms-lang-tag" class="cms-lang-tag">English</span></div>
+        <p class="cms-note cms-note-tight">Applies to the text you <b>select</b> in the box above
+            (English or Arabic). Select part of the text to style only that part; select nothing to
+            style the whole language.</p>
+        <div class="cms-field">
+            <label>Font Family</label>
+            <select id="cms-font-family" data-inline="font-family">
+                <option value="">Default (inherit)</option>
+                <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+                <option value="'Hanken Grotesk', sans-serif">Hanken Grotesk</option>
+                <option value="'Montserrat', sans-serif">Montserrat</option>
+                <option value="'Playfair Display', serif">Playfair Display</option>
+                <option value="'Pinyon Script', cursive">Pinyon Script</option>
+                <option value="'Noto Sans Arabic', sans-serif">Noto Sans Arabic</option>
+                <option value="Arial, sans-serif">Arial</option>
+                <option value="Georgia, serif">Georgia</option>
+                <option value="'Times New Roman', serif">Times New Roman</option>
+            </select>
+        </div>
+        <div class="cms-field-row">
+            <div class="cms-field">
+                <label>Font Size</label>
+                <input type="text" id="cms-font-size" data-inline="font-size" placeholder="e.g. 40px">
+            </div>
+            <div class="cms-field">
+                <label>Font Weight</label>
+                <select id="cms-font-weight" data-inline="font-weight">
+                    <option value="">Default</option>
+                    <option value="300">300 · Light</option>
+                    <option value="400">400 · Regular</option>
+                    <option value="500">500 · Medium</option>
+                    <option value="600">600 · Semibold</option>
+                    <option value="700">700 · Bold</option>
+                </select>
+            </div>
+        </div>
+        <div class="cms-field-row">
+            <div class="cms-field">
+                <label>Text Color</label>
+                <input type="color" id="cms-color" data-inline="color" value="#1a1612">
+            </div>
+            <div class="cms-field">
+                <label>Letter Spacing</label>
+                <input type="text" id="cms-letter-spacing" data-inline="letter-spacing" placeholder="e.g. 2px">
+            </div>
+        </div>
+
+        {# ---- BLOCK STYLES (per language, whole element) ---- #}
+        <div class="cms-field">
+            <label>Text Align (whole block)</label>
+            <select id="cms-text-align" data-style="text-align">
+                <option value="">Default</option>
+                <option value="left">Left</option>
+                <option value="center">Center</option>
+                <option value="right">Right</option>
+                <option value="justify">Justify</option>
+            </select>
+        </div>
+
+        {# ---- SPACING ---- #}
+        <div class="cms-section-title">Spacing — Margin</div>
+        <div class="cms-box4">
+            <div class="cms-field"><label>Top</label><input type="text" data-style="margin-top" placeholder="px/rem"></div>
+            <div class="cms-field"><label>Bottom</label><input type="text" data-style="margin-bottom" placeholder="px/rem"></div>
+            <div class="cms-field"><label>Left</label><input type="text" data-style="margin-left" placeholder="px/rem"></div>
+            <div class="cms-field"><label>Right</label><input type="text" data-style="margin-right" placeholder="px/rem"></div>
+        </div>
+
+        <div class="cms-section-title">Spacing — Padding</div>
+        <div class="cms-box4">
+            <div class="cms-field"><label>Top</label><input type="text" data-style="padding-top" placeholder="px/rem"></div>
+            <div class="cms-field"><label>Bottom</label><input type="text" data-style="padding-bottom" placeholder="px/rem"></div>
+            <div class="cms-field"><label>Left</label><input type="text" data-style="padding-left" placeholder="px/rem"></div>
+            <div class="cms-field"><label>Right</label><input type="text" data-style="padding-right" placeholder="px/rem"></div>
+        </div>
+
+        {# ---- LAYOUT ---- #}
+        <div class="cms-section-title">Layout</div>
+        <div class="cms-field-row">
+            <div class="cms-field"><label>Line Height</label><input type="text" data-style="line-height" placeholder="e.g. 1.5"></div>
+            <div class="cms-field"><label>Width</label><input type="text" data-style="width" placeholder="e.g. 100%"></div>
+        </div>
+        <div class="cms-field-row">
+            <div class="cms-field"><label>Min Height</label><input type="text" data-style="min-height" placeholder="e.g. 120px"></div>
+            <div class="cms-field"><label>Max Width</label><input type="text" data-style="max-width" placeholder="e.g. 800px"></div>
+        </div>
+
+        </div>{# /cms-style-sections #}
+
+        <div class="cms-panel-actions">
+            <button id="cms-reset-btn" class="cms-btn cms-btn-ghost">Reset element</button>
+            <button id="cms-save-btn" class="cms-btn cms-btn-primary">Save Changes</button>
+        </div>
+    </div>
+</aside>

@@ -11,7 +11,15 @@
     background: #F4F1EA;
     text-align: center;
     padding: 220px 20px 70px 20px;
+    position: relative;
+    overflow: hidden;
 }
+/* hero background layer (image/video set from the dashboard) */
+.gallery-intro-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-size: cover; background-position: center; background-repeat: no-repeat;
+}
+.gallery-intro > *:not(.gallery-intro-bg) { position: relative; z-index: 1; }
 .gallery-eyebrow {
     font-family: "Hanken Grotesk", sans-serif;
     font-size: 12px;
@@ -54,33 +62,53 @@
     margin: 50px 0 70px;
 }
 
-/* Ornate framed image */
+/* Ornate single framed image */
 .gallery-frame-wrap {
-    display: flex; justify-content: center; margin-top: 20px;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(49, 31, 19, 0.2);
+    margin: 0 auto;            /* reliably centered at every size */
 }
 .gallery-frame {
-    position: relative; display: inline-block;
+    width: min(330px, 84vw);
+    aspect-ratio: 1 / 1;       /* stays square + shrinks on small screens */
+    background: #ede9e0;
+    overflow: hidden;
+    display: flex;             /* keep the photo centered inside its mat */
+    align-items: center;
+    justify-content: center;
 }
 .gallery-frame img {
-    width: 330px;
-    max-width: 80vw;
-    height: auto;
-    aspect-ratio: 1/1;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     display: block;
 }
-/* .gallery-frame::before {
-    content: '';
-    position: absolute; inset: -10px;
-    border: 1px solid rgba(44,36,32,0.2);
-    pointer-events: none;
+
+
+/* 3×3 intro image grid */
+.gallery-intro-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 50px auto 0;
+    padding: 0;
 }
-.gallery-frame::after {
-    content: '';
-    position: absolute; inset: -5px;
-    border: 1px solid rgba(44,36,32,0.1);
-    pointer-events: none;
-} */
+.gallery-intro-grid img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+    transition: transform 0.55s ease;
+}
+.gallery-intro-grid img:hover {
+    transform: scale(1.04);
+}
 
 /* Scrolling marquee text strip */
 .gallery-marquee-strip {
@@ -401,8 +429,8 @@
         font-size: 11px;
     }
 
-    .gallery-frame img {
-        width: 260px;
+    .gallery-frame {
+        width: min(260px, 84vw);
     }
      .gallery-mid-cta {
         padding: 60px 24px;
@@ -458,8 +486,8 @@
         font-size: 26px;
     }
 
-    .gallery-frame img {
-        width: 220px;
+    .gallery-frame {
+        width: min(220px, 84vw);
     }
     .gallery-mid-cta-title {
         font-size: 18px;
@@ -546,6 +574,19 @@
         aspect-ratio: 1 / 1;
         object-fit: cover;
     }
+
+    .gallery-intro-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3px;
+    }
+
+    /* Last odd image centered (e.g. the 9th of 9) */
+    .gallery-intro-grid img:last-child:nth-child(odd),
+    .gallery-grid-3col img:last-child:nth-child(odd){
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: calc(50% - 1.5px);
+    }
 }
 </style>
 {% endblock %}
@@ -553,7 +594,8 @@
 {% block content %}
 
 <!-- ===== GALLERY INTRO ===== -->
-<section class="gallery-intro reveal">
+<section class="gallery-intro reveal" data-cms-hero>
+    <div class="gallery-intro-bg" data-cms-bg></div>
 
     <span class="gallery-eyebrow"
           data-en="Gallery"
@@ -592,9 +634,10 @@
         Every celebration tells a story...
     </p>
 
+    <!-- Ornate framed image -->
     <div class="gallery-frame-wrap">
         <div class="gallery-frame">
-            <img src="{% static 'main/images/glry.jpg' %}" alt="Floral arrangement">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/glry.webp' %}" alt="Floral arrangement">
         </div>
     </div>
 
@@ -726,23 +769,16 @@
 
 <!-- ===== TOP 6-IMAGE GRID (3×2) ===== -->
 <div class="gallery-grid-top">
-    <div class="gallery-grid-3col" id="top-grid">
-
-        {% if top_images %}
-            {% for img in top_images|slice:":6" %}
-                <img src="{{ img.image.url }}"
-                     alt="{{ img.title }}"
-                     onclick="openLb(this)">
-            {% endfor %}
-        {% else %}
-            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=700&q=85" alt="" onclick="openLb(this)">
-            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=700&q=85" alt="" onclick="openLb(this)">
-            <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=700&q=85" alt="" onclick="openLb(this)">
-            <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=700&q=85" alt="" onclick="openLb(this)">
-            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&q=85" alt="" onclick="openLb(this)">
-            <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=700&q=85" alt="" onclick="openLb(this)">
-        {% endif %}
-
+    <div class="gallery-intro-grid" id="top-grid" style="margin-top: 0;">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/glry.webp' %}" alt="Gallery image 1">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/glry.webp' %}" alt="Gallery image 2">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/glry.webp' %}" alt="Gallery image 3">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/glry.webp' %}" alt="Gallery image 4">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/glry.webp' %}" alt="Gallery image 5">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/glry.webp' %}" alt="Gallery image 6">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/glry.webp' %}" alt="Gallery image 7">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/glry.webp' %}" alt="Gallery image 8">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/glry.webp' %}" alt="Gallery image 9">
     </div>
 </div>
 
@@ -770,6 +806,7 @@
 
 </section>
 
+
 <!-- ===== MAIN GALLERY GRID (3-col, 15 images) ===== -->
 
 <div class="gallery-main-section">
@@ -777,28 +814,28 @@
 
         {% if main_images %}
             {% for img in main_images %}
-                <img src="{{ img.image.url }}"
+                <img loading="lazy" decoding="async" src="{{ img.image.url }}"
                      alt="{{ img.title }}"
                      onclick="openLb(this)">
             {% endfor %}
         {% endif %}
 
         <!-- fallback/static images -->
-        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=700&q=85&sig=1" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=700&q=85" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=700&q=85" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=700&q=85" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=700&q=85&sig=2" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=700&q=85&sig=2" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&q=85&sig=2" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1478146059778-26028b07395a?w=700&q=85" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=700&q=85&sig=3" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=700&q=85&sig=3" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=700&q=85&sig=2" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=700&q=85&sig=2" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=700&q=85&sig=3" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=700&q=85&sig=2" alt="" onclick="openLb(this)">
-        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&q=85&sig=3" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=700&q=85&sig=1" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=700&q=85" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=700&q=85" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=700&q=85" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=700&q=85&sig=2" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=700&q=85&sig=2" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&q=85&sig=2" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1478146059778-26028b07395a?w=700&q=85" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=700&q=85&sig=3" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=700&q=85&sig=3" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=700&q=85&sig=2" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=700&q=85&sig=2" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=700&q=85&sig=3" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=700&q=85&sig=2" alt="" onclick="openLb(this)">
+        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&q=85&sig=3" alt="" onclick="openLb(this)">
 
     </div>
 </div>
@@ -856,18 +893,18 @@
 
 
     <!-- Images from admin panel -->
-    <div class="celebration-grid">
+    <div class="celebration-grid" data-cms-shared-scope="celebration">
         {% if celebration_images %}
             {% for img in celebration_images %}
-            <img src="{{ img.image.url }}" alt="{{ img.title }}" loading="lazy">
+            <img src="{{ img.image.url }}" alt="{{ img.title }}" loading="lazy" data-cms-gallery="{{ img.id }}">
             {% endfor %}
         {% else %}
-            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1478146059778-26028b07395a?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&q=80" alt="">
-            <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1478146059778-26028b07395a?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&q=80" alt="">
+            <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&q=80" alt="">
         {% endif %}
     </div>
 
@@ -877,7 +914,7 @@
 <div class="lightbox" id="lightbox">
     <button class="lb-close" onclick="closeLb()">✕</button>
     <button class="lb-prev" onclick="lbNav(-1)">‹</button>
-    <img id="lb-img" src="" alt="">
+    <img loading="lazy" decoding="async" id="lb-img" src="" alt="">
     <button class="lb-next" onclick="lbNav(1)">›</button>
 </div>
 

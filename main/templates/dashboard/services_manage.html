@@ -33,7 +33,7 @@
 <div class="gm-card"
      id="service-card-{{ service.pk }}">
 
-    <img src="{{ service.image_left.url }}"
+    <img loading="lazy" decoding="async" src="{{ service.image_left.url }}"
          alt="{{ service.title_en }}">
 
     <div class="gm-card-body">

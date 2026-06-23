@@ -19,7 +19,15 @@
     text-align: center;
     padding: 220px 20px 320px;
     background: #F4F1EA;
+    position: relative;
+    overflow: hidden;
 }
+/* hero background layer (image/video set from the dashboard) */
+.about-hero-bg{
+    position:absolute; inset:0; z-index:0;
+    background-size:cover; background-position:center; background-repeat:no-repeat;
+}
+.about-hero > *:not(.about-hero-bg){ position:relative; z-index:1; }
 
 .about-eyebrow{
     display:block;
@@ -840,21 +848,20 @@
     z-index: 2;
 }
 
+/* editable background layer (image/video from the dashboard) */
+.about-cta-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: url("{% static 'main/images/cbg.webp' %}") center / cover no-repeat;
+}
+/* dark overlay sits above the image layer, below the text */
 .about-cta::before {
     content: "";
     position: absolute;
     inset: 0;
-
-    background:
-        linear-gradient(
-            rgba(49,31,19,0.57),
-            rgba(49,31,19,0.57)
-        ),
-        url("{% static 'main/images/cbg.jpg' %}");
-
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    z-index: 1;
+    background: linear-gradient(rgba(49,31,19,0.57), rgba(49,31,19,0.57));
 }
 
 /* Center content */
@@ -1451,8 +1458,8 @@
 <section class="about-section">
 
     <!-- HERO CONTENT -->
-    <div class="about-hero">
-
+    <div class="about-hero" data-cms-hero>
+        <div class="about-hero-bg" data-cms-bg></div>
 
         <span class="about-eyebrow"
               data-en="ABOUT US"
@@ -1475,9 +1482,9 @@
 
 
     <!-- OVERLAP CINEMATIC -->
-    <div class="about-cinematic">
+    <div class="about-cinematic" data-cms-hero>
 
-        <img src="{% static 'main/images/Banner.jpg' %}"
+        <img loading="lazy" decoding="async" data-cms-bg src="{% static 'main/images/Banner.webp' %}"
              alt="Scenic landscape">
 
     <div class="about-cinematic-text">
@@ -1494,9 +1501,9 @@
 <section class="about-thoughtful reveal">
 
     <div class="about-two-imgs">
-        <img src="{% static 'main/images/1.jpg' %}" alt="Floral table">
-        <img src="{% static 'main/images/2.JPG' %}" alt="Event setup">
-        <img src="{% static 'main/images/3.JPG' %}" alt="Wedding detail">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/1.webp' %}" alt="Floral table">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/2.webp' %}" alt="Event setup">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/3.webp' %}" alt="Wedding detail">
         <div class="about-white-box"></div>
     </div>
 
@@ -1538,8 +1545,8 @@
     <div class="philosophy-inner">
 
         <div class="about-philosophy-img-wrap">
-            <img class="about-philosophy-img"
-                 src="{% static 'main/images/p1.png' %}"
+            <img loading="lazy" decoding="async" class="about-philosophy-img"
+                 src="{% static 'main/images/p1.webp' %}"
                  alt="">
 
             <span class="about-philosophy-label"
@@ -1608,31 +1615,31 @@
     <div class="venues-logos">
 
         <div class="venue-logo-item">
-            <img src="{% static 'main/images/Br.png' %}" alt="">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/Br.webp' %}" alt="">
         </div>
 
         <div class="venue-logo-item">
-            <img src="{% static 'main/images/D.png' %}" alt="">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/D.webp' %}" alt="">
         </div>
 
         <div class="venue-logo-item">
-            <img src="{% static 'main/images/Sr.png' %}" alt="">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/Sr.webp' %}" alt="">
         </div>
 
         <div class="venue-logo-item">
-            <img src="{% static 'main/images/GH.png' %}" alt="">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/GH.webp' %}" alt="">
         </div>
 
         <div class="venue-logo-item">
-            <img src="{% static 'main/images/WA.png' %}" alt="">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/WA.webp' %}" alt="">
         </div>
 
         <div class="venue-logo-item">
-            <img src="{% static 'main/images/H.png' %}" alt="">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/H.webp' %}" alt="">
         </div>
 
         <div class="venue-logo-item">
-            <img src="{% static 'main/images/R.png' %}" alt="">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/R.webp' %}" alt="">
         </div>
 
     </div>
@@ -1666,7 +1673,7 @@
 <section class="about-more reveal">
 
     <!-- IMAGE -->
-    <img src="{% static 'main/images/f4.png' %}"
+    <img loading="lazy" decoding="async" src="{% static 'main/images/f4.webp' %}"
          alt="Luxury event setup">
 
 
@@ -1717,14 +1724,15 @@
 
 <!-- ===== SECTION 8: 4-IMAGE STRIP ===== -->
 <div class="about-strip">
-    <img src="{% static 'main/images/p4.jpg' %}" alt="">
-    <img src="{% static 'main/images/p11.jpeg' %}" alt="">
-    <img src="{% static 'main/images/p2.JPG' %}" alt="">
-    <img src="{% static 'main/images/p3.jpg' %}" alt="">
+    <img loading="lazy" decoding="async" src="{% static 'main/images/p4.webp' %}" alt="">
+    <img loading="lazy" decoding="async" src="{% static 'main/images/p11.webp' %}" alt="">
+    <img loading="lazy" decoding="async" src="{% static 'main/images/p2.webp' %}" alt="">
+    <img loading="lazy" decoding="async" src="{% static 'main/images/p3.webp' %}" alt="">
 </div>
 
 <!-- ===== SECTION 9: DARK CTA ===== -->
-<section class="about-cta">
+<section class="about-cta" data-cms-hero>
+    <div class="about-cta-bg" data-cms-bg></div>
     <!-- <div class="overlay"></div> -->
     <div class="intro-watermark"
      data-en="Effortless detail. Elevated experiences. Thoughtfully designed moments."
@@ -1734,7 +1742,7 @@
 </div>
     <!-- Left Image -->
     <div class="left-image">
-        <img src="{% static 'main/images/f1.jpg' %}" alt="">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/f1.webp' %}" alt="">
     </div>
 
     <!-- Center Content -->
@@ -1771,7 +1779,7 @@
 
     <!-- Right Image -->
     <div class="right-image">
-        <img src="{% static 'main/images/f3.jpg' %}" alt="">
+        <img loading="lazy" decoding="async" src="{% static 'main/images/f3.webp' %}" alt="">
     </div>
 
     <!-- Watermark -->

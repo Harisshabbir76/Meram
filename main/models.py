@@ -1,8 +1,52 @@
 from django.db import models
 
+from .image_utils import optimize_instance_images
+
+
+class PageContent(models.Model):
+    """
+    A single CMS override for one element on one page, produced by the visual
+    Home editor. `element_key` is a deterministic DOM path (e.g.
+    'body>section:nth-of-type(2)>h2') so the same element is found again on the
+    live site. Any of content/styles/image may be set.
+    """
+    page = models.CharField(max_length=60, db_index=True)
+    element_key = models.CharField(max_length=600)
+
+    content_en = models.TextField(blank=True, null=True)
+    content_ar = models.TextField(blank=True, null=True)
+
+    # Legacy shared block styles (kept for back-compat; new code uses *_en / *_ar).
+    styles = models.JSONField(default=dict, blank=True)
+
+    # Per-language block-level styles (margin/padding/layout/align), e.g.
+    # { "margin-top": "10px", "text-align": "center" }
+    styles_en = models.JSONField(default=dict, blank=True)
+    styles_ar = models.JSONField(default=dict, blank=True)
+
+    image = models.ImageField(upload_to='cms/', blank=True, null=True)
+
+    # Hero/background media — an image OR a video, chosen in the editor.
+    hero_media = models.FileField(upload_to='cms/hero/', blank=True, null=True)
+    hero_type = models.CharField(max_length=10, blank=True)  # 'image' | 'video'
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('page', 'element_key')
+        ordering = ['page', 'element_key']
+
+    def save(self, *args, **kwargs):
+        optimize_instance_images(self, ['image'])
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.page} :: {self.element_key[:50]}'
+
 
 class GalleryImage(models.Model):
     CATEGORY_CHOICES = [
+        ('section0', 'Intro Grid (9 images)'),
         ('section1', '1st Section'),
         ('section2', '2nd Section'),
         ('cts', 'CTS Section'),
@@ -22,6 +66,10 @@ class GalleryImage(models.Model):
     class Meta:
         ordering = ['order', '-created_at']
 
+    def save(self, *args, **kwargs):
+        optimize_instance_images(self, ['image'])
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
 
@@ -30,6 +78,10 @@ class CelebrationImage(models.Model):
     title = models.CharField(max_length=200)
     image = models.ImageField(upload_to='celebration/')
     is_active = models.BooleanField(default=True)
+
+    def save(self, *args, **kwargs):
+        optimize_instance_images(self, ['image'])
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -67,13 +119,6 @@ class BookingRequest(models.Model):
         ('cancelled', 'Cancelled'),
         ('completed', 'Completed'),
     ]
-    TIME_SLOTS = [
-    ('10:00', '10:00 AM'),
-    ('12:00', '12:00 PM'),
-    ('14:00', '02:00 PM'),
-    ('16:00', '04:00 PM'),
-    ('18:00', '06:00 PM'),
-]
 
     full_name = models.CharField(max_length=200)
     email = models.EmailField()
@@ -82,9 +127,9 @@ class BookingRequest(models.Model):
     event_type = models.CharField(max_length=50, choices=EVENT_TYPES)
     event_date = models.DateField()
 
-    # 🔥 NEW FIELDS
-    start_time = models.CharField(max_length=10, choices=TIME_SLOTS)
-    end_time = models.CharField(max_length=10, choices=TIME_SLOTS)
+    # Custom 24h format (e.g. 10:30 AM)
+    start_time = models.CharField(max_length=20)
+    end_time = models.CharField(max_length=20)
 
     guest_count = models.CharField(max_length=100, blank=True)
     venue = models.CharField(max_length=300, blank=True)
@@ -144,8 +189,26 @@ class Testimonial(models.Model):
 
     def __str__(self):
         return f"{self.client_name} - {self.event_type}"
-    
 
+
+class OffDay(models.Model):
+    """
+    Represents dates or specific times when bookings are unavailable.
+    """
+    date = models.DateField(db_index=True)
+    is_full_day = models.BooleanField(default=False)
+    # Storing custom string format "HH:MM AM/PM" or using native TimeField. 
+    # Since booking uses CharField for times, we'll use CharField here as well to match.
+    start_time = models.CharField(max_length=20, blank=True, null=True)
+    end_time = models.CharField(max_length=20, blank=True, null=True)
+
+    class Meta:
+        ordering = ['date', 'start_time']
+
+    def __str__(self):
+        if self.is_full_day:
+            return f"Full Day Off: {self.date}"
+        return f"Off Time: {self.date} ({self.start_time} - {self.end_time})"
 class ServiceSection(models.Model):
 
     SERVICE_CHOICES = [
@@ -180,9 +243,13 @@ class ServiceSection(models.Model):
 
     is_active = models.BooleanField(default=True)
 
+    def save(self, *args, **kwargs):
+        optimize_instance_images(self, ['image_left', 'image_right'])
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title_en
-    
+
 class ServicePoint(models.Model):
 
     service = models.ForeignKey(
@@ -270,9 +337,13 @@ class MainService(models.Model):
         upload_to='services/details/'
     )
 
+    def save(self, *args, **kwargs):
+        optimize_instance_images(self, ['card_image', 'left_image', 'right_image'])
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
-    
+
 class CorporateEvent(models.Model):
 
     # English
@@ -297,9 +368,13 @@ class CorporateEvent(models.Model):
     main_image = models.ImageField(upload_to="corporate/main/")
     side_image = models.ImageField(upload_to="corporate/side/", blank=True, null=True)
 
+    def save(self, *args, **kwargs):
+        optimize_instance_images(self, ['main_image', 'side_image'])
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
-    
+
 class OtherService(models.Model):
     title = models.CharField(max_length=255)
     title_ar = models.CharField(max_length=255, blank=True)
@@ -310,6 +385,10 @@ class OtherService(models.Model):
     image = models.ImageField(upload_to='other_services/')
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        optimize_instance_images(self, ['image'])
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

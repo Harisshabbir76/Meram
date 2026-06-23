@@ -189,7 +189,7 @@
 
     <div class="gm-card" id="gallery-card-{{ img.pk }}">
 
-        <img src="{{ img.image.url }}"
+        <img loading="lazy" decoding="async" src="{{ img.image.url }}"
              alt="{{ img.title }}">
 
         <div class="gm-card-body">

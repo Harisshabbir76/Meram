@@ -212,8 +212,17 @@
         </div>
 
         <nav class="db-nav">
+            <a href="{% url 'dashboard_home_editor' %}" class="{% if active_page == 'home_editor' %}active{% endif %}">
+                <i class="fa-solid fa-house"></i> Home
+            </a>
+            <a href="{% url 'dashboard_about_editor' %}" class="{% if active_page == 'about_editor' %}active{% endif %}">
+                <i class="fa-solid fa-circle-info"></i> About
+            </a>
             <a href="{% url 'dashboard_bookings' %}" class="{% if active_page == 'booking' %}active{% endif %}">
                 <i class="fa-solid fa-calendar-check"></i> Bookings
+            </a>
+            <a href="{% url 'dashboard_calendar' %}" class="{% if active_page == 'calendar' %}active{% endif %}">
+                <i class="fa-solid fa-calendar-days"></i> Calendar
             </a>
             <a href="{% url 'dashboard_contacts' %}" class="{% if active_page == 'contacts' %}active{% endif %}">
                 <i class="fa-solid fa-envelope"></i> Messages
@@ -223,20 +232,22 @@
    class="{% if active_page == 'faq' %}active{% endif %}">
     <i class="fa-solid fa-circle-question"></i> FAQ
 </a>
-            <a href="{% url 'dashboard_gallery' %}" class="{% if active_page == 'gallery' %}active{% endif %}">
+            <a href="{% url 'dashboard_gallery_editor' %}" class="{% if active_page == 'gallery_editor' %}active{% endif %}">
                 <i class="fa-solid fa-images"></i> Gallery
             </a>
-            <li class="{% if request.resolver_match.url_name == 'dashboard_services' %}active{% endif %}">
-    <a href="{% url 'dashboard_services' %}">
+            <li>
+    <a href="{% url 'dashboard_services_editor' %}"
+       class="{% if active_page == 'services_editor' %}active{% endif %}">
         <i class="fas fa-concierge-bell"></i>
         <span>Main Services</span>
     </a>
-        <a href="{% url 'corporate_event_list' %}">
+        <a href="{% url 'dashboard_corporate_services_editor' %}"
+           class="{% if active_page == 'corporate_services_editor' %}active{% endif %}">
         <i class="fas fa-concierge-bell"></i>
         <span>Corporate Services</span>
     </a>
-    <a href="{% url 'other_services_dashboard' %}"
-   class="{% if active_page == 'other_services' %}active{% endif %}">
+    <a href="{% url 'dashboard_other_services_editor' %}"
+   class="{% if active_page == 'other_services_editor' %}active{% endif %}">
     <i class="fas fa-layer-group"></i>
     <span>Other Services</span>
 </a>
