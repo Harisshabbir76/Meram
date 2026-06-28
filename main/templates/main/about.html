@@ -498,9 +498,9 @@
     align-items:center;
     justify-content:center;
 
-    flex-wrap:wrap;
+    flex-wrap:nowrap;
 
-    gap:60px;
+    gap:40px;
 }
 
 
@@ -980,6 +980,31 @@
     width: 100%;
     max-width: 1070px;}
 
+    /* Keep CTA text from overlapping the side images on laptop */
+    .left-image{
+        left: 120px;
+        top: 80px;
+    }
+    .left-image img{
+        width: 190px;
+        height: 230px;
+    }
+    .right-image{
+        right: 120px;
+        bottom: 80px;
+    }
+    .right-image img{
+        width: 240px;
+        height: 165px;
+    }
+    .about-cta-content{
+        max-width: 560px;
+    }
+    .cta-title{
+        font-size: 28px;
+        line-height: 1.3;
+    }
+
 }
 
 @media (max-width:480px){
@@ -1006,7 +1031,7 @@
     }
 
     .venue-logo-item img{
-        max-width:75px;
+        max-width:60px;
         max-height:40px;
     }
         .about-philosophy-img{
@@ -1157,11 +1182,18 @@
     }
 
     .venues-logos{
-        gap:28px;
+        display:grid;
+        grid-template-columns:repeat(3, 1fr);
+        gap:24px 16px;
+        flex-wrap:unset;
+    }
+
+    .venue-logo-item:last-child{
+        grid-column:2 / 3;
     }
 
     .venue-logo-item img{
-        max-width:90px;
+        max-width:80px;
         max-height:45px;
     }
         .about-trust{
@@ -1235,90 +1267,6 @@
     .more-quote{
         text-align:center;
     }
-     .about-cta{
-        display:flex;
-        flex-direction:column;
-        gap:25px;
-        padding:60px 20px;
-        min-height:auto;
-    }
-
-    /* LEFT IMAGE FIRST */
-    .left-image{
-        position:relative;
-        left:auto !important;
-        top:auto !important;
-        right:auto;
-        bottom:auto;
-        margin:0 auto;
-        order:1;
-    }
-
-    .left-image img{
-        width:180px;
-        height:220px;
-        object-fit:cover;
-        display:block;
-    }
-
-    /* CONTENT SECOND */
-    .about-cta-content{
-        order:2;
-        max-width:100%;
-        text-align:center;
-        margin:0;
-        padding:0;
-    }
-
-    /* RIGHT IMAGE THIRD */
-    .right-image{
-        position:relative;
-        left:auto;
-        top:auto;
-        right:auto !important;
-        bottom:auto !important;
-        margin:0 auto;
-        order:3;
-    }
-
-    .right-image img{
-        width:220px;
-        height:140px;
-        object-fit:cover;
-        display:block;
-    }
-.about-cta-content {
-        max-width: 100%;
-        padding: 0 10px;
-                margin-bottom: 25px;
-
-    }
-
-    .cta-script {
-        font-size: 11px;
-        line-height: 1.2;
-        margin-bottom: 15px;
-    }
-
-    .cta-title {
-        font-size: 15px;
-        line-height: 1.3;
-        letter-spacing: 0;
-        margin-bottom: 20px;
-    }
-
-    .cta-body {
-        font-size: 6px;
-        line-height: 1.8;
-        padding: 0 10px;
-    }
-    .btn-outline-light {
-       width: 136px;
-    height: 30px;
-    font-size: 8px;
-    letter-spacing: 1px;
-}
-
     .cta-watermark {
         display: none;
     }
@@ -1328,10 +1276,6 @@
 }
     .venues-title {
         max-width: 230px;
-    }
-        .about-strip{
-        grid-template-columns:repeat(2,1fr);
-        gap:8px;
     }
     .about-thoughtful{
         grid-template-columns:1fr;
@@ -1420,13 +1364,96 @@
 }
 @media(max-width:992px){
 
+    .about-strip{
+        grid-template-columns:repeat(2,1fr) !important;
+        gap:8px !important;
+    }
+
+    .about-cta{
+        display:flex !important;
+        flex-direction:column !important;
+        gap:25px;
+        padding:60px 20px;
+        min-height:auto;
+    }
+
+    .left-image{
+        position:relative !important;
+        left:auto !important;
+        top:auto !important;
+        right:auto !important;
+        bottom:auto !important;
+        margin:0 auto;
+        order:1;
+    }
+
+    .left-image img{
+        width:180px;
+        height:220px;
+        object-fit:cover;
+        display:block;
+    }
+
+    .about-cta-content{
+        order:2;
+        max-width:100% !important;
+        text-align:center;
+        margin:0;
+        padding:0 10px;
+    }
+
+    .right-image{
+        position:relative !important;
+        left:auto !important;
+        top:auto !important;
+        right:auto !important;
+        bottom:auto !important;
+        margin:0 auto;
+        order:3;
+    }
+
+    .right-image img{
+        width:220px;
+        height:140px;
+        object-fit:cover;
+        display:block;
+    }
+
+    .cta-script{
+        font-size:20px;
+        line-height:1.3;
+        margin-bottom:15px;
+    }
+
+    .cta-title{
+        font-size:18px;
+        line-height:1.3;
+        letter-spacing:0;
+        margin-bottom:20px;
+    }
+
+    .cta-body{
+        font-size:10px;
+        line-height:1.8;
+    }
+
+    .btn-outline-light{
+        width:160px;
+        height:34px;
+        font-size:10px;
+    }
+
+    .about-cta .intro-watermark{
+        display:none;
+    }
+
     .venues-logos{
-        gap:40px;
+        gap:14px;
     }
 
     .venue-logo-item img{
-        max-width: 55px;
-        max-height: 37px;
+        max-width: 50px;
+        max-height: 32px;
     }
         /* .about-trust{
         padding:
@@ -1449,6 +1476,33 @@
     .intro-watermark{
                 display: none;
     }
+}
+
+/* ===== MOBILE CTA OVERRIDE — must be last to win cascade ===== */
+@media (max-width:600px){
+    .about-cta{
+        display:flex !important;
+        flex-direction:column !important;
+        align-items:center !important;
+        justify-content:flex-start !important;
+        gap:30px !important;
+        padding:50px 20px !important;
+        min-height:auto !important;
+    }
+    .left-image, .right-image{
+        position:relative !important;
+        left:auto !important;
+        top:auto !important;
+        right:auto !important;
+        bottom:auto !important;
+        margin:0 auto !important;
+    }
+    .left-image{ order:1 !important; }
+    .about-cta-content{ order:2 !important; max-width:100% !important; text-align:center !important; }
+    .right-image{ order:3 !important; }
+    .left-image img{ width:170px !important; height:210px !important; object-fit:cover !important; display:block !important; }
+    .right-image img{ width:210px !important; height:135px !important; object-fit:cover !important; display:block !important; }
+    .about-cta .intro-watermark{ display:none !important; }
 }
 </style>
 {% endblock %}
