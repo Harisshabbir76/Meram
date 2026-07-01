@@ -52,13 +52,13 @@
                 when the visitor selects عربي. Leave empty to fall back to the English text.</p>
         </div>
 
-        {# ---- IMAGE (only for <img>) ---- #}
+        {# ---- IMAGE (only for <img loading="lazy" decoding="async">) ---- #}
         <div id="cms-image-section" style="display:none;">
             <div class="cms-section-title">Image</div>
             <p id="cms-image-shared-note" class="cms-note cms-note-tight" style="display:none;">
                 <i class="fa-solid fa-link"></i> <b>Shared image.</b> Replacing it here updates
                 this picture on <b>every page</b> that shows it.</p>
-            <img id="cms-image-preview" alt="" />
+            <img loading="lazy" decoding="async" id="cms-image-preview" alt="" />
             <label class="cms-file-btn">
                 <i class="fa-solid fa-upload"></i> Replace image
                 <input type="file" id="cms-image-file" accept="image/*" hidden>
@@ -87,7 +87,7 @@
                 </button>
             </div>
             <div id="cms-bg-preview-wrap">
-                <img id="cms-bg-preview-img" alt="">
+                <img loading="lazy" decoding="async" id="cms-bg-preview-img" alt="">
                 <video id="cms-bg-preview-video" style="display:none;" muted loop autoplay playsinline></video>
             </div>
             <label class="cms-file-btn">

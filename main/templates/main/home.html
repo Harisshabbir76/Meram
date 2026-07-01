@@ -85,7 +85,7 @@
 
 .partners-section{
     width:100%;
-    background:#F4F1EA;
+    background:#f5f0e8;
     height:75px;
     display:flex;
     align-items:center;
@@ -97,8 +97,13 @@
     display:flex;
     align-items:center;
     width:max-content;
-    animation:scrollLeft 25s linear infinite;
+    animation:scrollLeft 30s linear infinite;
     height: 64px;
+    will-change: transform;
+}
+
+.p-track:hover{
+    animation-play-state: paused;
 }
 
 @keyframes scrollLeft{
@@ -112,15 +117,16 @@
 
 .p-item{
     flex:0 0 auto;
-    padding:0 37px;
+    width: 130px;
+    padding:0 30px;
     display:flex;
     align-items:center;
     justify-content:center;
 }
 
 .p-item img{
-    max-height: 62px;
-    width: 81px;
+    height: 50px;
+    width: 100%;
     object-fit: contain;
     opacity: 0.85;
     transition: all .3s ease;
@@ -1150,7 +1156,7 @@ position: absolute;
 
         <div class="p-item">
             <img loading="lazy" decoding="async" src="{% static 'main/images/D.webp' %}" alt="Damac">
-        </div>
+        </div> 
 
         <div class="p-item">
             <img loading="lazy" decoding="async" src="{% static 'main/images/GH.webp' %}" alt="W Hotel">
@@ -1164,65 +1170,100 @@ position: absolute;
             <img loading="lazy" decoding="async" src="{% static 'main/images/R.webp' %}" alt="Rixos">
         </div>
 
-        <!-- Duplicate for seamless loop -->
-        <div class="p-item">
-            <img loading="lazy" decoding="async" src="{% static 'main/images/Sr.webp' %}" alt="Rotana">
-        </div>
-
         <div class="p-item">
             <img loading="lazy" decoding="async" src="{% static 'main/images/WA.webp' %}" alt="Damac">
         </div>
 
         <div class="p-item">
-            <img loading="lazy" decoding="async" src="{% static 'main/images/Br.webp' %}" alt="W Hotel">
-        </div>
-
-        <div class="p-item">
-            <img loading="lazy" decoding="async" src="{% static 'main/images/D.webp' %}" alt="Hilton">
-        </div>
-
-        <div class="p-item">
-            <img loading="lazy" decoding="async" src="{% static 'main/images/GH.webp' %}" alt="Rixos">
-        </div>
-        <div class="p-item">
-            <img loading="lazy" decoding="async" src="{% static 'main/images/Br.webp' %}" alt="Rotana">
-        </div>
-
-        <div class="p-item">
-            <img loading="lazy" decoding="async" src="{% static 'main/images/D.webp' %}" alt="Damac">
-        </div>
-
-        <div class="p-item">
-            <img loading="lazy" decoding="async" src="{% static 'main/images/GH.webp' %}" alt="W Hotel">
-        </div>
-
-        <div class="p-item">
-            <img loading="lazy" decoding="async" src="{% static 'main/images/H.webp' %}" alt="Hilton">
-        </div>
-
-        <div class="p-item">
-            <img loading="lazy" decoding="async" src="{% static 'main/images/R.webp' %}" alt="Rixos">
-        </div>
-
-        <!-- Duplicate for seamless loop -->
-        <div class="p-item">
             <img loading="lazy" decoding="async" src="{% static 'main/images/Sr.webp' %}" alt="Rotana">
         </div>
 
+        <!-- new  -->
+
         <div class="p-item">
-            <img loading="lazy" decoding="async" src="{% static 'main/images/WA.webp' %}" alt="Damac">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/01.webp' %}" alt="Rotana">
+        </div>
+        
+        <div class="p-item">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/02.webp' %}" alt="Rotana">
         </div>
 
         <div class="p-item">
-            <img loading="lazy" decoding="async" src="{% static 'main/images/Br.webp' %}" alt="W Hotel">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/03.webp' %}" alt="Rotana">
         </div>
 
         <div class="p-item">
-            <img loading="lazy" decoding="async" src="{% static 'main/images/D.webp' %}" alt="Hilton">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/04.webp' %}" alt="Rotana">
         </div>
 
         <div class="p-item">
-            <img loading="lazy" decoding="async" src="{% static 'main/images/GH.webp' %}" alt="Rixos">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/05.webp' %}" alt="Rotana">
+        </div>
+
+        <div class="p-item">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/06.webp' %}" alt="Rotana">
+        </div>
+
+        <div class="p-item">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/07.webp' %}" alt="Rotana">
+        </div>
+
+        <div class="p-item">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/08.webp' %}" alt="Rotana">
+        </div>
+
+        <div class="p-item">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/09.webp' %}" alt="Rotana">
+        </div>
+
+        <!-- Duplicate set for seamless infinite loop -->
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/Br.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/D.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/GH.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/H.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/R.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/WA.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/Sr.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/01.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/02.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/03.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/04.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/05.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/06.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/07.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/08.webp' %}" alt="">
+        </div>
+        <div class="p-item" aria-hidden="true">
+            <img loading="lazy" decoding="async" src="{% static 'main/images/marques/09.webp' %}" alt="">
         </div>
 
     </div>
