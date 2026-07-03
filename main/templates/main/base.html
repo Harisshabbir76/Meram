@@ -636,6 +636,69 @@
             }
         }
 
+        /* ===== WHATSAPP FLOATING BUTTON ===== */
+        .whatsapp-float{
+            position:fixed;
+            left:20px;
+            bottom:20px;
+            z-index:999;
+
+            display:inline-flex;
+            align-items:center;
+            gap:10px;
+
+            background:#25D366;
+            color:#fff;
+            text-decoration:none;
+
+            padding:12px 18px;
+            border-radius:50px;
+
+            box-shadow:0 4px 14px rgba(0,0,0,0.25);
+            transition:transform .25s ease, box-shadow .25s ease;
+        }
+
+        .whatsapp-float:hover{
+            transform:translateY(-2px);
+            box-shadow:0 6px 18px rgba(0,0,0,0.3);
+            color:#fff;
+        }
+
+        .whatsapp-float i{
+            font-size:26px;
+            line-height:1;
+            flex-shrink:0;
+        }
+
+        .whatsapp-float span{
+            font-family:var(--font-body);
+            font-size:14px;
+            font-weight:600;
+            white-space:nowrap;
+        }
+
+        @media (max-width:768px){
+            .whatsapp-float{
+                left:14px;
+                bottom:14px;
+                padding:10px 16px;
+                gap:8px;
+            }
+            .whatsapp-float i{font-size:22px;}
+            .whatsapp-float span{font-size:12px;}
+        }
+
+        @media (max-width:480px){
+            .whatsapp-float{
+                left:12px;
+                bottom:12px;
+                padding:9px 14px;
+                gap:6px;
+            }
+            .whatsapp-float i{font-size:20px;}
+            .whatsapp-float span{font-size:11px;}
+        }
+
     </style>
     {% block extra_head %}{% endblock %}
     {% if cms_edit %}<link rel="stylesheet" href="{% static 'main/cms/editor.css' %}?v={% now 'U' %}">{% endif %}
@@ -753,6 +816,16 @@
 {% endblock %}
 
 {% block content %}{% endblock %}
+
+{% if request.resolver_match.url_name != 'book_now' %}
+<!-- ===== WHATSAPP FLOATING BUTTON ===== -->
+<a href="https://wa.me/971501406994?text=Hello%20Meram%20Events,%20I%20would%20like%20to%20know%20more."
+   target="_blank" rel="noopener noreferrer"
+   class="whatsapp-float" aria-label="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span data-en="Chat with us" data-ar="تحدث معنا">Chat with us</span>
+</a>
+{% endif %}
 
 <!-- ===== FOOTER ===== -->
 <footer class="footer" data-cms-shared="footer">

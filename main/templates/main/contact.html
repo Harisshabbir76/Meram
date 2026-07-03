@@ -40,18 +40,19 @@
         margin-top: 30px;
     }
 
-    /* Paper clip SVG at top */
+    /* Paper clip SVG at top — shrinks fluidly with viewport so it never
+       dwarfs the card on small devices */
     .contact-clip {
         position: absolute;
-        top: -69px;
+        top: clamp(-69px, -9vw, -20px);
         left: 0px;
         transform: rotate(2deg);
         z-index: 5;
     }
 
     .contact-clip img {
-        width: 200px;
-        height: 200px;
+        width: clamp(70px, 20vw, 200px);
+        height: clamp(70px, 20vw, 200px);
         display: block;
     }
 

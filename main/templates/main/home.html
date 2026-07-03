@@ -678,12 +678,6 @@ position: absolute;
 
     .intro-subtitle {
     font-size: 12px;}
-    .crafting-title
- {
-    font-size: 27px;
-}
-.crafting-body {
-    font-size: 11px;}
 }
 
 @media (max-width:1400px){
@@ -695,10 +689,7 @@ position: absolute;
 }
 .intro-subtitle {
     font-size: 12px;
-}.crafting-title {
-    font-size: 25px;}
-    .crafting-body {
-    font-size: 11px;}
+}
 .why-title {
     font-size: 36px;}
 
@@ -714,8 +705,71 @@ position: absolute;
     font-size: 30px;}
 }
 
+/* WHY CHOOSE — collapse to single column before the 3-col grid gets too cramped */
+@media (max-width:1200px){
+    .why-section{
+        grid-template-columns:1fr;
+        padding:10px 60px 24px;
+        gap:30px;
+        text-align:center;
+        justify-items:center;
+    }
 
-@media (max-width:991px){
+    .why-img-left,
+    .why-img-right{
+        width:220px;
+        height:220px;
+        object-fit:cover;
+        margin:0 auto;
+    }
+
+    .why-img-left{
+        order:1;
+    }
+
+    .why-center{
+        order:2;
+        width:100%;
+    }
+
+    .why-img-right{
+        order:3;
+    }
+
+    .why-watermark{
+        order:4;
+
+        position:static;
+        display:block;
+        width:100%;
+
+        text-align:center;
+
+        font-size:42px;
+        line-height:1.1;
+
+        white-space:normal;
+    }
+
+    .why-title{
+        font-size:26px;
+        line-height:32px;
+        max-width:100%;
+    }
+
+    .why-list{
+        max-width:100%;
+    }
+
+    .why-list li{
+        text-align:left;
+        font-size:12px;
+        line-height:24px;
+    }
+}
+
+
+@media (max-width:1400px){
 
     .crafting-section{
         grid-template-columns:1fr;
@@ -963,68 +1017,6 @@ position: absolute;
         margin:0 auto;
         font-size:12px;
     }
-      .why-section{
-        grid-template-columns:1fr;
-        padding:10px 60px 24px;
-        gap:30px;
-        text-align:center;
-        justify-items:center;
-    }
-
-    /* Images */
-    .why-img-left,
-    .why-img-right{
-        width:220px;
-        height:220px;
-        object-fit:cover;
-        margin:0 auto;
-    }
-
-    /* Order */
-    .why-img-left{
-        order:1;
-    }
-
-    .why-center{
-        order:2;
-        width:100%;
-    }
-
-    .why-img-right{
-        order:3;
-    }
-
-    /* Watermark last */
-    .why-watermark{
-        order:4;
-
-        position:static;
-        display:block;
-        width:100%;
-
-        text-align:center;
-
-        font-size:42px;
-        line-height:1.1;
-
-        white-space:normal;
-    }
-
-    .why-title{
-        font-size:32px;
-        line-height:38px;
-    }
-
-    .why-list{
-        max-width:100%;
-    }
-
-    .why-list li{
-        text-align:left;
-        font-size:12px;
-        line-height:24px;
-    }
-
     .celebration-section{padding:60px 24px;}
     .celebration-grid img {
         height: 115px;

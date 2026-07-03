@@ -1007,6 +1007,65 @@
 
 }
 
+/* THOUGHTFUL APPROACH — stack before the 2-col grid squeezes the fixed-size image collage */
+@media (max-width:1300px){
+
+    .about-thoughtful{
+        grid-template-columns:1fr;
+        gap:4px;
+        padding:60px 20px;
+        justify-items:center;
+        text-align:center;
+    }
+
+    .about-thoughtful-content{
+        max-width:100%;
+        text-align:center;
+    }
+
+    /* Images visible */
+    .about-two-imgs{
+        width:100%;
+        max-width:360px;
+        height:280px;
+        margin:0 auto;
+        position:relative;
+    }
+
+    /* Image 1 */
+    .about-two-imgs img:nth-child(1){
+        width:130px;
+        height:140px;
+        left:0;
+        top:0;
+    }
+
+    /* Main image */
+    .about-two-imgs img:nth-child(2){
+        width: 204px;
+        height: 161px;
+        left: 78px;
+        bottom: 89px;
+    }
+
+    /* Image 3 */
+    .about-two-imgs img:nth-child(3){
+        width:120px;
+        height:124px;
+        left:auto;
+        right:0;
+        top:15px;
+    }
+
+    .about-white-box{
+        width:125px;
+        height:145px;
+        left:auto;
+        right:0;
+        top:0;
+    }
+}
+
 @media (max-width:480px){
 
     .about-two-imgs{
@@ -1276,60 +1335,6 @@
 }
     .venues-title {
         max-width: 230px;
-    }
-    .about-thoughtful{
-        grid-template-columns:1fr;
-        gap:4px;
-        padding:60px 20px;
-        justify-items:center;
-        text-align:center;
-    }
-
-    .about-thoughtful-content{
-        max-width:100%;
-        text-align:center;
-    }
-
-    /* Images visible */
-    .about-two-imgs{
-        width:100%;
-        max-width:360px;
-        height:280px;
-        margin:0 auto;
-        position:relative;
-    }
-
-    /* Image 1 */
-    .about-two-imgs img:nth-child(1){
-        width:130px;
-        height:140px;
-        left:0;
-        top:0;
-    }
-
-    /* Main image */
-    .about-two-imgs img:nth-child(2){
-        width: 204px;
-        height: 161px;
-        left: 78px;
-        bottom: 89px;
-    }
-
-    /* Image 3 */
-    .about-two-imgs img:nth-child(3){
-        width:120px;
-        height:124px;
-        left:auto;
-        right:0;
-        top:15px;
-    }
-
-    .about-white-box{
-        width:125px;
-        height:145px;
-        left:auto;
-        right:0;
-        top:0;
     }
 }
 
