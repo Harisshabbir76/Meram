@@ -1,0 +1,16 @@
+# Database
+db.sqlite3
+db.sqlite3-journal
+db.sqlite3-wal
+db.sqlite3-shm
+
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Environment variables
+.env
+
+
