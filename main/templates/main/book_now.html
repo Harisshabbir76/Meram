@@ -51,7 +51,19 @@
 
     .booking-form-wrap .btn-primary {
         display: block;
+        width: 100%;
         margin: 30px auto 0;
+        background: var(--text-dark);
+        color: var(--white);
+        border: none;
+        padding: 16px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .booking-form-wrap .btn-primary:hover {
+        opacity: .85;
     }
 
     .booking-form-wrap textarea {
@@ -550,14 +562,6 @@
             text-align: center;
         }
 
-        .booking-info-title {
-            text-align: center;
-        }
-
-        .booking-info-body {
-            text-align: center;
-        }
-
         .page-header-title {
             margin-bottom: 20px;
 
@@ -567,64 +571,41 @@
     .booking-section {
         padding: 100px 166px;
         background: var(--cream);
-        display: grid;
-        grid-template-columns: 1fr 1.6fr;
-        gap: 80px;
-        align-items: start;
-    }
-
-    .booking-info-title {
-        font-family: var(--font-display);
-        font-size: clamp(20px, 3.5vw, 44px);
-        font-weight: 400;
-        font-style: italic;
-        line-height: 1.2;
-        margin-bottom: 20px;
-    }
-
-    .booking-info-body {
-        font-size: 9px;
-        color: var(--text-mid);
-        line-height: 2;
-        margin-bottom: 30px;
-    }
-
-    .booking-step {
         display: flex;
-        gap: 20px;
-        align-items: flex-start;
-        margin-bottom: 24px;
-    }
-
-    .booking-step-num {
-        width: 36px;
-        height: 36px;
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        display: flex;
-        align-items: center;
         justify-content: center;
-        font-family: var(--font-display);
-        font-size: 18px;
-        flex-shrink: 0;
-        color: var(--text-mid);
-    }
-
-    .booking-step-text {
-        font-size: 9px;
-        color: var(--text-mid);
-        line-height: 1.7;
-    }
-
-    .booking-step-text strong {
-        display: block;
-        color: var(--text-dark);
-        margin-bottom: 3px;
-        font-size: 13px;
+        align-items: flex-start;
+        gap: 60px;
     }
 
     .booking-form-wrap {
         background: var(--white);
         padding: 50px;
+        text-align: center;
+        flex: 0 1 720px;
+    }
+
+    .booking-form-wrap form {
+        text-align: left;
+    }
+
+    .form-main-title {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: clamp(24px, 3vw, 34px);
+        font-weight: 400;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+    }
+
+    .form-subtitle {
+        font-size: 12px;
+        color: var(--text-mid);
+        margin-bottom: 30px;
+    }
+
+    .booking-form-wrap .form-label {
+        color: var(--gold);
+        font-weight: 500;
     }
 
     .form-row {
@@ -646,17 +627,26 @@
 
     @media(max-width:900px) {
         .booking-section {
-            grid-template-columns: 1fr;
+            flex-direction: column;
+            align-items: center;
             padding: 60px 24px;
             gap: 40px;
         }
 
         .booking-form-wrap {
             padding: 30px 20px;
+            flex-basis: auto;
+            width: 100%;
         }
 
         .form-row {
             grid-template-columns: 1fr;
+        }
+
+        .off-days-panel {
+            flex-basis: auto;
+            width: 100%;
+            max-width: 100%;
         }
     }
 </style>
@@ -706,81 +696,13 @@
 
     <section class="booking-section">
 
-        <div class="booking-info reveal">
-
-        <span class="section-eyebrow" data-en="Start Planning" data-ar="ابدأ التخطيط">
-            Start Planning
-        </span>
-
-        <h2 class="booking-info-title" data-en="Let's Create Something Extraordinary"
-            data-ar="لنصنع شيئًااستثنائيًامعًا">
-            Let's Create Something Extraordinary
-        </h2>
-
-        <p class="booking-info-body"
-            data-en="Fill out the form and one of our event specialists will contact you within 24 hours to discuss your vision."
-            data-ar="املأ النموذج وسيتواصل معك أحد خبراء الفعاليات خلال 24 ساعة لمناقشة رؤيتك.">
-            Fill out the form and one of our event specialists will contact you within 24 hours to discuss your vision.
-        </p>
-
-        <div class="booking-step">
-            <div class="booking-step-num">1</div>
-            <div class="booking-step-text"
-                data-en="<strong>Submit Your Request</strong>Tell us about your event vision and requirements."
-                data-ar="<strong>إرسال طلبك</strong>أخبرنا عن رؤيتك ومتطلبات فعاليتك.">
-                <strong>Submit Your Request</strong>
-                Tell us about your event vision and requirements.
-            </div>
-        </div>
-
-        <div class="booking-step">
-            <div class="booking-step-num">2</div>
-            <div class="booking-step-text"
-                data-en="<strong>Initial Consultation</strong>We'll schedule a meeting to discuss your vision in detail."
-                data-ar="<strong>الاستشارة الأولية</strong>سنحدد اجتماعًا لمناقشة رؤيتك بالتفصيل.">
-                <strong>Initial Consultation</strong>
-                We'll schedule a meeting to discuss your vision in detail.
-            </div>
-        </div>
-
-        <div class="booking-step">
-            <div class="booking-step-num">3</div>
-            <div class="booking-step-text"
-                data-en="<strong>Custom Proposal</strong>Receive a tailored proposal crafted specifically for your event."
-                data-ar="<strong>عرض مخصص</strong>ستحصل على عرض مصمم خصيصًا لفعاليتك.">
-                <strong>Custom Proposal</strong>
-                Receive a tailored proposal crafted specifically for your event.
-            </div>
-        </div>
-
-        <div class="booking-step">
-            <div class="booking-step-num">4</div>
-            <div class="booking-step-text"
-                data-en="<strong>Begin Planning</strong>Once approved, we begin crafting your perfect event."
-                data-ar="<strong>بدء التخطيط</strong>بعد الموافقة نبدأ في تنفيذ فعاليتك المثالية.">
-                <strong>Begin Planning</strong>
-                Once approved, we begin crafting your perfect event.
-            </div>
-        </div>
-
-        <!-- OFF DAYS PANEL -->
-        <div id="offDaysPanel" class="off-days-panel" style="display:none; margin-top: 50px;">
-            <h3 data-en="Unavailable Days" data-ar="التواريخ غير المتاحة">Unavailable Days</h3>
-            <p style="font-size: 13px; color: #555; margin-bottom: 20px;">We are closed on the dates and times listed below.</p>
-            <hr style="border:none; border-top: 1px solid #e0dcd3; margin-bottom: 20px;">
-            <div id="offDaysListPublic">
-                <!-- Dynamically populated -->
-            </div>
-        </div>
-        </div> <!-- End booking-info -->
-
     <div class="booking-form-wrap reveal">
 
-        <h3 data-en="Request a Booking" data-ar="طلب حجز">
+        <h3 class="form-main-title" data-en="Request a Booking" data-ar="طلب حجز">
             Request a Booking
         </h3>
 
-        <p data-en="All fields marked * are required" data-ar="جميع الحقول التي تحمل * مطلوبة">
+        <p class="form-subtitle" data-en="All fields marked * are required" data-ar="جميع الحقول التي تحمل * مطلوبة">
             All fields marked * are required
         </p>
         <form method="post">
@@ -892,6 +814,15 @@
 
             </form>
         </div> <!-- End booking-form-wrap -->
+
+        <div id="offDaysPanel" class="off-days-panel reveal">
+            <h3 data-en="Unavailable Days" data-ar="التواريخ غير المتاحة">Unavailable Days</h3>
+            <p data-en="We are closed on the dates and times listed below." data-ar="نحن مغلقون في التواريخ والأوقات المذكورة أدناه.">We are closed on the dates and times listed below.</p>
+            <hr>
+            <div id="offDaysListPublic">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
 
     </section>
 <!-- ===== WHY CHOOSE MERAM EVENTS ===== -->
@@ -1014,33 +945,45 @@ document.addEventListener("DOMContentLoaded", function () {
 {% endblock %}
 <style>
 .off-days-panel {
-    max-width: 400px;
-    background: #FFFFFF;
-    padding: 30px;
-    border: 1px solid #e0dcd3;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    display: none;
+    flex: 0 1 420px;
 }
 .off-days-panel h3 {
     font-family: "FreightDisp Pro", serif;
     font-size: 26px;
     font-weight: 400;
     color: #311F13;
-    margin-bottom: 15px;
-}
-.public-offday-item {
-    background: #fdfbf7;
-    padding: 15px;
-    border: 1px solid #e0dcd3;
     margin-bottom: 10px;
 }
+.off-days-panel > p {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+.off-days-panel hr {
+    border: none;
+    border-top: 1px solid #e0dcd3;
+    margin-bottom: 20px;
+}
+.public-offday-item {
+    background: var(--cream);
+    border-left: 3px solid var(--gold);
+    padding: 14px 18px;
+    margin-bottom: 12px;
+}
 .public-offday-date {
-    font-weight: 500;
-    color: #311F13;
-    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 15px;
+    color: #1a1a1a;
+    margin-bottom: 4px;
 }
 .public-offday-time {
-    font-size: 13px;
-    color: #555;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--gold);
 }
 .time-selector-group {
     display: flex;
@@ -1169,41 +1112,45 @@ document.addEventListener("DOMContentLoaded", function () {
         return (hours * 60) + minutes;
     }
 
-    dateInput.addEventListener('change', async (e) => {
+    function renderOffDays(offDays) {
+        if (offDays.length === 0) {
+            offDaysList.innerHTML = '<p>No unavailable dates this month.</p>';
+            return;
+        }
+        let html = '';
+        offDays.forEach(od => {
+            const timeText = od.is_full_day ? 'Full Day Off' : `${od.start_time} - ${od.end_time}`;
+            const dateObj = new Date(od.date + 'T00:00:00');
+            const dateLabel = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+            html += `
+                <div class="public-offday-item">
+                    <div class="public-offday-date">${dateLabel}</div>
+                    <div class="public-offday-time">${timeText}</div>
+                </div>
+            `;
+        });
+        offDaysList.innerHTML = html;
+    }
+
+    async function loadOffDays(year, month) {
+        const res = await fetch(`/api/offdays/?year=${year}&month=${month}`);
+        const data = await res.json();
+        if (data.status === 'ok') {
+            monthOffDays = data.off_days;
+            renderOffDays(monthOffDays);
+            offDaysPanel.style.display = 'block';
+        }
+    }
+
+    dateInput.addEventListener('change', (e) => {
         const val = e.target.value;
         if (!val) {
             offDaysPanel.style.display = 'none';
             return;
         }
 
-        const [y, m, d] = val.split('-');
-        
-        // Fetch offdays for the selected month for validation
-        const res = await fetch(`/api/offdays/?year=${y}&month=${parseInt(m, 10)}`);
-        const data = await res.json();
-        
-        if (data.status === 'ok') {
-            monthOffDays = data.off_days;
-            
-            // Show panel
-            offDaysPanel.style.display = 'block';
-            
-            if (monthOffDays.length === 0) {
-                offDaysList.innerHTML = '<p>No unavailable dates this month.</p>';
-            } else {
-                let html = '';
-                monthOffDays.forEach(od => {
-                    const timeText = od.is_full_day ? 'Full Day' : `${od.start_time} - ${od.end_time}`;
-                    html += `
-                        <div class="public-offday-item">
-                            <div class="public-offday-date">${new Date(od.date).toDateString()}</div>
-                            <div class="public-offday-time"><i class="fa-regular fa-clock"></i> ${timeText}</div>
-                        </div>
-                    `;
-                });
-                offDaysList.innerHTML = html;
-            }
-        }
+        const [y, m] = val.split('-');
+        loadOffDays(y, parseInt(m, 10));
     });
 
     function closeOverlapModal() {
