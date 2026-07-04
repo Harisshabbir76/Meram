@@ -137,9 +137,8 @@
 
 .srv-row{
     display:grid;
-    grid-template-columns:420px 1fr 420px;
-    height:620px; /* min-height nahi */
-    overflow:hidden;
+    grid-template-columns:minmax(320px, 420px) minmax(0, 1fr) minmax(320px, 420px);
+    min-height:620px;
 }
 
 .srv-row:last-of-type .btn-srv{
@@ -148,6 +147,7 @@
 
 .srv-side-image{
     height:100%;
+    overflow:hidden;
 }
 
 .srv-side-image img{
@@ -722,6 +722,14 @@
 /* ── RESPONSIVE ── */
 
 
+@media (max-width:1500px) and (min-width:1201px){
+    .srv-block-title{
+        font-size:32px;
+        line-height:40px;
+        margin-bottom:24px;
+    }
+}
+
 @media (max-width:1400px){
 
 .srv-content-col {
@@ -963,7 +971,6 @@ padding: 0 20px;}
         width:100%;
         height:100%;
         object-fit:cover;
-        padding:4px;
     }
 
     .srv-block-title{
