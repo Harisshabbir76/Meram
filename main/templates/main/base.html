@@ -100,6 +100,15 @@
             font-family: "Dearest" !important;
         }
 
+        /* Decorative watermark text stays in English — keep their original
+           script fonts instead of switching to Tajawal. */
+        html[dir="rtl"] .intro-watermark{
+            font-family: "charlotte", cursive !important;
+        }
+        html[dir="rtl"] .why-watermark{
+            font-family: "Shabby Chic", cursive !important;
+        }
+
         /* ======== NAVBAR ======== */
         .navbar{
             position:fixed;top:0;left:0;width:100%;z-index:1000;
